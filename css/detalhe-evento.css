@@ -1,0 +1,225 @@
+/* ==========================================================================
+   DETALHE DO EVENTO
+   ========================================================================== */
+
+.evento-banner {
+  width: 100%;
+  height: 360px;
+  background: url('../assets/banner-evento.jpg') center/cover no-repeat;
+}
+
+.evento-content {
+  padding: 40px 0 60px;
+}
+
+.evento-content .container {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 40px;
+  align-items: start;
+}
+
+.evento-titulo {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.evento-meta {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  color: var(--color-gray-text);
+}
+
+.evento-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.evento-meta i {
+  color: var(--color-orange);
+}
+
+.evento-status-btn {
+  display: inline-block;
+  background: var(--color-orange);
+  color: var(--color-white);
+  padding: 12px 28px;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.evento-status-btn:hover {
+  background: #e65a00;
+  transform: translateY(-2px);
+}
+
+.evento-section h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  margin-top: 30px;
+}
+
+.evento-section h3:first-child {
+  margin-top: 0;
+}
+
+.evento-section h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 16px 0 8px;
+  text-transform: uppercase;
+}
+
+.evento-section p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  color: var(--color-black);
+}
+
+.btn-cyan-evento {
+  background: var(--color-cyan);
+  color: var(--color-white);
+  padding: 12px 24px;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 14px;
+  display: inline-block;
+  margin: 12px 0;
+  transition: var(--transition);
+}
+
+.btn-cyan-evento:hover {
+  background: #46b3b4;
+  transform: translateY(-2px);
+}
+
+/* Percursos */
+.percursos {
+  margin-top: 18px;
+}
+
+.percurso-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: var(--color-bg-light);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.percurso-item:hover {
+  background: #ebebeb;
+}
+
+.percurso-item .label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.percurso-item .label i {
+  color: var(--color-orange);
+}
+
+.percurso-item .ver-mapa {
+  background: var(--color-white);
+  border: 1px solid var(--color-input-border);
+  padding: 6px 14px;
+  border-radius: var(--radius);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.percurso-item .ver-mapa:hover {
+  background: var(--color-orange);
+  color: var(--color-white);
+  border-color: var(--color-orange);
+}
+
+/* Sidebar */
+.evento-sidebar {
+  position: sticky;
+  top: 100px;
+}
+
+.sidebar-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.sidebar-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+/* Countdown */
+.countdown {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.countdown-item {
+  text-align: center;
+}
+
+.countdown-item .num {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--color-orange);
+  line-height: 1;
+}
+
+.countdown-item .label {
+  font-size: 11px;
+  color: var(--color-gray-text);
+  text-transform: lowercase;
+  font-weight: 500;
+}
+
+.organizador-logo,
+.patrocinador-logo {
+  width: 100%;
+  background: var(--color-bg-light);
+  border-radius: var(--radius);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70px;
+}
+
+.organizador-logo img,
+.patrocinador-logo img {
+  max-width: 80%;
+  max-height: 50px;
+}
+
+.kit-img {
+  margin-top: 20px;
+  max-width: 320px;
+  border-radius: var(--radius);
+}

@@ -1,0 +1,599 @@
+/* ==========================================================================
+   RECEBE DIGITAL — Estilos Globais
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+/* ----- VARIÁVEIS DE DESIGN ----- */
+:root {
+  --color-orange: #FF6600;
+  --color-orange-soft: rgba(255, 102, 0, 0.5);
+  --color-dark: #242424;
+  --color-cyan: #58C6C7;
+  --color-bg-light: #F4F4F4;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-gray-text: #6c6c6c;
+  --color-input-bg: #ededed;
+  --color-input-border: #d8d8d8;
+
+  --font: 'Montserrat', sans-serif;
+
+  --container: 1200px;
+  --radius: 8px;
+  --radius-lg: 14px;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.10);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+  --transition: all 0.25s ease;
+}
+
+/* ----- RESET ----- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-black);
+  background: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ----- LAYOUT ----- */
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.container-narrow {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ==========================================================================
+   HEADER / NAVEGAÇÃO
+   ========================================================================== */
+.site-header {
+  background: var(--color-dark);
+  padding: 18px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.site-header .logo img {
+  height: 40px;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-left: auto;
+}
+
+.main-nav a {
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+  padding: 6px 0;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color: var(--color-orange);
+}
+
+.main-nav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-orange);
+  border-radius: 2px;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-nav {
+  padding: 10px 22px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-nav-organizador {
+  background: var(--color-black);
+  color: var(--color-white);
+  border: 1px solid var(--color-black);
+}
+
+.btn-nav-organizador:hover {
+  background: #000;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn-nav-atleta {
+  background: var(--color-orange);
+  color: var(--color-white);
+}
+
+.btn-nav-atleta:hover {
+  background: #e65a00;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(255, 102, 0, 0.4);
+}
+
+/* ==========================================================================
+   BOTÕES
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 15px;
+  transition: var(--transition);
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-primary {
+  background: var(--color-orange);
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  background: #e65a00;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 102, 0, 0.4);
+}
+
+.btn-secondary {
+  background: var(--color-orange-soft);
+  color: var(--color-white);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 102, 0, 0.7);
+  transform: translateY(-2px);
+}
+
+.btn-cyan {
+  background: var(--color-cyan);
+  color: var(--color-white);
+}
+
+.btn-cyan:hover {
+  background: #46b3b4;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(88, 198, 199, 0.4);
+}
+
+.btn-gray {
+  background: #b9b9b9;
+  color: var(--color-white);
+  cursor: not-allowed;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-disabled {
+  background: #b9b9b9 !important;
+  color: var(--color-white);
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+   FORMULÁRIOS
+   ========================================================================== */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-black);
+  margin-bottom: 8px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--color-input-bg);
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  color: var(--color-black);
+  transition: var(--transition);
+}
+
+.form-control::placeholder {
+  color: #999;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-orange);
+  background: var(--color-white);
+  box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.1);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-switch input {
+  display: none;
+}
+
+.toggle-slider {
+  width: 48px;
+  height: 26px;
+  background: #cfcfcf;
+  border-radius: 26px;
+  position: relative;
+  transition: var(--transition);
+}
+
+.toggle-slider::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: var(--color-white);
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: var(--transition);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: var(--color-orange);
+}
+
+.toggle-switch input:checked + .toggle-slider::after {
+  left: 24px;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.site-footer {
+  background: var(--color-dark);
+  color: var(--color-white);
+  padding: 50px 0 24px;
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.footer-social a {
+  width: 44px;
+  height: 44px;
+  background: var(--color-white);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.footer-social a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(255, 102, 0, 0.3);
+}
+
+.footer-social a {
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border-radius: var(--radius);
+  padding: 0;
+}
+
+.footer-social a img {
+  width: 44px;
+  height: 44px;
+  /* Ícones já vêm brancos no novo SVG */
+}
+
+/* Compartilhar (no detalhe do evento) — ícones laranja */
+.share-social {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.share-social a {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  background: transparent;
+  padding: 0;
+}
+
+.share-social a:hover {
+  transform: translateY(-2px);
+}
+
+.share-social a img {
+  width: 36px;
+  height: 36px;
+  /* Os ícones já têm o estilo laranja no original */
+  filter: hue-rotate(0deg);
+}
+
+/* No share-social do detalhe do evento, os ícones precisam virar laranja
+   pois originalmente são brancos. Usamos um wrapper colorido. */
+.share-social.orange a {
+  background: var(--color-orange);
+  width: 36px;
+  height: 36px;
+}
+.share-social.orange a img {
+  width: 20px;
+  height: 20px;
+}
+
+.footer-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 36px;
+}
+
+.footer-logo img {
+  height: 56px;
+}
+
+.footer-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  max-width: 800px;
+  margin: 0 auto 36px;
+  text-align: center;
+}
+
+.footer-cols h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.footer-cols ul {
+  list-style: none;
+}
+
+.footer-cols li {
+  margin-bottom: 8px;
+}
+
+.footer-cols a {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-white);
+  opacity: 0.9;
+}
+
+.footer-cols a:hover {
+  color: var(--color-orange);
+  opacity: 1;
+}
+
+.footer-bottom {
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.7;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================================================
+   FAIXA "SERVIÇOS PARA ATLETAS" (usado em home + detalhe evento)
+   Mockup do celular FLUTUA pegando seções de cima e de baixo
+   ========================================================================== */
+.servicos-atletas {
+  background: var(--color-dark) url('../assets/bg-atleta-home.jpg') center/cover no-repeat;
+  background-blend-mode: overlay;
+  padding: 70px 0 70px;
+  position: relative;
+  overflow: visible; /* permite o celular sair da seção */
+  z-index: 2;
+}
+
+.servicos-atletas::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(36, 36, 36, 0.92) 0%, rgba(36, 36, 36, 0.55) 60%, rgba(36, 36, 36, 0.45) 100%);
+}
+
+.servicos-atletas .container {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 40px;
+  align-items: center;
+}
+
+.servicos-atletas h2 {
+  color: var(--color-white);
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 1.05;
+  margin-bottom: 30px;
+}
+
+.servicos-atletas h2 .label {
+  display: block;
+  color: var(--color-orange);
+  font-weight: 700;
+  font-size: 56px;
+}
+
+.servicos-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 40px;
+  margin-bottom: 30px;
+  list-style: none;
+  max-width: 600px;
+}
+
+.servicos-list li {
+  color: var(--color-white);
+  font-size: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  line-height: 1.35;
+}
+
+.servicos-list li::before {
+  content: '';
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  background: url('../assets/icon-check.svg') center/contain no-repeat;
+  margin-top: 2px;
+}
+
+.servicos-mockup {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.servicos-mockup img {
+  /* Celular flutuante — sai para fora da seção */
+  width: 100%;
+  max-width: 380px;
+  margin-top: -120px;   /* avança para a seção de cima */
+  margin-bottom: -120px; /* avança para a seção de baixo (footer) */
+  filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.6));
+  position: relative;
+  z-index: 5;
+}
+
+/* ==========================================================================
+   ANIMAÇÕES
+   ========================================================================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}

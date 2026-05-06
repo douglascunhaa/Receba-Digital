@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar conta — Etapa 3 — Recebe Digital</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/cadastro.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.svg" alt="Recebe Digital">
+      </a>
+      <nav class="main-nav">
+        <a href="quem-somos.html">Quem somos</a>
+        <a href="organizadores.html">Para organizadores</a>
+      </nav>
+      <div class="nav-buttons">
+        <a href="#" class="btn-nav btn-nav-organizador">Área do Organizador</a>
+        <a href="login.html" class="btn-nav btn-nav-atleta">Área do Atleta</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CADASTRO ETAPA 3 -->
+  <section class="cadastro-section">
+    <div class="container">
+      <div class="cadastro-card">
+
+        <div class="progress-steps">
+          <div class="step done"></div>
+          <div class="line active"></div>
+          <div class="step done"></div>
+          <div class="line active"></div>
+          <div class="step active"></div>
+        </div>
+
+        <h2>Termos de Uso e<br>Política de Privacidade</h2>
+        <p class="subtitle">Para criar sua conta, aceite os termos de uso.</p>
+
+        <div class="terms-box">
+          <p>O presente documento estabelece os Termos de Uso e a Política de Privacidade da plataforma Recebe Digital. Ao utilizar nossos serviços, você concorda com as condições aqui estabelecidas e declara estar ciente das suas responsabilidades como usuário.</p>
+          <p>1. ACEITAÇÃO DOS TERMOS — Ao acessar a plataforma, o usuário concorda integralmente com estes Termos de Uso. Caso não concorde com qualquer disposição, recomendamos não utilizar a plataforma.</p>
+          <p>2. CADASTRO — Para utilizar todos os recursos disponíveis, é necessário realizar cadastro com informações verídicas, completas e atualizadas. O usuário é o único responsável pela guarda da sua senha de acesso.</p>
+          <p>3. PRIVACIDADE E LGPD — Todas as informações coletadas seguem rigorosamente a Lei Geral de Proteção de Dados (LGPD). Os dados pessoais são utilizados exclusivamente para finalidades relacionadas à prestação dos serviços e nunca são compartilhados com terceiros sem consentimento expresso.</p>
+          <p>4. USO ADEQUADO — É vedado ao usuário utilizar a plataforma para fins ilícitos, fraudulentos ou que violem direitos de terceiros. A Recebe Digital reserva-se o direito de suspender ou cancelar contas que descumpram estas regras.</p>
+          <p>5. INSCRIÇÕES E PAGAMENTOS — As inscrições em eventos são intermediadas pela plataforma, que não se responsabiliza pela organização ou pela realização dos eventos. Os pagamentos são processados por instituições financeiras parceiras.</p>
+          <p>6. RESPONSABILIDADE DO ATLETA — O atleta é responsável por estar em condições físicas adequadas para a prática esportiva, devendo apresentar avaliação médica quando exigida pelo organizador do evento.</p>
+          <p>7. ALTERAÇÕES — Estes Termos podem ser atualizados a qualquer momento. Notificaremos os usuários sobre mudanças significativas por e-mail ou pela própria plataforma.</p>
+          <p>8. CONTATO — Em caso de dúvidas sobre estes Termos ou sobre o tratamento de seus dados, entre em contato pelo nosso canal de atendimento.</p>
+        </div>
+
+        <div class="toggle-row">
+          <label class="toggle-switch">
+            <input type="checkbox" id="aceitoTermos" onchange="atualizarBotao()">
+            <span class="toggle-slider"></span>
+          </label>
+          <span>Li e concordo com os Termos de Uso</span>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-disabled" id="btnCriar" onclick="criarConta()">Criar minha conta</button>
+        <a href="cadastro-2.html" class="btn btn-secondary"><i class="fas fa-arrow-left" style="margin-right:8px"></i> Voltar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><img src="assets/icon-instagram.svg" alt=""></a>
+        <a href="#" aria-label="Whatsapp"><img src="assets/icon-whatsapp.svg" alt=""></a>
+        <a href="#" aria-label="Linkedin"><img src="assets/icon-linkedin.svg" alt=""></a>
+        <a href="#" aria-label="Facebook"><img src="assets/icon-facebook.svg" alt=""></a>
+      </div>
+      <div class="footer-logo">
+        <img src="assets/logo.svg" alt="Recebe Digital">
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>Atletas</h4>
+          <ul>
+            <li><a href="login.html">Acessar</a></li>
+            <li><a href="cadastro-1.html">Crie sua conta</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Organizadores</h4>
+          <ul>
+            <li><a href="organizadores.html">Serviços Oferecidos</a></li>
+            <li><a href="#">Crie sua Conta</a></li>
+            <li><a href="#">Resultados</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Institucional</h4>
+          <ul>
+            <li><a href="quem-somos.html">Quem Somos</a></li>
+            <li><a href="#">Calendário</a></li>
+            <li><a href="#">Políticas de Privacidade</a></li>
+            <li><a href="#">Oportunidades</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2013 - 2026 - Recebe Digital - CNPJ: 12.345.678/0001-99 - Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/global.js"></script>
+  <script>
+    function atualizarBotao() {
+      const aceito = document.getElementById('aceitoTermos').checked;
+      const btn = document.getElementById('btnCriar');
+      if (aceito) {
+        btn.classList.remove('btn-disabled');
+      } else {
+        btn.classList.add('btn-disabled');
+      }
+    }
+
+    function criarConta() {
+      const aceito = document.getElementById('aceitoTermos').checked;
+      if (!aceito) {
+        showToast('É preciso aceitar os Termos de Uso', 'info');
+        return;
+      }
+      const btn = document.getElementById('btnCriar');
+      fakeLoadingButton(btn, () => {
+        showToast('Conta criada com sucesso! Redirecionando...', 'success');
+        setTimeout(() => window.location = 'perfil-meus-dados.html', 1200);
+      }, 'Criando conta...');
+    }
+  </script>
+</body>
+</html>

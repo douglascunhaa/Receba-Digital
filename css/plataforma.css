@@ -1,0 +1,366 @@
+/* ==========================================================================
+   PLATAFORMA DO ATLETA — Área logada
+   ========================================================================== */
+
+.plataforma {
+  background: #f8f9ff;
+  min-height: calc(100vh - 100px - 380px);
+  padding: 50px 0 80px;
+}
+
+.plataforma .container {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* Sidebar com menu */
+.plat-sidebar {
+  background: transparent;
+  position: sticky;
+  top: 100px;
+}
+
+.plat-menu {
+  list-style: none;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.plat-menu li {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.plat-menu li:last-child {
+  border-bottom: none;
+}
+
+.plat-menu a {
+  display: block;
+  padding: 14px 22px;
+  background: var(--color-dark);
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 600;
+  transition: var(--transition);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.plat-menu li:last-child a {
+  border-bottom: none;
+}
+
+.plat-menu a:hover {
+  background: #333;
+  padding-left: 28px;
+}
+
+.plat-menu a.active {
+  background: var(--color-orange);
+  color: var(--color-white);
+}
+
+/* Conteúdo principal */
+.plat-content {
+  background: transparent;
+}
+
+.plat-content h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: var(--color-black);
+}
+
+.plat-content h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 28px 0 16px;
+  color: var(--color-black);
+}
+
+.plat-content h2:first-child {
+  margin-top: 0;
+}
+
+.plat-content .subtitle {
+  font-size: 14px;
+  color: var(--color-gray-text);
+  margin-bottom: 22px;
+}
+
+/* Forms na plataforma */
+.plat-content .form-label {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.plat-content .form-control {
+  background: #ededed;
+  border: none;
+}
+
+.plat-content .form-control:focus {
+  background: var(--color-white);
+}
+
+/* Privacidade — toggle list */
+.privacy-list {
+  list-style: none;
+}
+
+.privacy-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #ececec;
+}
+
+.privacy-item:last-child {
+  border-bottom: none;
+}
+
+.privacy-item .privacy-text strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.privacy-item .privacy-text small {
+  font-size: 13px;
+  color: var(--color-gray-text);
+}
+
+.privacy-item .privacy-text a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.privacy-item .privacy-text a:hover {
+  text-decoration: underline;
+}
+
+/* Zona de Atenção */
+.danger-zone {
+  margin-top: 40px;
+}
+
+.danger-zone h2 {
+  margin-bottom: 14px;
+}
+
+.danger-card {
+  border: 1px solid var(--color-orange);
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: center;
+}
+
+.danger-card strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.danger-card small {
+  font-size: 13px;
+  color: var(--color-gray-text);
+}
+
+.danger-card .btn {
+  padding: 10px 18px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* Card de ficha de saúde (estado vazio) */
+.saude-card {
+  border: 1px solid var(--color-orange);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  background: var(--color-white);
+}
+
+.saude-card .info {
+  padding: 24px 28px;
+}
+
+.saude-card .info strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.saude-card .info p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-gray-text);
+  margin-bottom: 18px;
+}
+
+.saude-card .img {
+  background: url('../assets/img-ficha-saude.jpg') center/cover no-repeat;
+}
+
+/* Banner de saúde no topo da ficha */
+.saude-banner {
+  width: 100%;
+  height: 200px;
+  background: url('../assets/banner-ficha-saude.jpg') center/cover no-repeat;
+  position: relative;
+}
+
+.saude-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* Wrapper para etapas de ficha (preenchimento) */
+.ficha-wrap {
+  background: #f8f9ff;
+  padding: 50px 0;
+}
+
+.ficha-card {
+  max-width: 540px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.ficha-card h1 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.ficha-card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.ficha-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.ficha-card ul {
+  list-style: none;
+  margin: 8px 0 16px;
+}
+
+.ficha-card ul li {
+  padding: 4px 0;
+  font-size: 14px;
+}
+
+.ficha-card .btn-row {
+  display: flex;
+  gap: 12px;
+  margin: 24px 0 18px;
+}
+
+.ficha-card .btn-row .btn {
+  flex: 1;
+}
+
+.ficha-card .alerta {
+  border: 1px solid var(--color-orange);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  background: rgba(255, 102, 0, 0.04);
+}
+
+.ficha-card .alerta strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.ficha-card .alerta p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-gray-text);
+}
+
+/* Toggle dentro de bloco emoldurado */
+.toggle-bloco {
+  border: 1px solid var(--color-orange);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 18px 0;
+  font-size: 14px;
+}
+
+/* Tabela do PAR-Q */
+.parq-list {
+  list-style: none;
+  margin-bottom: 24px;
+}
+
+.parq-list li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  padding: 14px 0;
+  border-bottom: 1px solid #ececec;
+  font-size: 14px;
+  align-items: center;
+}
+
+.parq-list select {
+  background: var(--color-white);
+  border: 1px solid var(--color-orange);
+  color: var(--color-orange);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  min-width: 110px;
+}
+
+/* Card "ficha preenchida" */
+.saude-card.preenchida .info strong {
+  font-size: 18px;
+}
+
+.saude-card.preenchida .info .data {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.saude-card.preenchida .info .data b {
+  font-weight: 700;
+}
+
+.saude-card.preenchida .btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.saude-card.preenchida .btn-row .btn {
+  flex: 0 1 auto;
+  padding: 10px 22px;
+  font-size: 13px;
+}

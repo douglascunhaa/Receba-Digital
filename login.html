@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acesse sua conta — Recebe Digital</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.svg" alt="Recebe Digital">
+      </a>
+      <nav class="main-nav">
+        <a href="quem-somos.html">Quem somos</a>
+        <a href="organizadores.html">Para organizadores</a>
+      </nav>
+      <div class="nav-buttons">
+        <a href="#" class="btn-nav btn-nav-organizador">Área do Organizador</a>
+        <a href="login.html" class="btn-nav btn-nav-atleta">Área do Atleta</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- LOGIN -->
+  <section class="login-section">
+    <div class="container">
+      <div></div>
+      <div class="login-card">
+        <h2>Acesse sua conta</h2>
+        <p class="subtitle">Para acessar a plataforma, é necessário um e-mail válido.<br>Se não souber qual é o seu, veja as opções para recuperá-lo.</p>
+
+        <form id="loginForm" onsubmit="return fazerLogin(event)">
+          <div class="form-group">
+            <label class="form-label">E-mail</label>
+            <input type="email" class="form-control" placeholder="Seu melhor e-mail" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Senha</label>
+            <input type="password" class="form-control" placeholder="Digite sua senha" required>
+          </div>
+
+          <a href="#" class="forgot-link" onclick="event.preventDefault(); showToast('Enviamos instruções ao seu e-mail', 'info')">Esqueci minha senha</a>
+
+          <button type="submit" class="btn btn-primary btn-block">Acessar</button>
+          <a href="cadastro-1.html" class="btn btn-criar-conta btn-block">Criar minha conta</a>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><img src="assets/icon-instagram.svg" alt=""></a>
+        <a href="#" aria-label="Whatsapp"><img src="assets/icon-whatsapp.svg" alt=""></a>
+        <a href="#" aria-label="Linkedin"><img src="assets/icon-linkedin.svg" alt=""></a>
+        <a href="#" aria-label="Facebook"><img src="assets/icon-facebook.svg" alt=""></a>
+      </div>
+      <div class="footer-logo">
+        <img src="assets/logo.svg" alt="Recebe Digital">
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>Atletas</h4>
+          <ul>
+            <li><a href="login.html">Acessar</a></li>
+            <li><a href="cadastro-1.html">Crie sua conta</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Organizadores</h4>
+          <ul>
+            <li><a href="organizadores.html">Serviços Oferecidos</a></li>
+            <li><a href="#">Crie sua Conta</a></li>
+            <li><a href="#">Resultados</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Institucional</h4>
+          <ul>
+            <li><a href="quem-somos.html">Quem Somos</a></li>
+            <li><a href="#">Calendário</a></li>
+            <li><a href="#">Políticas de Privacidade</a></li>
+            <li><a href="#">Oportunidades</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2013 - 2026 - Recebe Digital - CNPJ: 12.345.678/0001-99 - Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/global.js"></script>
+  <script>
+    function fazerLogin(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.btn-primary');
+      fakeLoadingButton(btn, () => {
+        showToast('Acesso autorizado! Redirecionando...', 'success');
+        setTimeout(() => window.location = 'perfil-meus-dados.html', 1200);
+      }, 'Validando...');
+      return false;
+    }
+  </script>
+</body>
+</html>

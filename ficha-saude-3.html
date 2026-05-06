@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ficha de Saúde — Recebe Digital</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/plataforma.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.svg" alt="Recebe Digital">
+      </a>
+      <nav class="main-nav">
+        <a href="quem-somos.html">Quem somos</a>
+        <a href="organizadores.html">Para organizadores</a>
+      </nav>
+      <div class="nav-buttons">
+        <a href="#" class="btn-nav btn-nav-organizador">Área do Organizador</a>
+        <a href="login.html" class="btn-nav btn-nav-atleta">Área do Atleta</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="saude-banner"></div>
+
+  <section class="ficha-wrap">
+    <div class="container">
+      <div class="ficha-card">
+        <h2>Atenção aos sinais do seu corpo</h2>
+
+        <p>Antes de iniciar atividades físicas, procure orientação médica caso tenha apresentado, nos últimos 12 meses:</p>
+        <ul>
+          <li>✔ Dor no peito durante exercício</li>
+          <li>✔ Palpitações ou batimentos irregulares</li>
+          <li>✔ Desmaio</li>
+          <li>✔ Falta de ar fora do comum</li>
+        </ul>
+
+        <div class="toggle-bloco">
+          <label class="toggle-switch">
+            <input type="checkbox" id="declaroLido" onchange="atualizarBtn()">
+            <span class="toggle-slider"></span>
+          </label>
+          <span>Declaro que li e estou ciente dos riscos envolvidos</span>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block btn-disabled" id="btnContinuar" onclick="continuar()">Continuar</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><img src="assets/icon-instagram.svg" alt=""></a>
+        <a href="#" aria-label="Whatsapp"><img src="assets/icon-whatsapp.svg" alt=""></a>
+        <a href="#" aria-label="Linkedin"><img src="assets/icon-linkedin.svg" alt=""></a>
+        <a href="#" aria-label="Facebook"><img src="assets/icon-facebook.svg" alt=""></a>
+      </div>
+      <div class="footer-logo">
+        <img src="assets/logo.svg" alt="Recebe Digital">
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>Atletas</h4>
+          <ul>
+            <li><a href="login.html">Acessar</a></li>
+            <li><a href="cadastro-1.html">Crie sua conta</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Organizadores</h4>
+          <ul>
+            <li><a href="organizadores.html">Serviços Oferecidos</a></li>
+            <li><a href="#">Crie sua Conta</a></li>
+            <li><a href="#">Resultados</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Institucional</h4>
+          <ul>
+            <li><a href="quem-somos.html">Quem Somos</a></li>
+            <li><a href="#">Calendário</a></li>
+            <li><a href="#">Políticas de Privacidade</a></li>
+            <li><a href="#">Oportunidades</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2013 - 2026 - Recebe Digital - CNPJ: 12.345.678/0001-99 - Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/global.js"></script>
+  <script>
+    function atualizarBtn() {
+      const ok = document.getElementById('declaroLido').checked;
+      const btn = document.getElementById('btnContinuar');
+      if (ok) btn.classList.remove('btn-disabled');
+      else btn.classList.add('btn-disabled');
+    }
+    function continuar() {
+      if (!document.getElementById('declaroLido').checked) {
+        showToast('Confirme que leu os riscos envolvidos', 'info');
+        return;
+      }
+      window.location = 'ficha-saude-4.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ficha de Saúde — Recebe Digital</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/plataforma.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.svg" alt="Recebe Digital">
+      </a>
+      <nav class="main-nav">
+        <a href="quem-somos.html">Quem somos</a>
+        <a href="organizadores.html">Para organizadores</a>
+      </nav>
+      <div class="nav-buttons">
+        <a href="#" class="btn-nav btn-nav-organizador">Área do Organizador</a>
+        <a href="login.html" class="btn-nav btn-nav-atleta">Área do Atleta</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="saude-banner"></div>
+
+  <section class="ficha-wrap">
+    <div class="container">
+      <div class="ficha-card" style="max-width: 640px;">
+        <h2>Avaliação Rápida de Saúde (PAR-Q)</h2>
+
+        <p>Essa avaliação é importante para sua segurança. Responda com atenção para praticar atividade física com mais tranquilidade.</p>
+
+        <ul class="parq-list" style="margin-top: 24px;">
+          <li>
+            <span>1. Algum médico já disse que você possui problema cardíaco?</span>
+            <select class="parq-select" onchange="onSelectParq()">
+              <option value="">Escolher</option>
+              <option value="sim">Sim</option>
+              <option value="nao">Não</option>
+            </select>
+          </li>
+          <li>
+            <span>2. Você sente dor no peito durante atividade física?</span>
+            <select class="parq-select" onchange="onSelectParq()">
+              <option value="">Escolher</option>
+              <option value="sim">Sim</option>
+              <option value="nao">Não</option>
+            </select>
+          </li>
+          <li>
+            <span>3. Sentiu dor no peito no último mês em repouso?</span>
+            <select class="parq-select" onchange="onSelectParq()">
+              <option value="">Escolher</option>
+              <option value="sim">Sim</option>
+              <option value="nao">Não</option>
+            </select>
+          </li>
+          <li>
+            <span>4. Já perdeu equilíbrio por tontura ou desmaiou?</span>
+            <select class="parq-select" onchange="onSelectParq()">
+              <option value="">Escolher</option>
+              <option value="sim">Sim</option>
+              <option value="nao">Não</option>
+            </select>
+          </li>
+          <li>
+            <span>5. Tem problema ósseo/articular que piora com exercício?</span>
+            <select class="parq-select" onchange="onSelectParq()">
+              <option value="">Escolher</option>
+              <option value="sim">Sim</option>
+              <option value="nao">Não</option>
+            </select>
+          </li>
+          <li>
+            <span>6. Usa medicação para pressão ou coração?</span>
+            <select class="parq-select" onchange="onSelectParq()">
+              <option value="">Escolher</option>
+              <option value="sim">Sim</option>
+              <option value="nao">Não</option>
+            </select>
+          </li>
+          <li>
+            <span>7. Existe outro motivo que impeça atividade física?</span>
+            <select class="parq-select" onchange="onSelectParq()">
+              <option value="">Escolher</option>
+              <option value="sim">Sim</option>
+              <option value="nao">Não</option>
+            </select>
+          </li>
+        </ul>
+
+        <button type="button" class="btn btn-block btn-disabled" id="btnFinalizar" onclick="finalizar()">Finalizar</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><img src="assets/icon-instagram.svg" alt=""></a>
+        <a href="#" aria-label="Whatsapp"><img src="assets/icon-whatsapp.svg" alt=""></a>
+        <a href="#" aria-label="Linkedin"><img src="assets/icon-linkedin.svg" alt=""></a>
+        <a href="#" aria-label="Facebook"><img src="assets/icon-facebook.svg" alt=""></a>
+      </div>
+      <div class="footer-logo">
+        <img src="assets/logo.svg" alt="Recebe Digital">
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>Atletas</h4>
+          <ul>
+            <li><a href="login.html">Acessar</a></li>
+            <li><a href="cadastro-1.html">Crie sua conta</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Organizadores</h4>
+          <ul>
+            <li><a href="organizadores.html">Serviços Oferecidos</a></li>
+            <li><a href="#">Crie sua Conta</a></li>
+            <li><a href="#">Resultados</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Institucional</h4>
+          <ul>
+            <li><a href="quem-somos.html">Quem Somos</a></li>
+            <li><a href="#">Calendário</a></li>
+            <li><a href="#">Políticas de Privacidade</a></li>
+            <li><a href="#">Oportunidades</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2013 - 2026 - Recebe Digital - CNPJ: 12.345.678/0001-99 - Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/global.js"></script>
+  <script>
+    function onSelectParq() {
+      const selects = document.querySelectorAll('.parq-select');
+      const todasRespondidas = Array.from(selects).every(s => s.value !== '');
+      const btn = document.getElementById('btnFinalizar');
+      if (todasRespondidas) {
+        btn.classList.remove('btn-disabled');
+        btn.classList.add('btn-primary');
+      } else {
+        btn.classList.add('btn-disabled');
+        btn.classList.remove('btn-primary');
+      }
+    }
+    function finalizar() {
+      const btn = document.getElementById('btnFinalizar');
+      if (btn.classList.contains('btn-disabled')) {
+        showToast('Responda todas as perguntas antes de finalizar', 'info');
+        return;
+      }
+      fakeLoadingButton(btn, () => {
+        showToast('Ficha preenchida com sucesso!', 'success');
+        setTimeout(() => window.location = 'perfil-saude-preenchida.html', 1200);
+      }, 'Salvando ficha...');
+    }
+  </script>
+</body>
+</html>

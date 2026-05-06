@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacidade — Recebe Digital</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/plataforma.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.svg" alt="Recebe Digital">
+      </a>
+      <nav class="main-nav">
+        <a href="quem-somos.html">Quem somos</a>
+        <a href="organizadores.html">Para organizadores</a>
+      </nav>
+      <div class="nav-buttons">
+        <a href="#" class="btn-nav btn-nav-organizador">Área do Organizador</a>
+        <a href="login.html" class="btn-nav btn-nav-atleta">Área do Atleta</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="plataforma">
+    <div class="container">
+
+      <aside class="plat-sidebar">
+        <ul class="plat-menu">
+          <li><a href="#" onclick="event.preventDefault(); showToast('Carregando inscrições...', 'info')">Minhas Inscrições</a></li>
+          <li><a href="#" onclick="event.preventDefault(); showToast('Carregando calendário...', 'info')">Calendário de Eventos</a></li>
+          <li><a href="#" onclick="event.preventDefault(); showToast('Carregando histórico...', 'info')">Histórico de resultados</a></li>
+          <li><a href="perfil-meus-dados.html">Meus dados</a></li>
+          <li><a href="perfil-alterar-senha.html">Alterar Minha Senha</a></li>
+          <li><a href="perfil-privacidade.html" class="active">Privacidade</a></li>
+          <li><a href="perfil-saude.html">Perfil de Saúde</a></li>
+        </ul>
+      </aside>
+
+      <div class="plat-content">
+        <h1>Privacidade</h1>
+
+        <ul class="privacy-list">
+          <li class="privacy-item">
+            <div class="privacy-text">
+              <strong>Notificações via Whatsapp</strong>
+              <small>Aceite receber mensagens e notificações via Whatsapp</small>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked onchange="onTogglePriv(this, 'WhatsApp')">
+              <span class="toggle-slider"></span>
+            </label>
+          </li>
+
+          <li class="privacy-item">
+            <div class="privacy-text">
+              <strong>Notificações via E-mail</strong>
+              <small>Aceite receber mensagens e notificações via E-mail</small>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" onchange="onTogglePriv(this, 'E-mail')">
+              <span class="toggle-slider"></span>
+            </label>
+          </li>
+
+          <li class="privacy-item">
+            <div class="privacy-text">
+              <strong>Aceito Cookies de navegação</strong>
+              <small>Aceite receber mensagens e notificações via E-mail</small>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked onchange="onTogglePriv(this, 'Cookies')">
+              <span class="toggle-slider"></span>
+            </label>
+          </li>
+
+          <li class="privacy-item">
+            <div class="privacy-text">
+              <strong>Marketing e promoções via E-mail</strong>
+              <small>Aceite receber alertas de marketing via E-mail</small>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" onchange="onTogglePriv(this, 'Marketing')">
+              <span class="toggle-slider"></span>
+            </label>
+          </li>
+
+          <li class="privacy-item">
+            <div class="privacy-text">
+              <strong>Termos de Uso da Plataforma</strong>
+              <small>Aceito os <a href="#">Termos de Uso</a></small>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked onchange="onTogglePriv(this, 'Termos')">
+              <span class="toggle-slider"></span>
+            </label>
+          </li>
+
+          <li class="privacy-item">
+            <div class="privacy-text">
+              <strong>Políticas de Privacidade</strong>
+              <small>Aceito as <a href="#">Políticas de Privacidade</a></small>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked onchange="onTogglePriv(this, 'Políticas')">
+              <span class="toggle-slider"></span>
+            </label>
+          </li>
+        </ul>
+
+        <div class="danger-zone">
+          <h2>Zona de Atenção</h2>
+          <div class="danger-card">
+            <div>
+              <strong>Excluir essa conta</strong>
+              <small>Uma vez que excluir a sua conta, não é possível recupera-la.</small>
+            </div>
+            <button class="btn btn-primary" onclick="excluirConta(this)">Excluir minha conta</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><img src="assets/icon-instagram.svg" alt=""></a>
+        <a href="#" aria-label="Whatsapp"><img src="assets/icon-whatsapp.svg" alt=""></a>
+        <a href="#" aria-label="Linkedin"><img src="assets/icon-linkedin.svg" alt=""></a>
+        <a href="#" aria-label="Facebook"><img src="assets/icon-facebook.svg" alt=""></a>
+      </div>
+      <div class="footer-logo">
+        <img src="assets/logo.svg" alt="Recebe Digital">
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>Atletas</h4>
+          <ul>
+            <li><a href="login.html">Acessar</a></li>
+            <li><a href="cadastro-1.html">Crie sua conta</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Organizadores</h4>
+          <ul>
+            <li><a href="organizadores.html">Serviços Oferecidos</a></li>
+            <li><a href="#">Crie sua Conta</a></li>
+            <li><a href="#">Resultados</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Institucional</h4>
+          <ul>
+            <li><a href="quem-somos.html">Quem Somos</a></li>
+            <li><a href="#">Calendário</a></li>
+            <li><a href="#">Políticas de Privacidade</a></li>
+            <li><a href="#">Oportunidades</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2013 - 2026 - Recebe Digital - CNPJ: 12.345.678/0001-99 - Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/global.js"></script>
+  <script>
+    function onTogglePriv(el, label) {
+      const status = el.checked ? 'ativada' : 'desativada';
+      showToast(`${label}: ${status}`, 'info');
+    }
+
+    function excluirConta(btn) {
+      if (confirm('Tem certeza? Esta ação não pode ser desfeita.')) {
+        fakeLoadingButton(btn, () => {
+          showToast('Solicitação registrada (protótipo)', 'info');
+        }, 'Processando...');
+      }
+    }
+  </script>
+</body>
+</html>
