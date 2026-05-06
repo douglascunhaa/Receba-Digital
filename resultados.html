@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados — Recebe Digital</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/resultados.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.svg" alt="Recebe Digital">
+      </a>
+      <nav class="main-nav">
+        <a href="quem-somos.html">Quem somos</a>
+        <a href="organizadores.html">Para organizadores</a>
+      </nav>
+      <div class="nav-buttons">
+        <a href="#" class="btn-nav btn-nav-organizador">Área do Organizador</a>
+        <a href="login.html" class="btn-nav btn-nav-atleta">Área do Atleta</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- RESULTADOS -->
+  <section class="resultados-section">
+    <div class="container">
+      <h1>Resultados</h1>
+
+      <form class="resultados-filters" onsubmit="return filtrar(event)">
+        <input type="text" class="form-control" placeholder="Pesquisar por Evento...">
+        <select class="form-control">
+          <option value="">Pesquisar por Modalidade</option>
+          <option>Corrida de Rua</option>
+          <option>MTB</option>
+          <option>Triathlon</option>
+          <option>Trail Run</option>
+        </select>
+        <input type="text" class="form-control" placeholder="DD/MM/AAAA"
+               onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'">
+        <button type="submit" class="btn-search" aria-label="Pesquisar">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+
+      <div class="resultados-table-wrap">
+        <table class="resultados-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Data</th>
+              <th>Evento</th>
+              <th class="modalidade-col">Modalidade</th>
+              <th class="cidade-col">Cidade</th>
+            </tr>
+          </thead>
+          <tbody id="resultadosBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><img src="assets/icon-instagram.svg" alt=""></a>
+        <a href="#" aria-label="Whatsapp"><img src="assets/icon-whatsapp.svg" alt=""></a>
+        <a href="#" aria-label="Linkedin"><img src="assets/icon-linkedin.svg" alt=""></a>
+        <a href="#" aria-label="Facebook"><img src="assets/icon-facebook.svg" alt=""></a>
+      </div>
+      <div class="footer-logo">
+        <img src="assets/logo.svg" alt="Recebe Digital">
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>Atletas</h4>
+          <ul>
+            <li><a href="login.html">Acessar</a></li>
+            <li><a href="cadastro-1.html">Crie sua conta</a></li>
+            <li><a href="resultados.html">Resultados</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Organizadores</h4>
+          <ul>
+            <li><a href="organizadores.html">Serviços Oferecidos</a></li>
+            <li><a href="#">Crie sua Conta</a></li>
+            <li><a href="resultados.html">Resultados</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Institucional</h4>
+          <ul>
+            <li><a href="quem-somos.html">Quem Somos</a></li>
+            <li><a href="#">Calendário</a></li>
+            <li><a href="#">Políticas de Privacidade</a></li>
+            <li><a href="#">Oportunidades</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2013 - 2026 - Recebe Digital - CNPJ: 12.345.678/0001-99 - Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/global.js"></script>
+  <script>
+    // Dados fictícios da listagem de resultados
+    const resultados = [
+      { data: '17/05/2026', evento: '4ª CORRIDA FORÇA TOTAL ESPORTES', modalidade: 'Corrida de Rua', cidade: 'ARAÇATUBA/SP' },
+      { data: '03/05/2026', evento: '3º Corrida Caveiras Running 2026', modalidade: 'Corrida de Rua', cidade: 'GARÇA/SP' },
+      { data: '03/05/2026', evento: 'CORRIDA DO TRABALHADOR DE ITATINGA', modalidade: 'Corrida de Rua', cidade: 'ITATINGA/SP' },
+      { data: '01/05/2026', evento: '1ª CORRIDA E CAMINHADA DOS METALÚRGICOS/TORRES CONSTRUTORA', modalidade: 'Corrida de Rua', cidade: 'BOTUCATU/SP' },
+      { data: '01/05/2026', evento: '2ª CORRIDA ASP', modalidade: 'Corrida de Rua', cidade: 'PARAGUAÇU PAULISTA/SP' },
+      { data: '01/05/2026', evento: 'CORRIDA DO TRABALHADOR', modalidade: 'Corrida de Rua', cidade: 'ULIANÓPOLIS/PA' },
+      { data: '26/04/2026', evento: '2ª EDIÇÃO - 4ª COPA PEIXE BIKE SHOP', modalidade: 'MTB', cidade: '/SP' },
+      { data: '26/04/2026', evento: '2ª ETAPA - JAÚ SERVE IBITINGA', modalidade: 'Corrida de Rua', cidade: 'IBITINGA/SP' },
+      { data: '26/04/2026', evento: 'Sesc + Corridas – Etapa Taguatinga', modalidade: 'Corrida de Rua', cidade: 'BRASÍLIA/DF' },
+      { data: '21/04/2026', evento: 'MARATONA BRASILIA 2026', modalidade: 'Corrida de Rua', cidade: 'BRASÍLIA/DF' },
+      { data: '19/04/2026', evento: 'GBC Trail Run – 7ª Edição – Indiana', modalidade: 'Corrida de Rua', cidade: 'BOTUCATU/SP' },
+      { data: '19/04/2026', evento: 'ROTARY RUN 2026', modalidade: 'Corrida de Rua', cidade: 'ARAÇATUBA/SP' },
+      { data: '19/04/2026', evento: 'TABA RUNNING 2026', modalidade: 'Corrida de Rua', cidade: 'TABATINGA/SP' },
+      { data: '18/04/2026', evento: 'CORRIDA TIRADENTES 2026', modalidade: 'Corrida de Rua', cidade: 'BELÉM/PA' },
+      { data: '12/04/2026', evento: 'Conecta Wellness Brasília', modalidade: 'Corrida de Rua', cidade: 'BRASÍLIA/DF' },
+      { data: '12/04/2026', evento: 'Sesc + Corridas – Etapa PLANO PILOTO', modalidade: 'Corrida de Rua', cidade: 'BRASÍLIA/DF' },
+      { data: '05/04/2026', evento: '150 ANOS POLICIA CIVIL', modalidade: 'Corrida de Rua', cidade: 'BELÉM/PA' },
+      { data: '05/04/2026', evento: 'Correndo Pela Paz 2026', modalidade: 'Corrida de Rua', cidade: 'BRASÍLIA/DF' },
+      { data: '29/03/2026', evento: '1ª ETAPA - CAMPEONATO MATO-GROSSENSE DE TRIATHLON', modalidade: 'Triathlon', cidade: 'CUIABÁ/MT' },
+      { data: '28/03/2026', evento: '15º Circuito Anapolino de Corrida de Rua - 1ª ETAPA - Noturna', modalidade: 'Corrida de Rua', cidade: 'ANÁPOLIS/GO' },
+      { data: '28/03/2026', evento: 'NIGHT RUN - 1ª FEIJUCA DOS MONGES', modalidade: 'Corrida de Rua', cidade: 'BAURU/SP' },
+      { data: '22/03/2026', evento: '16º TRIATHLON DE EPITÁCIO - TRIMAN X ETAPA INICIAL', modalidade: 'Triathlon', cidade: 'PRESIDENTE EPITÁCIO/SP' },
+      { data: '22/03/2026', evento: '1ª ETAPA - JAÚ SERVE PIRACICABA', modalidade: 'Corrida de Rua', cidade: 'PIRACICABA/SP' },
+      { data: '21/03/2026', evento: '2º BIRIGUI NIGHT RUN', modalidade: 'Corrida de Rua', cidade: 'BIRIGUI/SP' }
+    ];
+
+    function renderResultados() {
+      const tbody = document.getElementById('resultadosBody');
+      tbody.innerHTML = resultados.map(r => `
+        <tr onclick="window.location='resultado-evento.html'">
+          <td class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288zM184 296l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg></td>
+          <td class="data-cell">${r.data}</td>
+          <td class="evento-cell">${r.evento}</td>
+          <td class="modalidade-cell">${r.modalidade}</td>
+          <td class="cidade-cell">${r.cidade}</td>
+        </tr>
+      `).join('');
+    }
+    renderResultados();
+
+    function filtrar(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.btn-search');
+      fakeLoadingButton(btn, () => showToast('Filtros aplicados', 'info'), '');
+      return false;
+    }
+  </script>
+</body>
+</html>
