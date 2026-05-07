@@ -364,3 +364,100 @@
   padding: 10px 22px;
   font-size: 13px;
 }
+
+/* ==========================================================================
+   MEUS AMIGOS
+   ========================================================================== */
+
+/* Estado vazio */
+.amigos-empty {
+  border: 1px solid var(--color-orange);
+  border-radius: var(--radius-lg);
+  padding: 50px 30px;
+  text-align: center;
+  background: var(--color-white);
+}
+
+.amigos-empty h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 14px;
+  color: var(--color-black);
+}
+
+.amigos-empty p {
+  font-size: 14px;
+  color: var(--color-gray-text);
+  margin-bottom: 22px;
+  line-height: 1.5;
+}
+
+.amigos-empty .btn {
+  padding: 12px 32px;
+}
+
+/* Lista de amigos */
+.amigos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.amigo-card {
+  background: var(--color-bg-light);
+  border-radius: var(--radius-lg);
+  padding: 22px 26px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+  transition: var(--transition);
+}
+
+.amigo-card:hover {
+  background: #ebebeb;
+}
+
+.amigo-card .nome {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-black);
+  margin-bottom: 10px;
+}
+
+.amigo-card .info-line {
+  font-size: 13px;
+  color: var(--color-black);
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+
+.amigo-card .info-line b {
+  font-weight: 700;
+}
+
+.amigo-card .acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 160px;
+}
+
+.amigo-card .acoes .btn {
+  padding: 10px 22px;
+  font-size: 13px;
+}
+
+/* Form de amigo */
+.amigos-form .form-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.amigos-form .form-actions .btn {
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 700;
+}
