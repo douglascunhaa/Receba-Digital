@@ -17,6 +17,7 @@
         <img src="assets/logo.svg" alt="Recebe Digital">
       </a>
       <nav class="main-nav">
+        <a href="resultados.html">Resultados</a>
         <a href="quem-somos.html">Quem somos</a>
         <a href="organizadores.html">Para organizadores</a>
       </nav>
@@ -29,7 +30,7 @@
 
   <!-- HERO -->
   <section class="home-hero">
-    <h1>Muito além da linha de chegada</h1>
+    <h1>MUITO ALÉM<br>DO ESPORTE</h1>
   </section>
 
   <!-- SEARCH BAR -->
@@ -53,6 +54,17 @@
       <div class="search-field">
         <i class="far fa-calendar icon"></i>
         <input type="text" placeholder="Data" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'">
+      </div>
+      <div class="search-field">
+        <i class="fas fa-medal icon"></i>
+        <select id="searchModalidade">
+          <option value="">Modalide</option>
+          <option>Corrida de Rua</option>
+          <option>MTB</option>
+          <option>Triathlon</option>
+          <option>Natação</option>
+          <option>Trail Run</option>
+        </select>
       </div>
       <label class="search-toggle toggle-switch">
         <input type="checkbox" checked>
@@ -94,7 +106,7 @@
   <section class="servicos-atletas">
     <div class="container">
       <div>
-        <h2><span class="label">Serviços para</span>Atletas</h2>
+        <h2><span class="label">Mais serviços</span> para o atleta</h2>
         <ul class="servicos-list">
           <li>Confirmação de inscrição por WhatsApp e e-mail</li>
           <li>Gestão de dados</li>
@@ -130,7 +142,6 @@
             <li><a href="login.html">Acessar</a></li>
             <li><a href="cadastro-1.html">Crie sua conta</a></li>
             <li><a href="resultados.html">Resultados</a></li>
-            <li><a href="#">Termos de Uso</a></li>
           </ul>
         </div>
         <div>
@@ -138,17 +149,14 @@
           <ul>
             <li><a href="organizadores.html">Serviços Oferecidos</a></li>
             <li><a href="#">Crie sua Conta</a></li>
-            <li><a href="resultados.html">Resultados</a></li>
-            <li><a href="#">Termos de Uso</a></li>
           </ul>
         </div>
         <div>
           <h4>Institucional</h4>
           <ul>
             <li><a href="quem-somos.html">Quem Somos</a></li>
-            <li><a href="#">Calendário</a></li>
             <li><a href="#">Políticas de Privacidade</a></li>
-            <li><a href="#">Oportunidades</a></li>
+            <li><a href="#">Termos de Uso</a></li>
           </ul>
         </div>
       </div>
@@ -164,7 +172,7 @@
     const eventos = [
       { img: 'assets/card-evento1.jpg', tag: 'União Europeia', titulo: '19º Corrida União Europeia Sunset Edition Ultimate', data: '09/05/2026 - 17:00', local: 'Brasília - DF', status: 'last', label: 'Últimas unidades' },
       { img: 'assets/card-evento2.jpg', tag: 'União Europeia', titulo: 'Corrida FENAE do Pessoal da Caixa', data: '09/05/2026 - 17:00', local: 'Brasília - DF', status: 'sold-out', label: 'Inscrições esgotadas' },
-      { img: 'assets/card-evento3.jpg', tag: 'União Europeia', titulo: 'Corrida da Família', data: '09/05/2026 - 17:00', local: 'Brasília - DF', status: 'pre-sale', label: 'Pré-venda' },
+      { img: 'assets/card-evento3.jpg', tag: 'União Europeia', titulo: 'Natação nacional da Família', data: '09/05/2026 - 17:00', local: 'Brasília - DF', status: 'pre-sale', label: 'Pré-venda' },
       { img: 'assets/card-evento4.jpg', tag: 'União Europeia', titulo: 'Curves RUN 2026 - Só para Mulheres', data: '09/05/2026 - 17:00', local: 'Brasília - DF', status: 'open', label: 'Inscrições aberta' }
     ];
 

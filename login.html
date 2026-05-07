@@ -17,6 +17,7 @@
         <img src="assets/logo.svg" alt="Recebe Digital">
       </a>
       <nav class="main-nav">
+        <a href="resultados.html">Resultados</a>
         <a href="quem-somos.html">Quem somos</a>
         <a href="organizadores.html">Para organizadores</a>
       </nav>
@@ -37,8 +38,8 @@
 
         <form id="loginForm" onsubmit="return fazerLogin(event)">
           <div class="form-group">
-            <label class="form-label">E-mail</label>
-            <input type="email" class="form-control" placeholder="Seu melhor e-mail" required>
+            <label class="form-label">CPF</label>
+            <input type="text" class="form-control" placeholder="123.456.789-00" maxlength="14" oninput="mascararCPF(this)" required>
           </div>
 
           <div class="form-group">
@@ -74,7 +75,6 @@
             <li><a href="login.html">Acessar</a></li>
             <li><a href="cadastro-1.html">Crie sua conta</a></li>
             <li><a href="resultados.html">Resultados</a></li>
-            <li><a href="#">Termos de Uso</a></li>
           </ul>
         </div>
         <div>
@@ -82,17 +82,14 @@
           <ul>
             <li><a href="organizadores.html">Serviços Oferecidos</a></li>
             <li><a href="#">Crie sua Conta</a></li>
-            <li><a href="resultados.html">Resultados</a></li>
-            <li><a href="#">Termos de Uso</a></li>
           </ul>
         </div>
         <div>
           <h4>Institucional</h4>
           <ul>
             <li><a href="quem-somos.html">Quem Somos</a></li>
-            <li><a href="#">Calendário</a></li>
             <li><a href="#">Políticas de Privacidade</a></li>
-            <li><a href="#">Oportunidades</a></li>
+            <li><a href="#">Termos de Uso</a></li>
           </ul>
         </div>
       </div>
@@ -104,6 +101,15 @@
 
   <script src="js/global.js"></script>
   <script>
+    function mascararCPF(el) {
+      let v = el.value.replace(/\D/g, '');
+      if (v.length > 11) v = v.slice(0, 11);
+      v = v.replace(/(\d{3})(\d)/, '$1.$2');
+      v = v.replace(/(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+      v = v.replace(/(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+      el.value = v;
+    }
+
     function fazerLogin(e) {
       e.preventDefault();
       const btn = e.target.querySelector('.btn-primary');

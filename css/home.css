@@ -24,11 +24,13 @@
   position: relative;
   z-index: 2;
   color: var(--color-white);
-  font-size: 48px;
-  font-weight: 700;
+  font-size: 72px;
+  font-weight: 800;
   text-align: center;
-  letter-spacing: -0.5px;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  letter-spacing: -1px;
+  line-height: 1;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.6);
+  text-transform: uppercase;
   animation: fadeInUp 0.8s ease;
 }
 
@@ -43,7 +45,7 @@
   padding: 18px;
   box-shadow: var(--shadow-lg);
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr auto auto;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr auto auto;
   gap: 12px;
   align-items: center;
 }

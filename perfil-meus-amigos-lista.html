@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alterar Senha — Recebe Digital</title>
+  <title>Meus amigos — Recebe Digital</title>
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/plataforma.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-  <!-- HEADER -->
   <header class="site-header">
     <div class="container">
       <a href="index.html" class="logo">
@@ -36,41 +35,24 @@
           <li><a href="#" onclick="event.preventDefault(); showToast('Carregando inscrições...', 'info')">Minhas Inscrições</a></li>
           <li><a href="#" onclick="event.preventDefault(); showToast('Carregando calendário...', 'info')">Calendário de Eventos</a></li>
           <li><a href="#" onclick="event.preventDefault(); showToast('Carregando histórico...', 'info')">Histórico de resultados</a></li>
-          <li><a href="perfil-meus-amigos.html">Meus amigos</a></li>
+          <li><a href="perfil-meus-amigos-lista.html" class="active">Meus amigos</a></li>
           <li><a href="perfil-meus-dados.html">Meus dados</a></li>
-          <li><a href="perfil-alterar-senha.html" class="active">Alterar Minha Senha</a></li>
+          <li><a href="perfil-alterar-senha.html">Alterar Minha Senha</a></li>
           <li><a href="perfil-privacidade.html">Privacidade</a></li>
           <li><a href="perfil-saude.html">Perfil de Saúde</a></li>
         </ul>
       </aside>
 
       <div class="plat-content">
-        <h1>Alterar senha</h1>
+        <h1>Meus amigos</h1>
 
-        <form onsubmit="return alterarSenha(event)">
-          <div class="form-group">
-            <label class="form-label">Digite sua senha atual</label>
-            <input type="password" class="form-control" placeholder="Sua senha" required>
-          </div>
+        <div class="amigos-lista" id="listaAmigos"></div>
 
-          <div class="form-group">
-            <label class="form-label">Digite a nova senha</label>
-            <input type="password" class="form-control" placeholder="Nova senha" required minlength="6">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Confirme nova senha</label>
-            <input type="password" class="form-control" placeholder="Confirmar senha" required minlength="6">
-          </div>
-
-          <p style="text-align: center; font-size: 13px; color: var(--color-gray-text); margin: 16px 0 26px;">
-            Tenha certeza que sua nova senha contenha pelo menos 6 dígitos.
-          </p>
-
-          <div style="text-align: center;">
-            <button type="submit" class="btn btn-primary" style="padding: 14px 80px;">Atualizar senha</button>
-          </div>
-        </form>
+        <div style="margin-top: 26px; text-align: right;">
+          <a href="perfil-meus-amigos-form.html" class="btn btn-primary">
+            <i class="fas fa-plus" style="margin-right:8px"></i> Adicionar amigo
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -119,12 +101,59 @@
 
   <script src="js/global.js"></script>
   <script>
-    function alterarSenha(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('.btn-primary');
-      fakeLoadingButton(btn, () => showToast('Senha alterada com sucesso!'), 'Salvando...');
-      return false;
+    const amigos = [
+      {
+        nome: 'Luiz Carlos Santos',
+        apelido: 'Luiz',
+        cpf: '422.812.088-18',
+        nascimento: '11/01/1991',
+        email: 'luiz@minhacorrida.com.br',
+        celular: '(15)99644-4373',
+        equipe: 'Corrida'
+      },
+      {
+        nome: 'Luiz Carlos Santos',
+        apelido: 'Luiz',
+        cpf: '422.812.088-18',
+        nascimento: '11/01/1991',
+        email: 'luiz@minhacorrida.com.br',
+        celular: '(15)99644-4373',
+        equipe: 'Corrida'
+      }
+    ];
+
+    function renderAmigos() {
+      const lista = document.getElementById('listaAmigos');
+      lista.innerHTML = amigos.map((a, i) => `
+        <div class="amigo-card" data-idx="${i}">
+          <div class="info">
+            <div class="nome">${a.nome} (${a.apelido})</div>
+            <div class="info-line"><b>CPF:</b> ${a.cpf}</div>
+            <div class="info-line"><b>Data Nascimento:</b> ${a.nascimento}</div>
+            <div class="info-line"><b>E-mail:</b> ${a.email}</div>
+            <div class="info-line"><b>Celular:</b> ${a.celular}</div>
+            <div class="info-line"><b>Equipe:</b> ${a.equipe}</div>
+          </div>
+          <div class="acoes">
+            <a href="perfil-meus-amigos-form.html" class="btn btn-primary">Editar perfil</a>
+            <button class="btn btn-secondary" onclick="apagarAmigo(${i})">Apagar</button>
+          </div>
+        </div>
+      `).join('');
     }
+
+    function apagarAmigo(i) {
+      if (confirm('Tem certeza que deseja remover este amigo?')) {
+        amigos.splice(i, 1);
+        renderAmigos();
+        showToast('Amigo removido (protótipo)', 'info');
+        if (amigos.length === 0) {
+          setTimeout(() => window.location = 'perfil-meus-amigos.html', 800);
+        }
+      }
+    }
+
+    renderAmigos();
   </script>
 </body>
 </html>
