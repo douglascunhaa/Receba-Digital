@@ -223,3 +223,31 @@
   max-width: 320px;
   border-radius: var(--radius);
 }
+
+/* Blocos de informação na sidebar do evento */
+.info-bloco {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #eaeaea;
+}
+
+.info-bloco:first-of-type {
+  margin-top: 18px;
+}
+
+.info-titulo {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-black);
+  margin-bottom: 4px;
+}
+
+.info-texto {
+  font-size: 13px;
+  color: var(--color-black);
+  line-height: 1.5;
+}
+
+.sidebar-card .btn-block {
+  margin-top: 20px;
+}
