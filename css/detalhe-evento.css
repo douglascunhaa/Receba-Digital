@@ -93,20 +93,20 @@
   color: var(--color-black);
 }
 
-.btn-cyan-evento {
-  background: var(--color-cyan);
+.btn-regulamento {
+  background: var(--color-orange);
   color: var(--color-white);
-  padding: 12px 24px;
+  padding: 14px 30px;
   border-radius: var(--radius);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15px;
   display: inline-block;
-  margin: 12px 0;
+  margin: 18px 0 8px;
   transition: var(--transition);
 }
 
-.btn-cyan-evento:hover {
-  background: #46b3b4;
+.btn-regulamento:hover {
+  background: #e65a00;
   transform: translateY(-2px);
 }
 
@@ -119,17 +119,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
-  background: var(--color-bg-light);
-  border-radius: var(--radius);
-  margin-bottom: 8px;
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--color-input-border);
   font-size: 14px;
   font-weight: 600;
   transition: var(--transition);
 }
 
+.percurso-item:last-child {
+  border-bottom: none;
+}
+
 .percurso-item:hover {
-  background: #ebebeb;
+  background: var(--color-bg-light);
 }
 
 .percurso-item .label {
@@ -222,6 +224,21 @@
 .patrocinador-logo img {
   max-width: 80%;
   max-height: 50px;
+}
+
+.patrocinador-placeholder {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-gray-text);
+  text-align: center;
+  line-height: 1.5;
+  min-height: 70px;
+}
+
+/* Compartilhe dentro do card "Prepara-se" */
+.share-na-sidebar {
+  margin-top: 10px;
+  margin-bottom: 0;
 }
 
 .kit-img {

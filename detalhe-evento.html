@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>19º Corrida União Europeia — Recebe Digital</title>
+  <title>19º Mountain Bike União Europeia — RecebeSports</title>
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/detalhe-evento.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -45,8 +45,6 @@
           <span><i class="fas fa-map-marker-alt"></i> Sorocaba - SP</span>
           <span><i class="fas fa-medal"></i> Bike</span>
         </div>
-        <a href="#" class="evento-status-btn" onclick="abrirInscricao(event)">Inscrições aberta</a>
-
         <h3>Informações Gerais</h3>
         <p><strong>ENTREGA DE KITS CONFIRMADA DIAS 07 e 08 DE MAIO NO TERRAÇO SHOPPING DE 10:00 às 19:00</strong></p>
         <p>Para retirada de kits por terceiros é necessário apresentar documento e comprovante de inscrição do terceiro! Inscrições básicas 60+ e PCD só podem ser retiradas pelos próprios atletas!</p>
@@ -60,7 +58,7 @@
         <p>9 de maio de 2026<br>17h<br>Brasília</p>
         <p>Corrida da União Europeia 2026 — Mais que uma corrida, um encontro de culturas.</p>
 
-        <a href="#" class="btn-cyan-evento" onclick="event.preventDefault(); showToast('Abrindo regulamento...', 'info')">Regulamento Oficial</a>
+        <a href="#" class="btn-regulamento" onclick="event.preventDefault(); showToast('Abrindo regulamento...', 'info')">Regulamento Oficial</a>
 
         <h3 style="margin-top: 40px;">Modalidade</h3>
         <div class="percursos">
@@ -122,28 +120,28 @@
             </div>
           </div>
 
-          <div class="info-bloco">
-            <div class="info-titulo">Data do evento:</div>
-            <div class="info-texto">16 a 17/05/2026</div>
-          </div>
-
-          <div class="info-bloco">
-            <div class="info-titulo">Inscrições até:</div>
-            <div class="info-texto">13/05/2026</div>
-          </div>
+          <button class="btn btn-primary btn-block" onclick="showToast('Abrindo inscrição...', 'info')">Inscreva-se</button>
 
           <div class="info-bloco">
             <div class="info-titulo">Local do evento:</div>
-            <div class="info-texto">Estadio Municipal Parque do Sabia<br>Av. Jose Malignon, Uberlândia - MG.<br>Brasil</div>
+            <div class="info-texto">Estadio Municipal Parque do Sabia<br>Av. Jose Malignon Silva Santos,<br>Uberlândia - MG. Brasil</div>
           </div>
 
-          <button class="btn btn-primary btn-block" onclick="showToast('Abrindo inscrição...', 'info')">Inscreva-se</button>
+          <div class="info-bloco">
+            <div class="info-titulo">Compartilhe</div>
+            <div class="share-social orange share-na-sidebar">
+              <a href="#" onclick="event.preventDefault(); showToast('Compartilhar no Instagram')"><img src="assets/icon-instagram.svg" alt=""></a>
+              <a href="#" onclick="event.preventDefault(); showToast('Compartilhar no WhatsApp')"><img src="assets/icon-whatsapp.svg" alt=""></a>
+              <a href="#" onclick="event.preventDefault(); showToast('Compartilhar no LinkedIn')"><img src="assets/icon-linkedin.svg" alt=""></a>
+              <a href="#" onclick="event.preventDefault(); showToast('Compartilhar no Facebook')"><img src="assets/icon-facebook.svg" alt=""></a>
+            </div>
+          </div>
         </div>
 
         <div class="sidebar-card">
           <h4>Entrega do Kit</h4>
           <div class="info-texto" style="margin-bottom: 14px;">Dia 09 de Maio de 2026 (sábado),<br>das 9h às 15h</div>
-          <div class="info-titulo">Local:</div>
+          <div class="info-titulo">Local de retirada:</div>
           <div class="info-texto">Sede Social Club Esportivo<br>8 Setor Bueno – Goiânia - GO</div>
         </div>
 
@@ -158,20 +156,8 @@
 
         <div class="sidebar-card">
           <h4>Patrocinadores</h4>
-          <div class="patrocinador-logo">
-            <div style="background: #1f3da8; padding: 10px 20px; border-radius: 4px; color: white; font-weight: 800; font-size: 13px; text-align: center;">
-              Corrida<br>União Europeia
-            </div>
-          </div>
-        </div>
-
-        <div class="sidebar-card">
-          <h4>Compartilhe</h4>
-          <div class="share-social orange">
-            <a href="#" onclick="event.preventDefault(); showToast('Compartilhar no Instagram')"><img src="assets/icon-instagram.svg" alt=""></a>
-            <a href="#" onclick="event.preventDefault(); showToast('Compartilhar no WhatsApp')"><img src="assets/icon-whatsapp.svg" alt=""></a>
-            <a href="#" onclick="event.preventDefault(); showToast('Compartilhar no LinkedIn')"><img src="assets/icon-linkedin.svg" alt=""></a>
-            <a href="#" onclick="event.preventDefault(); showToast('Compartilhar no Facebook')"><img src="assets/icon-facebook.svg" alt=""></a>
+          <div class="patrocinador-logo patrocinador-placeholder">
+            Espaço reservado<br>para patrocinadores
           </div>
         </div>
 
@@ -260,11 +246,6 @@
       document.getElementById('cd-seg').textContent = String(seg).padStart(2, '0');
     }
     setInterval(tickCountdown, 1000);
-
-    function abrirInscricao(e) {
-      e.preventDefault();
-      showToast('Inscrição abrindo... (protótipo)', 'info');
-    }
   </script>
 </body>
 </html>
