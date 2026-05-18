@@ -5,7 +5,7 @@
 .page-hero {
   position: relative;
   height: 460px;
-  background: url('../assets/banner-quem-somos.jpg') center/cover no-repeat;
+  background: url('../assets/banner-home.jpg') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;

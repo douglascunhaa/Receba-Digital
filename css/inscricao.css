@@ -1,0 +1,580 @@
+/* ==========================================================================
+   FLUXO DE INSCRIÇÃO NO EVENTO
+   ========================================================================== */
+
+/* Banner reaproveitado no topo das telas de inscrição */
+.insc-banner {
+  width: 100%;
+  line-height: 0;
+}
+
+.insc-banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Card largo para o formulário de dados pessoais */
+.cadastro-card.wide {
+  max-width: 780px;
+}
+
+.cadastro-card.wide .form-section-title {
+  text-align: left;
+  font-size: 22px;
+  font-weight: 800;
+  margin: 26px 0 14px;
+}
+
+.cadastro-card.wide .form-section-title:first-of-type {
+  margin-top: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   Barra de etapas com rótulos
+   -------------------------------------------------------------------------- */
+.insc-steps {
+  display: flex;
+  max-width: 760px;
+  margin: 36px auto 34px;
+  padding-top: 4px;
+}
+
+.insc-step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+.insc-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #c2c2c2;
+  margin: 0 auto 12px;
+  position: relative;
+  z-index: 2;
+  transition: var(--transition);
+}
+
+.insc-step.active .insc-dot,
+.insc-step.done .insc-dot {
+  background: var(--color-orange);
+}
+
+.insc-step.active .insc-dot {
+  box-shadow: 0 0 0 5px rgba(255, 102, 0, 0.2);
+}
+
+.insc-step::before,
+.insc-step::after {
+  content: '';
+  position: absolute;
+  top: 9px;
+  height: 3px;
+  width: 50%;
+  background: #c2c2c2;
+  z-index: 1;
+}
+
+.insc-step::before { left: 0; }
+.insc-step::after { right: 0; }
+.insc-step:first-child::before { display: none; }
+.insc-step:last-child::after { display: none; }
+
+.insc-step.done::before,
+.insc-step.done::after,
+.insc-step.active::before {
+  background: var(--color-orange);
+}
+
+.insc-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-gray-text);
+}
+
+.insc-step.active .insc-label,
+.insc-step.done .insc-label {
+  color: var(--color-orange);
+}
+
+/* --------------------------------------------------------------------------
+   Conteúdo
+   -------------------------------------------------------------------------- */
+.insc-content {
+  background: var(--color-bg-light);
+  padding: 0 0 70px;
+  min-height: 40vh;
+}
+
+/* Card "Quem vai participar" */
+.participante-card {
+  max-width: 480px;
+  margin: 6px auto 0;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 32px 30px;
+  text-align: center;
+  animation: fadeInUp 0.5s ease;
+}
+
+.participante-card .nome {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+.participante-card .btn {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.participante-card .btn:last-child {
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Detalhes + Resumo
+   -------------------------------------------------------------------------- */
+.insc-grid {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 24px;
+  align-items: start;
+  animation: fadeInUp 0.5s ease;
+}
+
+.painel {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.painel-header {
+  background: var(--color-dark);
+  color: var(--color-white);
+  font-size: 19px;
+  font-weight: 700;
+  padding: 16px 22px;
+}
+
+.painel-body {
+  padding: 20px 22px;
+}
+
+/* Lista de modalidades */
+.modalidade-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 4px;
+  border-bottom: 1px solid var(--color-input-border);
+}
+
+.modalidade-row:last-child {
+  border-bottom: none;
+}
+
+.modalidade-row .nome {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.btn-selecionar {
+  background: var(--color-orange);
+  color: var(--color-white);
+  border: none;
+  padding: 9px 24px;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.btn-selecionar:hover {
+  background: #e65a00;
+}
+
+/* Modalidade selecionada */
+.modalidade-sel {
+  background: #8c8c8c;
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 18px;
+}
+
+.modalidade-sel .fechar-sel {
+  background: none;
+  border: none;
+  color: var(--color-white);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.kit-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 4px 4px 0;
+}
+
+.kit-nome {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.kit-desc {
+  font-size: 13px;
+  color: var(--color-gray-text);
+  margin-top: 3px;
+}
+
+.kit-valor-bloco {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.kit-valor-label {
+  font-size: 12px;
+  color: var(--color-gray-text);
+}
+
+.kit-valor {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-orange);
+}
+
+.kit-camisa {
+  margin-top: 14px;
+}
+
+/* Resumo */
+.resumo-pessoa {
+  padding: 4px 0 14px;
+}
+
+.resumo-pessoa + .resumo-pessoa {
+  border-top: 1px solid #ececec;
+  padding-top: 14px;
+}
+
+.resumo-rotulo {
+  font-size: 13px;
+  color: var(--color-gray-text);
+}
+
+.resumo-nome {
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.resumo-amigo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.btn-remover {
+  background: none;
+  border: 1px solid var(--color-orange);
+  color: var(--color-orange);
+  border-radius: var(--radius);
+  width: 32px;
+  height: 32px;
+  font-size: 13px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.btn-remover:hover {
+  background: var(--color-orange);
+  color: var(--color-white);
+}
+
+.btn-mais-atleta {
+  width: 100%;
+  background: var(--color-dark);
+  color: var(--color-white);
+  border: none;
+  padding: 12px;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: var(--transition);
+}
+
+.btn-mais-atleta:hover {
+  background: #000;
+}
+
+.resumo-kit {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  margin-top: 16px;
+  padding: 18px 22px;
+  text-align: center;
+}
+
+.resumo-kit-nome {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+/* Termos */
+.insc-termos {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.insc-termos .toggle-switch {
+  font-size: 14px;
+}
+
+.insc-termos a {
+  color: #1a52c4;
+  text-decoration: underline;
+}
+
+/* Ações inferiores */
+.insc-acoes {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.insc-acoes .btn {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Modal "Meus amigos"
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 200;
+}
+
+.modal-overlay.aberto {
+  display: flex;
+}
+
+.modal-amigos {
+  background: var(--color-bg-light);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 700px;
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 28px;
+  animation: fadeInUp 0.3s ease;
+}
+
+.modal-amigos h3 {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 22px;
+}
+
+.modal-busca {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.modal-busca .campo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--color-white);
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius);
+  padding: 0 16px;
+}
+
+.modal-busca .campo i {
+  color: var(--color-orange);
+}
+
+.modal-busca .campo input {
+  flex: 1;
+  border: none;
+  background: none;
+  padding: 14px 0;
+  font-size: 14px;
+  color: var(--color-black);
+}
+
+.modal-busca .campo input:focus {
+  outline: none;
+}
+
+.modal-painel {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 24px 26px;
+  min-height: 230px;
+  margin-bottom: 18px;
+}
+
+.modal-vazio {
+  text-align: center;
+  padding: 56px 12px;
+}
+
+.modal-vazio h4 {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.modal-vazio p {
+  font-size: 14px;
+  color: var(--color-black);
+}
+
+.amigo-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 2px;
+  border-bottom: 1px solid var(--color-input-border);
+}
+
+.amigo-row:last-child {
+  border-bottom: none;
+}
+
+.amigo-nome {
+  font-size: 16px;
+  flex: 1;
+}
+
+.amigo-dados {
+  font-size: 13px;
+  color: var(--color-black);
+  line-height: 1.5;
+}
+
+.amigo-dados strong {
+  font-weight: 700;
+}
+
+.btn-incluir {
+  background: var(--color-orange);
+  color: var(--color-white);
+  border: none;
+  padding: 9px 18px;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.btn-incluir:hover {
+  background: #e65a00;
+}
+
+.modal-form .form-label .obrig {
+  color: #e23b3b;
+}
+
+.modal-acoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.modal-acoes .btn {
+  width: 100%;
+}
+
+/* Tela de conclusão */
+.insc-concluido {
+  max-width: 520px;
+  margin: 10px auto 0;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 44px 36px;
+  text-align: center;
+  animation: fadeInUp 0.5s ease;
+}
+
+.insc-concluido .check {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: var(--color-orange);
+  color: var(--color-white);
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 22px;
+}
+
+.insc-concluido h2 {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.insc-concluido p {
+  font-size: 14px;
+  color: var(--color-gray-text);
+  margin-bottom: 26px;
+}
+
+.insc-concluido .btn {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Responsivo
+   -------------------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .insc-grid,
+  .insc-acoes {
+    grid-template-columns: 1fr;
+  }
+
+  .insc-label {
+    font-size: 11px;
+  }
+}

@@ -7,6 +7,11 @@
   line-height: 0;
 }
 
+.evento-banner a {
+  display: block;
+  line-height: 0;
+}
+
 .evento-banner img {
   width: 100%;
   height: auto;

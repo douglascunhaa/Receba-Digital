@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscrição — Confirma dados — RecebeSports</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/inscricao.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.svg" alt="Recebe Sports">
+      </a>
+      <nav class="main-nav">
+        <a href="resultados.html">Resultados</a>
+        <a href="quem-somos.html">Quem somos</a>
+        <a href="organizadores.html">Para organizadores</a>
+      </nav>
+      <div class="nav-buttons">
+        <a href="#" class="btn-nav btn-nav-organizador">Área do Organizador</a>
+        <a href="login.html" class="btn-nav btn-nav-atleta">Área do Atleta</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- BANNER DO EVENTO -->
+  <section class="insc-banner">
+    <img src="assets/banner-evento.jpg" alt="5K Pela Paz no Trânsito">
+  </section>
+
+  <!-- CONTEÚDO -->
+  <section class="insc-content">
+    <div class="container">
+
+      <div class="insc-steps">
+        <div class="insc-step done">
+          <div class="insc-dot"></div>
+          <div class="insc-label">Participação</div>
+        </div>
+        <div class="insc-step active">
+          <div class="insc-dot"></div>
+          <div class="insc-label">Confirma dados inscrição</div>
+        </div>
+        <div class="insc-step">
+          <div class="insc-dot"></div>
+          <div class="insc-label">Concluído</div>
+        </div>
+      </div>
+
+      <div class="insc-grid">
+        <!-- Coluna esquerda -->
+        <div>
+          <div class="painel">
+            <div class="painel-header">Detalhes</div>
+            <div class="painel-body" id="detalhesBody"></div>
+          </div>
+
+          <div class="insc-termos" id="inscTermos" style="display:none;">
+            <label class="toggle-switch">
+              <input type="checkbox" id="aceitoPriv">
+              <span class="toggle-slider"></span>
+              <span>Li e concordo com a <a href="#" onclick="event.preventDefault()">Política de Privacidade</a></span>
+            </label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="aceitoTermos">
+              <span class="toggle-slider"></span>
+              <span>Li e concordo com os <a href="#" onclick="event.preventDefault()">Termos de Uso</a></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Coluna direita -->
+        <div>
+          <div class="painel">
+            <div class="painel-header">Resumo</div>
+            <div class="painel-body" id="resumoBody"></div>
+          </div>
+          <div class="resumo-kit" id="resumoKit" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="insc-acoes">
+        <a href="inscricao-participante.html" class="btn btn-secondary"><i class="fas fa-arrow-left" style="margin-right:8px"></i> Voltar</a>
+        <button class="btn btn-primary btn-disabled" id="btnContinuar" onclick="continuar()">Continuar</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MODAL MEUS AMIGOS -->
+  <div class="modal-overlay" id="modalAmigos" onclick="if(event.target===this)fecharModal()">
+    <div class="modal-amigos">
+      <h3>Meus amigos</h3>
+      <div id="modalCorpo"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><img src="assets/icon-instagram.svg" alt=""></a>
+        <a href="#" aria-label="Whatsapp"><img src="assets/icon-whatsapp.svg" alt=""></a>
+        <a href="#" aria-label="Linkedin"><img src="assets/icon-linkedin.svg" alt=""></a>
+        <a href="#" aria-label="Facebook"><img src="assets/icon-facebook.svg" alt=""></a>
+      </div>
+      <div class="footer-logo">
+        <img src="assets/logo.svg" alt="Recebe Sports">
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>Atletas</h4>
+          <ul>
+            <li><a href="login.html">Acessar</a></li>
+            <li><a href="cadastro-1.html">Crie sua conta</a></li>
+            <li><a href="resultados.html">Resultados</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Organizadores</h4>
+          <ul>
+            <li><a href="organizadores.html">Serviços Oferecidos</a></li>
+            <li><a href="#">Crie sua Conta</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Institucional</h4>
+          <ul>
+            <li><a href="quem-somos.html">Quem Somos</a></li>
+            <li><a href="#">Políticas de Privacidade</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2013 - 2026 - Recebe Digital - CNPJ: 12.345.678/0001-99 - Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/global.js"></script>
+  <script>
+    // ===== Dados =====
+    const ATLETA = 'João da Silva Guerreiro Goulart Marinho';
+
+    const MODALIDADES = {
+      '5km':       { label: 'Corrida 5 KM',  kit: 'KIT Participação', desc: 'A escolher na retirada do KIT', valor: 93.00,  camisa: false },
+      '21km':      { label: 'Corrida 21 KM', kit: 'KIT Essencial',    desc: 'Camiseta, Sacola, Número de peito, Medalha', valor: 129.00, camisa: true },
+      'caminhada': { label: 'Caminhada',     kit: 'KIT Participação', desc: 'A escolher na retirada do KIT', valor: 93.00,  camisa: false }
+    };
+
+    let modalidadeSel = null;
+    let amigos = [];
+    let modalEstado = 'lista';
+    let amigosCadastrados = [
+      { nome: 'Leonidas Manson Lemon da Cunha', nasc: '24/05/1982', email: 'leoesparta@gmail.com' },
+      { nome: 'Mario Marinho',                  nasc: '24/05/1982', email: 'leoesparta@gmail.com' },
+      { nome: 'Juliana Ana Gourlart',           nasc: '24/05/1982', email: 'leoesparta@gmail.com' }
+    ];
+
+    const moeda = v => 'R$ ' + v.toFixed(2).replace('.', ',');
+
+    // ===== Painel Detalhes =====
+    function renderDetalhes() {
+      const body = document.getElementById('detalhesBody');
+      if (!modalidadeSel) {
+        body.innerHTML = Object.entries(MODALIDADES).map(([k, m]) => `
+          <div class="modalidade-row">
+            <span class="nome">${m.label}</span>
+            <button class="btn-selecionar" onclick="selecionar('${k}')">Selecionar</button>
+          </div>`).join('');
+        return;
+      }
+      const m = MODALIDADES[modalidadeSel];
+      body.innerHTML = `
+        <div class="modalidade-sel">
+          <span>${m.label}</span>
+          <button class="fechar-sel" onclick="selecionar(null)" aria-label="Remover modalidade">&times;</button>
+        </div>
+        <div class="kit-row">
+          <div>
+            <div class="kit-nome">${m.kit}</div>
+            <div class="kit-desc">${m.desc}</div>
+          </div>
+          <div class="kit-valor-bloco">
+            <div class="kit-valor-label">Valor</div>
+            <div class="kit-valor">${moeda(m.valor)}</div>
+          </div>
+        </div>
+        ${m.camisa ? `
+        <div class="kit-camisa">
+          <select class="form-control">
+            <option value="">Selecione a Camisa</option>
+            <option>P</option><option>M</option><option>G</option><option>GG</option>
+          </select>
+        </div>` : ''}`;
+    }
+
+    // ===== Painel Resumo =====
+    function renderResumo() {
+      let html = `
+        <div class="resumo-pessoa">
+          <div class="resumo-rotulo">Você:</div>
+          <div class="resumo-nome">${ATLETA}</div>
+        </div>`;
+      amigos.forEach((nome, i) => {
+        html += `
+        <div class="resumo-pessoa">
+          <div class="resumo-amigo">
+            <div>
+              <div class="resumo-rotulo">Amigo:</div>
+              <div class="resumo-nome">${nome}</div>
+            </div>
+            <button class="btn-remover" onclick="removerAmigo(${i})" aria-label="Remover amigo">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>`;
+      });
+      html += `<button class="btn-mais-atleta" onclick="abrirModalAmigos()">Inscrever mais atleta</button>`;
+      document.getElementById('resumoBody').innerHTML = html;
+
+      const kitBox = document.getElementById('resumoKit');
+      if (modalidadeSel) {
+        const m = MODALIDADES[modalidadeSel];
+        kitBox.innerHTML = `
+          <div class="resumo-kit-nome">${m.kit}</div>
+          <div class="kit-valor-label">Valor <span class="kit-valor">${moeda(m.valor)}</span></div>`;
+        kitBox.style.display = 'block';
+      } else {
+        kitBox.style.display = 'none';
+      }
+    }
+
+    // ===== Seleção de modalidade =====
+    function selecionar(k) {
+      modalidadeSel = k;
+      renderDetalhes();
+      renderResumo();
+      document.getElementById('inscTermos').style.display = k ? 'flex' : 'none';
+      document.getElementById('btnContinuar').classList.toggle('btn-disabled', !k);
+    }
+
+    function removerAmigo(i) {
+      amigos.splice(i, 1);
+      renderResumo();
+    }
+
+    function continuar() {
+      if (!modalidadeSel) { showToast('Selecione uma modalidade', 'info'); return; }
+      const ok = document.getElementById('aceitoPriv').checked
+              && document.getElementById('aceitoTermos').checked;
+      if (!ok) { showToast('Aceite a Política de Privacidade e os Termos de Uso', 'info'); return; }
+      window.location = 'inscricao-concluido.html';
+    }
+
+    // ===== Modal Meus amigos =====
+    function abrirModalAmigos() {
+      modalEstado = 'lista';
+      renderModal();
+      document.getElementById('modalAmigos').classList.add('aberto');
+    }
+
+    function fecharModal() {
+      document.getElementById('modalAmigos').classList.remove('aberto');
+    }
+
+    function renderModal() {
+      const corpo = document.getElementById('modalCorpo');
+
+      if (modalEstado === 'form') {
+        corpo.innerHTML = `
+          <div class="modal-painel modal-form">
+            <div class="form-group">
+              <label class="form-label">Nome Completo <span class="obrig">*</span></label>
+              <input type="text" class="form-control" id="amNome" placeholder="Nome completo do amigo">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">CPF <span class="obrig">*</span></label>
+                <input type="text" class="form-control" placeholder="123.456.789-00">
+              </div>
+              <div class="form-group">
+                <label class="form-label">RG <span class="obrig">*</span></label>
+                <input type="text" class="form-control" placeholder="12.345.678-00">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Data de Nascimento <span class="obrig">*</span></label>
+                <input type="text" class="form-control" placeholder="00/00/1900">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Gênero <span class="obrig">*</span></label>
+                <select class="form-control">
+                  <option value="">Escolher gênero</option>
+                  <option>Masculino</option><option>Feminino</option>
+                  <option>Prefiro não informar</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Apelido</label>
+                <input type="text" class="form-control" placeholder="Apelido do amigo">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Equipe</label>
+                <input type="text" class="form-control" placeholder="Nome da equipe se tiver">
+              </div>
+            </div>
+            <div class="form-row" style="margin-bottom:0;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Celular</label>
+                <input type="text" class="form-control" placeholder="(15) 99644-4373">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">E-mail</label>
+                <input type="text" class="form-control" placeholder="email@dominio.com.br">
+              </div>
+            </div>
+          </div>
+          <div class="modal-acoes">
+            <button class="btn btn-secondary" onclick="modalEstado='lista'; renderModal()">Fechar</button>
+            <button class="btn btn-primary" onclick="salvarAmigo()">Salvar amigo</button>
+          </div>`;
+        return;
+      }
+
+      // estado 'lista' (com amigos cadastrados ou vazio)
+      let painel;
+      if (amigosCadastrados.length === 0) {
+        painel = `
+          <div class="modal-painel">
+            <div class="modal-vazio">
+              <h4>Nenhum amigo registrado</h4>
+              <p>Clique no botão <strong>"Adicionar novo amigo"</strong> abaixo para cadastrar um novo amigo</p>
+            </div>
+          </div>`;
+      } else {
+        painel = `
+          <div class="modal-busca">
+            <div class="campo">
+              <i class="fas fa-running"></i>
+              <input type="text" placeholder="Pesquise o nome do amigo...">
+            </div>
+            <button class="btn btn-primary" onclick="showToast('Busca de amigos (protótipo)','info')">Procurar</button>
+          </div>
+          <div class="modal-painel">
+            ${amigosCadastrados.map((a, i) => `
+              <div class="amigo-row">
+                <div class="amigo-nome">${a.nome}</div>
+                <div class="amigo-dados">
+                  <strong>Data Nascimento:</strong> ${a.nasc}<br>
+                  <strong>E-mail:</strong> ${a.email}
+                </div>
+                <button class="btn-incluir" onclick="incluirAmigo(${i})">Incluir atleta</button>
+              </div>`).join('')}
+          </div>`;
+      }
+
+      corpo.innerHTML = painel + `
+        <div class="modal-acoes">
+          <button class="btn btn-secondary" onclick="fecharModal()">Fechar</button>
+          <button class="btn btn-primary" onclick="modalEstado='form'; renderModal()">Adicionar novo amigo</button>
+        </div>`;
+    }
+
+    function salvarAmigo() {
+      const campo = document.getElementById('amNome');
+      const nome = (campo && campo.value || '').trim();
+      amigosCadastrados.push({
+        nome: nome || 'Novo Amigo',
+        nasc: '00/00/0000',
+        email: 'amigo@email.com'
+      });
+      showToast('Amigo salvo com sucesso!');
+      modalEstado = 'lista';
+      renderModal();
+    }
+
+    function incluirAmigo(i) {
+      const a = amigosCadastrados[i];
+      if (amigos.includes(a.nome)) {
+        showToast('Esse atleta já está na inscrição', 'info');
+        return;
+      }
+      amigos.push(a.nome);
+      fecharModal();
+      renderResumo();
+      showToast(a.nome + ' incluído na inscrição');
+    }
+
+    // Init
+    renderDetalhes();
+    renderResumo();
+  </script>
+</body>
+</html>

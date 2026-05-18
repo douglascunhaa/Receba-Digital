@@ -28,9 +28,32 @@
     </div>
   </header>
 
-  <!-- HERO -->
+  <!-- HERO — CARROSSEL DE BANNERS -->
   <section class="home-hero">
-    <img src="assets/banner-home.jpg" alt="5K Pela Paz no Trânsito - Abertura 15/05 às 14h">
+    <div class="hero-track" id="heroTrack">
+      <a href="inscricao-1.html" class="hero-slide" aria-hidden="true" tabindex="-1">
+        <img src="assets/banner-home.jpg" alt="">
+      </a>
+      <a href="inscricao-1.html" class="hero-slide">
+        <img src="assets/banner-home.jpg" alt="5K Pela Paz no Trânsito — Abertura 15/05 às 14h — Inscreva-se">
+      </a>
+      <a href="inscricao-1.html" class="hero-slide">
+        <img src="assets/banner-home.jpg" alt="5K Pela Paz no Trânsito — Abertura 15/05 às 14h — Inscreva-se">
+      </a>
+      <a href="inscricao-1.html" class="hero-slide">
+        <img src="assets/banner-home.jpg" alt="5K Pela Paz no Trânsito — Abertura 15/05 às 14h — Inscreva-se">
+      </a>
+      <a href="inscricao-1.html" class="hero-slide" aria-hidden="true" tabindex="-1">
+        <img src="assets/banner-home.jpg" alt="">
+      </a>
+    </div>
+    <button class="hero-arrow prev" onclick="moverHero(-1)" aria-label="Banner anterior">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="hero-arrow next" onclick="moverHero(1)" aria-label="Próximo banner">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+    <div class="hero-dots" id="heroDots"></div>
   </section>
 
   <!-- SEARCH BAR -->
@@ -271,6 +294,73 @@
     function searchEvents(btn) {
       fakeLoadingButton(btn, () => showToast('Busca atualizada!'), 'Buscando...');
     }
+
+    // ===== Carrossel do banner hero (loop infinito) =====
+    // Estrutura no DOM: [clone-fim][slide1][slide2][slide3][clone-início]
+    const HERO_REAIS = 3;
+    const heroTrack = document.getElementById('heroTrack');
+    const heroTotal = heroTrack.children.length; // 5 (3 reais + 2 clones)
+    let heroIdx = 1;                              // começa no 1º slide real
+    let heroAnimando = false;
+    let heroTimer;
+
+    function posicionarHero(animar) {
+      heroTrack.style.transition = animar
+        ? 'transform 0.7s cubic-bezier(0.45, 0, 0.15, 1)'
+        : 'none';
+      heroTrack.style.transform = `translateX(-${heroIdx * 100}%)`;
+    }
+
+    function sincronizarHeroDots() {
+      const ativo = ((heroIdx - 1) % HERO_REAIS + HERO_REAIS) % HERO_REAIS;
+      document.querySelectorAll('#heroDots button').forEach((d, i) => {
+        d.classList.toggle('active', i === ativo);
+      });
+    }
+
+    function moverHero(dir) {
+      if (heroAnimando) return;
+      heroAnimando = true;
+      heroIdx += dir;
+      posicionarHero(true);
+      sincronizarHeroDots();
+      reiniciarHeroAuto();
+    }
+
+    function irParaHero(i) {
+      if (heroAnimando || i + 1 === heroIdx) return;
+      heroIdx = i + 1;
+      posicionarHero(true);
+      sincronizarHeroDots();
+      reiniciarHeroAuto();
+    }
+
+    // Ao terminar a transição, faz o "salto" invisível nos clones
+    heroTrack.addEventListener('transitionend', () => {
+      if (heroIdx === heroTotal - 1) { heroIdx = 1; posicionarHero(false); }
+      else if (heroIdx === 0) { heroIdx = HERO_REAIS; posicionarHero(false); }
+      heroAnimando = false;
+    });
+
+    function reiniciarHeroAuto() {
+      clearInterval(heroTimer);
+      heroTimer = setInterval(() => moverHero(1), 5000);
+    }
+
+    // Monta os indicadores (1 por slide real)
+    (function montarHeroDots() {
+      const dots = document.getElementById('heroDots');
+      for (let i = 0; i < HERO_REAIS; i++) {
+        const b = document.createElement('button');
+        if (i === 0) b.className = 'active';
+        b.setAttribute('aria-label', 'Ir para o banner ' + (i + 1));
+        b.addEventListener('click', () => irParaHero(i));
+        dots.appendChild(b);
+      }
+    })();
+
+    posicionarHero(false);
+    reiniciarHeroAuto();
   </script>
 </body>
 </html>
