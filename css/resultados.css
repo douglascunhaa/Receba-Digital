@@ -12,8 +12,7 @@
 /* Layout em 2 colunas (lista + sidebar) */
 .resultados-layout {
   display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 28px;
+  gap: 0px;
   align-items: start;
 }
 
