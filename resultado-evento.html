@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maratona Brasília 2026 — Resultados — Recebe Digital</title>
+  <title>4ª Corrida Força Total Esportes — Resultados — RecebeSports</title>
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/resultados.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="has-suporte-bar">
 
   <!-- HEADER -->
   <header class="site-header">
@@ -17,7 +17,7 @@
         <img src="assets/logo.svg" alt="Recebe Sports">
       </a>
       <nav class="main-nav">
-        <a href="resultados.html">Resultados</a>
+        <a href="resultados.html" class="active">Resultados</a>
         <a href="quem-somos.html">Quem somos</a>
         <a href="organizadores.html">Para organizadores</a>
       </nav>
@@ -28,80 +28,112 @@
     </div>
   </header>
 
-  <!-- BANNER DO EVENTO -->
-  <section class="resultado-banner">
-    <img src="assets/banner-evento.jpg" alt="5K Pela Paz no Trânsito">
-  </section>
-
-  <!-- DETALHE DO RESULTADO -->
-  <section class="resultado-detalhe">
+  <!-- RESULTADO DO EVENTO -->
+  <section class="evento-res-page">
     <div class="container">
-      <h1>Resultados</h1>
 
       <!-- Cabeçalho do evento -->
-      <div class="resultado-evento-head">
-        <h2>23º Maratona de Bike da União Europeia 2026<br>Sunset Edition by OverPower</h2>
-        <div class="resultado-evento-meta">
-          <span class="tag-data">13 de Maio de 2026</span>
-          <span class="modalidade-info"><i class="fas fa-medal"></i> <strong>Modalidade:</strong> Bike</span>
+      <div class="evento-head-card">
+        <div class="evento-head-top">
+          <div class="data-badge">
+            <div class="ano">2026</div>
+            <div class="dia">17</div>
+            <div class="mes">mai</div>
+          </div>
+          <div class="evento-head-info">
+            <div class="nome">4ª CORRIDA FORÇA TOTAL ESPORTES</div>
+            <div class="meta">
+              <span><i class="fas fa-map-marker-alt"></i>Araçatuba - SP</span>
+              <span><i class="fas fa-person-running"></i>465 concluintes</span>
+            </div>
+            <div class="dist-pills">
+              <span class="dist-pill azul"><i class="fas fa-person-running"></i> 5k | 465 concluintes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="evento-head-divider"></div>
+
+        <div class="evento-sobre">
+          <i class="fas fa-chart-simple"></i> Sobre o evento
+        </div>
+        <div class="evento-atualizado">
+          Dados atualizados pelo <a href="#" onclick="event.preventDefault()">resultado oficial do evento</a> em 18/05/2026.
         </div>
       </div>
 
-      <!-- Box categorias -->
-      <div class="categorias-box">
-        <h3>Escolha a Categoria</h3>
-        <div class="categorias-grid">
-          <a href="https://resultadosbrasil.com.br/glive/g-live.html?f=MARATONABRASILIA2026DIA2104.clax" target="_blank" class="categoria-card">
-            <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 352c0 35.3 28.7 64 64 64l176 0-10.7 32L160 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l256 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-69.3 0L336 416l176 0c35.3 0 64-28.7 64-64l0-288c0-35.3-28.7-64-64-64L64 0zM512 64l0 224L64 288 64 64l448 0z"/></svg>
-            <div class="info">
-              <div class="titulo">18/04/2026</div>
-              <div class="subtitulo">18/04/2026</div>
-            </div>
-          </a>
-          <a href="https://resultadosbrasil.com.br/glive/g-live.html?f=MARATONABRASILIA2026DIA2104.clax" target="_blank" class="categoria-card">
-            <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 352c0 35.3 28.7 64 64 64l176 0-10.7 32L160 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l256 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-69.3 0L336 416l176 0c35.3 0 64-28.7 64-64l0-288c0-35.3-28.7-64-64-64L64 0zM512 64l0 224L64 288 64 64l448 0z"/></svg>
-            <div class="info">
-              <div class="titulo">19/04/2026</div>
-              <div class="subtitulo">19/04/2026</div>
-            </div>
-          </a>
-          <a href="https://resultadosbrasil.com.br/glive/g-live.html?f=MARATONABRASILIA2026DIA2104.clax" target="_blank" class="categoria-card">
-            <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 352c0 35.3 28.7 64 64 64l176 0-10.7 32L160 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l256 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-69.3 0L336 416l176 0c35.3 0 64-28.7 64-64l0-288c0-35.3-28.7-64-64-64L64 0zM512 64l0 224L64 288 64 64l448 0z"/></svg>
-            <div class="info">
-              <div class="titulo">20/04/2026</div>
-              <div class="subtitulo">20/04/2026</div>
-            </div>
-          </a>
-          <a href="https://resultadosbrasil.com.br/glive/g-live.html?f=MARATONABRASILIA2026DIA2104.clax" target="_blank" class="categoria-card">
-            <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 352c0 35.3 28.7 64 64 64l176 0-10.7 32L160 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l256 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-69.3 0L336 416l176 0c35.3 0 64-28.7 64-64l0-288c0-35.3-28.7-64-64-64L64 0zM512 64l0 224L64 288 64 64l448 0z"/></svg>
-            <div class="info">
-              <div class="titulo">21/04/2026</div>
-              <div class="subtitulo">21/04/2026</div>
-            </div>
-          </a>
-          <a href="https://resultadosbrasil.com.br/glive/g-live.html?f=MARATONABRASILIA2026DIA2104.clax" target="_blank" class="categoria-card">
-            <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 352c0 35.3 28.7 64 64 64l176 0-10.7 32L160 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l256 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-69.3 0L336 416l176 0c35.3 0 64-28.7 64-64l0-288c0-35.3-28.7-64-64-64L64 0zM512 64l0 224L64 288 64 64l448 0z"/></svg>
-            <div class="info">
-              <div class="titulo">BSB 66 ANOS</div>
-              <div class="subtitulo">DESAFIO</div>
-            </div>
-          </a>
-          <a href="https://resultadosbrasil.com.br/glive/g-live.html?f=MARATONABRASILIA2026DIA2104.clax" target="_blank" class="categoria-card">
-            <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 352c0 35.3 28.7 64 64 64l176 0-10.7 32L160 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l256 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-69.3 0L336 416l176 0c35.3 0 64-28.7 64-64l0-288c0-35.3-28.7-64-64-64L64 0zM512 64l0 224L64 288 64 64l448 0z"/></svg>
-            <div class="info">
-              <div class="titulo">JK</div>
-              <div class="subtitulo">DESAFIO</div>
-            </div>
-          </a>
-          <a href="https://resultadosbrasil.com.br/glive/g-live.html?f=MARATONABRASILIA2026DIA2104.clax" target="_blank" class="categoria-card">
-            <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 352c0 35.3 28.7 64 64 64l176 0-10.7 32L160 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l256 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-69.3 0L336 416l176 0c35.3 0 64-28.7 64-64l0-288c0-35.3-28.7-64-64-64L64 0zM512 64l0 224L64 288 64 64l448 0z"/></svg>
-            <div class="info">
-              <div class="titulo">SEM LIMITES</div>
-              <div class="subtitulo">DESAFIO</div>
-            </div>
-          </a>
+      <!-- Seleção de modalidade -->
+      <p class="modalidade-label">Escolha uma modalidade para ver os resultados:</p>
+
+      <div class="modalidade-card">
+        <div class="modalidade-card-header">
+          <i class="fas fa-person-running"></i> 5 KM
+        </div>
+        <div class="modalidade-row">
+          <span class="rot">Melhor:</span>
+          <span class="v"><i class="fas fa-venus"></i> 00:18:53</span>
+          <span class="v"><i class="fas fa-mars"></i> 00:16:43</span>
+        </div>
+        <div class="modalidade-row">
+          <span class="rot">Média:</span>
+          <span class="v"><i class="fas fa-venus"></i> 00:32:37</span>
+          <span class="v"><i class="fas fa-mars"></i> 00:26:20</span>
+        </div>
+        <div class="modalidade-row">
+          <span class="rot">Totais:</span>
+          <span class="v"><i class="fas fa-venus"></i> 274</span>
+          <span class="v"><i class="fas fa-mars"></i> 191</span>
+        </div>
+        <div class="modalidade-row full">
+          <span class="rot"></span>
+          <span class="v"><i class="fas fa-person-running"></i> 465 concluintes</span>
         </div>
       </div>
+
+      <p class="outras-modalidades">Outras modalidades: <span>nenhuma outra modalidade neste evento.</span></p>
+
+      <!-- Tabela de resultados -->
+      <div class="resultado-bar">
+        <span class="barras">//</span>
+        <i class="fas fa-person-running"></i> Resultado — 5 KM
+      </div>
+
+      <div class="tabela-painel">
+        <div class="genero-abas">
+          <button class="genero-aba active" onclick="trocarGenero('fem', this)">
+            <i class="fas fa-venus"></i> FEMININO
+          </button>
+          <button class="genero-aba" onclick="trocarGenero('mas', this)">
+            <i class="fas fa-mars"></i> MASCULINO
+          </button>
+        </div>
+
+        <div class="tabela-busca">
+          <label for="buscaReg">Pesquisar</label>
+          <input type="text" id="buscaReg" placeholder="Buscar registros" oninput="renderTabela()">
+        </div>
+
+        <div class="tabela-scroll">
+          <table class="tabela-result">
+            <thead>
+              <tr>
+                <th onclick="ordenar('geral')">Geral <span class="sort">▲▼</span></th>
+                <th onclick="ordenar('cat')">Cat. <span class="sort">▲▼</span></th>
+                <th onclick="ordenar('numero')">Número <span class="sort">▲▼</span></th>
+                <th onclick="ordenar('nome')">Nome <span class="sort">▲▼</span></th>
+                <th onclick="ordenar('equipe')">Equipe <span class="sort">▲▼</span></th>
+                <th onclick="ordenar('pace')">Pace <span class="sort">▲▼</span></th>
+                <th onclick="ordenar('tempo')">Tempo <span class="sort">▲▼</span></th>
+                <th onclick="ordenar('gap')">Gap <i class="fas fa-circle-info" style="font-size:10px;color:#bbb"></i> <span class="sort">▲▼</span></th>
+              </tr>
+            </thead>
+            <tbody id="tabelaBody"></tbody>
+          </table>
+        </div>
+
+        <div class="tabela-rodape" id="tabelaRodape"></div>
+      </div>
+
     </div>
   </section>
 
@@ -148,11 +180,108 @@
     </div>
   </footer>
 
-    <!-- BARRA FIXA SUPORTE AO CLIENTE -->
+  <!-- BARRA FIXA SUPORTE AO CLIENTE -->
   <button class="suporte-bar" onclick="showToast('Abrindo canal de suporte ao cliente...', 'info')">
     <i class="fab fa-whatsapp"></i> Suporte ao cliente
   </button>
 
   <script src="js/global.js"></script>
+  <script>
+    // ===== Dados dos resultados =====
+    const corredores = {
+      fem: [
+        { geral:1,  cat:2534, numero:5001, nome:'ANA PAULA FERREIRA LIMA',        equipe:'RUN 100 LIMITES', pace:'03:58', tempo:'00:19:54', gap:'00:00:00' },
+        { geral:2,  cat:2534, numero:5042, nome:'JULIANA SANTOS OLIVEIRA',         equipe:'TEAM PACATO',     pace:'04:05', tempo:'00:20:25', gap:'00:00:31' },
+        { geral:3,  cat:3544, numero:5067, nome:'FERNANDA COSTA RIBEIRO',          equipe:'SUPERANDO',       pace:'04:12', tempo:'00:21:01', gap:'00:01:07' },
+        { geral:4,  cat:4554, numero:5088, nome:'PATRICIA ALMEIDA SOUZA',          equipe:'KM RUNNER',       pace:'04:18', tempo:'00:21:32', gap:'00:01:38' },
+        { geral:5,  cat:3544, numero:5095, nome:'CAMILA RODRIGUES DIAS',           equipe:'CORUJAFIT',       pace:'04:21', tempo:'00:21:48', gap:'00:01:54' },
+        { geral:6,  cat:4554, numero:5109, nome:'ERODI MARIA RAMALHO PIRES',       equipe:'KM RUNNER',       pace:'04:25', tempo:'00:22:08', gap:'00:03:14' },
+        { geral:7,  cat:3544, numero:5259, nome:'REBECA SOCCIO NOGUEIRA FABRIS',   equipe:'SUPERANDO',       pace:'04:28', tempo:'00:22:21', gap:'00:03:27' },
+        { geral:8,  cat:2534, numero:5143, nome:'IZABELA CRISTINA NUNES FURLANETI',equipe:'RUN 100 LIMITES', pace:'04:34', tempo:'00:22:53', gap:'00:03:59' },
+        { geral:9,  cat:2534, numero:5148, nome:'JESSICA ALVES SANCHES MENDES',    equipe:'—',               pace:'04:38', tempo:'00:23:12', gap:'00:04:18' },
+        { geral:10, cat:3544, numero:5239, nome:'MONICA APARECIDA DA SILVA',       equipe:'TEAM PACATO',     pace:'04:38', tempo:'00:23:14', gap:'00:04:20' },
+        { geral:11, cat:3544, numero:5296, nome:'THAIS DE FREITAS OLIVEIRA',       equipe:'HIDALGO TREINAMENTO ESPORTIVO', pace:'04:39', tempo:'00:23:16', gap:'00:04:22' },
+        { geral:12, cat:3544, numero:5212, nome:'MARIA EDILEUZA DE ARAÚJO SILVA',  equipe:'TEAM PACATO',     pace:'04:45', tempo:'00:23:49', gap:'00:04:55' },
+        { geral:13, cat:2534, numero:5240, nome:'NADINE OZAKI TRAVASSOS',          equipe:'SUPERANDO',       pace:'04:46', tempo:'00:23:53', gap:'00:04:59' },
+        { geral:14, cat:3544, numero:5085, nome:'CRISTINA ARANTES ROCHA PAGAN',    equipe:'SUPERANDO',       pace:'04:46', tempo:'00:23:53', gap:'00:04:59' },
+        { geral:15, cat:2534, numero:5241, nome:'NAIARA CRISTINA MARTINS RODRIGUES',equipe:'CORUJAFIT',      pace:'04:48', tempo:'00:24:03', gap:'00:05:09' },
+        { geral:16, cat:2534, numero:5197, nome:'LÍVIA DINIZ CORRÊA GANDOLFI',     equipe:'—',               pace:'04:48', tempo:'00:24:03', gap:'00:05:09' },
+        { geral:17, cat:5564, numero:5073, nome:'CIBELE GRANDE DI SANTI',          equipe:'SAM RUNNERS',     pace:'04:48', tempo:'00:24:04', gap:'00:05:10' },
+        { geral:18, cat:2534, numero:5108, nome:'ERICA ROCHA DA SILVA',            equipe:'ERICA',           pace:'04:50', tempo:'00:24:14', gap:'00:05:20' }
+      ],
+      mas: [
+        { geral:1,  cat:3544, numero:5301, nome:'RAFAEL OLIVEIRA SANTOS',   equipe:'KM RUNNER',       pace:'03:21', tempo:'00:16:43', gap:'00:00:00' },
+        { geral:2,  cat:3544, numero:5318, nome:'BRUNO COSTA ALMEIDA',      equipe:'SUPERANDO',       pace:'03:26', tempo:'00:17:12', gap:'00:00:29' },
+        { geral:3,  cat:2534, numero:5322, nome:'LUCAS PEREIRA MARTINS',    equipe:'TEAM PACATO',     pace:'03:30', tempo:'00:17:31', gap:'00:00:48' },
+        { geral:4,  cat:4554, numero:5340, nome:'GABRIEL SOUZA LIMA',       equipe:'RUN 100 LIMITES', pace:'03:34', tempo:'00:17:52', gap:'00:01:09' },
+        { geral:5,  cat:3544, numero:5355, nome:'FELIPE RODRIGUES DIAS',    equipe:'CORUJAFIT',       pace:'03:39', tempo:'00:18:14', gap:'00:01:31' },
+        { geral:6,  cat:2534, numero:5361, nome:'MATEUS ALVES FERREIRA',    equipe:'SAM RUNNERS',     pace:'03:42', tempo:'00:18:31', gap:'00:01:48' },
+        { geral:7,  cat:3544, numero:5377, nome:'THIAGO BARBOSA NUNES',     equipe:'SUPERANDO',       pace:'03:47', tempo:'00:18:55', gap:'00:02:12' },
+        { geral:8,  cat:4554, numero:5390, nome:'DANIEL CARVALHO ROCHA',    equipe:'KM RUNNER',       pace:'03:51', tempo:'00:19:16', gap:'00:02:33' },
+        { geral:9,  cat:2534, numero:5402, nome:'GUSTAVO MENDES SILVA',     equipe:'—',               pace:'03:55', tempo:'00:19:34', gap:'00:02:51' },
+        { geral:10, cat:3544, numero:5418, nome:'RODRIGO ARAÚJO PINTO',     equipe:'TEAM PACATO',     pace:'03:58', tempo:'00:19:52', gap:'00:03:09' },
+        { geral:11, cat:2534, numero:5423, nome:'EDUARDO RAMOS CASTRO',     equipe:'HIDALGO TREINAMENTO ESPORTIVO', pace:'04:02', tempo:'00:20:13', gap:'00:03:30' },
+        { geral:12, cat:3544, numero:5440, nome:'MARCELO TEIXEIRA GOMES',   equipe:'SUPERANDO',       pace:'04:06', tempo:'00:20:31', gap:'00:03:48' },
+        { geral:13, cat:2534, numero:5455, nome:'ANDRÉ LOPES MOREIRA',      equipe:'CORUJAFIT',       pace:'04:10', tempo:'00:20:52', gap:'00:04:09' },
+        { geral:14, cat:4554, numero:5467, nome:'PAULO HENRIQUE DUARTE',    equipe:'SAM RUNNERS',     pace:'04:14', tempo:'00:21:14', gap:'00:04:31' }
+      ]
+    };
+    const totais = { fem: 274, mas: 191 };
+
+    let generoAtivo = 'fem';
+    const numericas = ['geral', 'cat', 'numero'];
+    let ordenacao = { col: 'geral', dir: 1 };
+
+    function trocarGenero(g, btn) {
+      generoAtivo = g;
+      document.querySelectorAll('.genero-aba').forEach(a => a.classList.remove('active'));
+      btn.classList.add('active');
+      ordenacao = { col: 'geral', dir: 1 };
+      renderTabela();
+    }
+
+    function ordenar(col) {
+      if (ordenacao.col === col) ordenacao.dir *= -1;
+      else { ordenacao.col = col; ordenacao.dir = 1; }
+      renderTabela();
+    }
+
+    function renderTabela() {
+      const termo = (document.getElementById('buscaReg').value || '').trim().toUpperCase();
+      let dados = corredores[generoAtivo].slice();
+
+      // ordenação
+      dados.sort((a, b) => {
+        let x = a[ordenacao.col], y = b[ordenacao.col];
+        if (numericas.includes(ordenacao.col)) { x = +x; y = +y; }
+        if (x < y) return -1 * ordenacao.dir;
+        if (x > y) return 1 * ordenacao.dir;
+        return 0;
+      });
+
+      // filtro de busca
+      if (termo) dados = dados.filter(r => r.nome.toUpperCase().includes(termo));
+
+      document.getElementById('tabelaBody').innerHTML = dados.map(r => `
+        <tr>
+          <td>${r.geral}</td>
+          <td>${r.cat}</td>
+          <td>${r.numero}</td>
+          <td class="nome-col">${r.nome}</td>
+          <td class="equipe-col">${r.equipe}</td>
+          <td>${r.pace}</td>
+          <td>${r.tempo}</td>
+          <td>${r.gap}</td>
+        </tr>`).join('') ||
+        '<tr><td colspan="8" style="text-align:center;padding:30px;font-family:inherit;color:#999;">Nenhum registro encontrado</td></tr>';
+
+      const total = totais[generoAtivo];
+      const mostrando = termo ? dados.length : total;
+      document.getElementById('tabelaRodape').textContent =
+        `Mostrando de 1 até ${mostrando} de ${total} registros`;
+    }
+
+    renderTabela();
+  </script>
 </body>
 </html>

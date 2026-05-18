@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resultados — Recebe Digital</title>
+  <title>Resultados de Corridas — RecebeSports</title>
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/resultados.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="has-suporte-bar">
 
   <!-- HEADER -->
   <header class="site-header">
@@ -29,39 +29,38 @@
   </header>
 
   <!-- RESULTADOS -->
-  <section class="resultados-section">
+  <section class="resultados-page">
     <div class="container">
-      <h1>Resultados</h1>
+      <div class="resultados-layout">
 
-      <form class="resultados-filters" onsubmit="return filtrar(event)">
-        <input type="text" class="form-control" placeholder="Pesquisar por Evento...">
-        <select class="form-control">
-          <option value="">Pesquisar por Modalidade</option>
-          <option>Corrida de Rua</option>
-          <option>MTB</option>
-          <option>Triathlon</option>
-          <option>Trail Run</option>
-        </select>
-        <input type="text" class="form-control" placeholder="DD/MM/AAAA"
-               onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'">
-        <button type="submit" class="btn-search" aria-label="Pesquisar">
-          <i class="fas fa-search"></i>
-        </button>
-      </form>
+        <!-- Coluna principal -->
+        <div>
+          <h1 class="res-titulo">
+            <i class="fas fa-person-running"></i>
+            <span class="barras">//</span>
+            Resultados de Corridas
+          </h1>
 
-      <div class="resultados-table-wrap">
-        <table class="resultados-table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Data</th>
-              <th>Evento</th>
-              <th class="modalidade-col">Modalidade</th>
-              <th class="cidade-col">Cidade</th>
-            </tr>
-          </thead>
-          <tbody id="resultadosBody"></tbody>
-        </table>
+          <div class="estado-filtros" id="estadoFiltros"></div>
+
+          <div class="res-abas">
+            <button class="res-aba active" onclick="trocarAba(this)">ÚLTIMOS</button>
+            <button class="res-aba" onclick="trocarAba(this)">MAIORES</button>
+            <button class="res-aba" onclick="trocarAba(this)">MARATONAS</button>
+          </div>
+
+          <div class="semana-bar">
+            <i class="far fa-calendar"></i>
+            <span class="barras">//</span>
+            Semana de 11 a 17 de Maio
+          </div>
+
+          <div class="res-lista" id="resLista"></div>
+        </div>
+
+        <!-- Sidebar de estatísticas -->
+        <aside class="stats-side" id="statsSide"></aside>
+
       </div>
     </div>
   </section>
@@ -109,61 +108,129 @@
     </div>
   </footer>
 
-    <!-- BARRA FIXA SUPORTE AO CLIENTE -->
+  <!-- BARRA FIXA SUPORTE AO CLIENTE -->
   <button class="suporte-bar" onclick="showToast('Abrindo canal de suporte ao cliente...', 'info')">
     <i class="fab fa-whatsapp"></i> Suporte ao cliente
   </button>
 
   <script src="js/global.js"></script>
   <script>
-    // Dados fictícios da listagem de resultados
-    const resultados = [
-      { data: '17/05/2026', evento: '4ª CORRIDA FORÇA TOTAL ESPORTES', modalidade: 'Corrida de Rua', cidade: 'ARAÇATUBA/SP' },
-      { data: '03/05/2026', evento: '3º Corrida Caveiras Running 2026', modalidade: 'Corrida de Rua', cidade: 'GARÇA/SP' },
-      { data: '03/05/2026', evento: 'CORRIDA DO TRABALHADOR DE ITATINGA', modalidade: 'Corrida de Rua', cidade: 'ITATINGA/SP' },
-      { data: '01/05/2026', evento: '1ª CORRIDA E CAMINHADA DOS METALÚRGICOS/TORRES CONSTRUTORA', modalidade: 'Corrida de Rua', cidade: 'BOTUCATU/SP' },
-      { data: '01/05/2026', evento: '2ª CORRIDA ASP', modalidade: 'Corrida de Rua', cidade: 'PARAGUAÇU PAULISTA/SP' },
-      { data: '01/05/2026', evento: 'CORRIDA DO TRABALHADOR', modalidade: 'Corrida de Rua', cidade: 'ULIANÓPOLIS/PA' },
-      { data: '26/04/2026', evento: '2ª EDIÇÃO - 4ª COPA PEIXE BIKE SHOP', modalidade: 'MTB', cidade: '/SP' },
-      { data: '26/04/2026', evento: '2ª ETAPA - JAÚ SERVE IBITINGA', modalidade: 'Corrida de Rua', cidade: 'IBITINGA/SP' },
-      { data: '26/04/2026', evento: 'Sesc + Corridas – Etapa Taguatinga', modalidade: 'Corrida de Rua', cidade: 'BRASÍLIA/DF' },
-      { data: '21/04/2026', evento: 'MARATONA BRASILIA 2026', modalidade: 'Corrida de Rua', cidade: 'BRASÍLIA/DF' },
-      { data: '19/04/2026', evento: 'GBC Trail Run – 7ª Edição – Indiana', modalidade: 'Corrida de Rua', cidade: 'BOTUCATU/SP' },
-      { data: '19/04/2026', evento: 'ROTARY RUN 2026', modalidade: 'Corrida de Rua', cidade: 'ARAÇATUBA/SP' },
-      { data: '19/04/2026', evento: 'TABA RUNNING 2026', modalidade: 'Corrida de Rua', cidade: 'TABATINGA/SP' },
-      { data: '18/04/2026', evento: 'CORRIDA TIRADENTES 2026', modalidade: 'Corrida de Rua', cidade: 'BELÉM/PA' },
-      { data: '12/04/2026', evento: 'Conecta Wellness Brasília', modalidade: 'Corrida de Rua', cidade: 'BRASÍLIA/DF' },
-      { data: '12/04/2026', evento: 'Sesc + Corridas – Etapa PLANO PILOTO', modalidade: 'Corrida de Rua', cidade: 'BRASÍLIA/DF' },
-      { data: '05/04/2026', evento: '150 ANOS POLICIA CIVIL', modalidade: 'Corrida de Rua', cidade: 'BELÉM/PA' },
-      { data: '05/04/2026', evento: 'Correndo Pela Paz 2026', modalidade: 'Corrida de Rua', cidade: 'BRASÍLIA/DF' },
-      { data: '29/03/2026', evento: '1ª ETAPA - CAMPEONATO MATO-GROSSENSE DE TRIATHLON', modalidade: 'Triathlon', cidade: 'CUIABÁ/MT' },
-      { data: '28/03/2026', evento: '15º Circuito Anapolino de Corrida de Rua - 1ª ETAPA - Noturna', modalidade: 'Corrida de Rua', cidade: 'ANÁPOLIS/GO' },
-      { data: '28/03/2026', evento: 'NIGHT RUN - 1ª FEIJUCA DOS MONGES', modalidade: 'Corrida de Rua', cidade: 'BAURU/SP' },
-      { data: '22/03/2026', evento: '16º TRIATHLON DE EPITÁCIO - TRIMAN X ETAPA INICIAL', modalidade: 'Triathlon', cidade: 'PRESIDENTE EPITÁCIO/SP' },
-      { data: '22/03/2026', evento: '1ª ETAPA - JAÚ SERVE PIRACICABA', modalidade: 'Corrida de Rua', cidade: 'PIRACICABA/SP' },
-      { data: '21/03/2026', evento: '2º BIRIGUI NIGHT RUN', modalidade: 'Corrida de Rua', cidade: 'BIRIGUI/SP' }
+    // ===== Filtros de estado =====
+    const estados = ['AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT',
+                     'PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO'];
+    document.getElementById('estadoFiltros').innerHTML =
+      estados.map(e => `<button class="estado-pill" onclick="toggleEstado(this)">${e}</button>`).join('');
+
+    function toggleEstado(btn) {
+      document.querySelectorAll('.estado-pill').forEach(p => { if (p !== btn) p.classList.remove('active'); });
+      btn.classList.toggle('active');
+      showToast(btn.classList.contains('active') ? 'Filtrando por ' + btn.textContent : 'Filtro removido', 'info');
+    }
+
+    function trocarAba(btn) {
+      document.querySelectorAll('.res-aba').forEach(a => a.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    // ===== Lista de resultados =====
+    const eventos = [
+      { dia:'17', mes:'mai', ano:'2026', nome:'10 KM TRIBUNA - 40ª EDIÇÃO', local:'Santos - SP', conc:'20.830',
+        dists:[['10k','20.830']] },
+      { dia:'17', mes:'mai', ano:'2026', nome:'ASICS GOLDEN RUN 2026 - ETAPA SP', local:'São Paulo - SP', conc:'7.628',
+        dists:[['10k','3.292'],['21k','4.336']] },
+      { dia:'17', mes:'mai', ano:'2026', nome:'MEIA MARATONA FOCO RUN - 2026', local:'Manaus - AM', conc:'5.293',
+        dists:[['5k','2.443'],['10k','1.595'],['21k','1.255']] },
+      { dia:'17', mes:'mai', ano:'2026', nome:'CORRIDA DA CÂMARA DOS DEPUTADOS', local:'Brasília - DF', conc:'4.107',
+        dists:[['3k','460'],['5k','2.773'],['10k','874']] },
+      { dia:'17', mes:'mai', ano:'2026', nome:'MARATONA OFICIAL DE BELO HORIZONTE 2026', local:'Belo Horizonte - MG', conc:'3.895',
+        dists:[['5k','1.998'],['42k','1.897']] },
+      { dia:'17', mes:'mai', ano:'2026', nome:'6ª Corrida do Café', local:'São Paulo - SP', conc:'3.889',
+        dists:[['6k','3.889']] },
+      { dia:'17', mes:'mai', ano:'2026', nome:'CORRIDA TIME BRASIL 2026', local:'Rio de Janeiro - RJ', conc:'3.303',
+        dists:[['3k','834'],['5k','1.788'],['10k','681']] },
+      { dia:'17', mes:'mai', ano:'2026', nome:'LIVE! RUN XP São Paulo 2026', local:'São Paulo - SP', conc:'3.248',
+        dists:[['5k','1.526'],['10k','1.053'],['21k','669']] },
+      { dia:'17', mes:'mai', ano:'2026', nome:'Corrida APAS', local:'São Paulo - SP', conc:'1.906',
+        dists:[['5k','1.283'],['10k','623']] },
+      { dia:'17', mes:'mai', ano:'2026', nome:'RIO DO RASTRO MARATHON - A TRANSFORMAÇÃO', local:'Orleans - SC', conc:'1.849',
+        dists:[['13k','648'],['25k','865'],['42k','336']] },
+      { dia:'17', mes:'mai', ano:'2026', nome:'Corrida Da Semana S – 2026', local:'Recife - PE', conc:'1.719',
+        dists:[['5k','1.305'],['10k','414']] }
     ];
 
-    function renderResultados() {
-      const tbody = document.getElementById('resultadosBody');
-      tbody.innerHTML = resultados.map(r => `
-        <tr onclick="window.location='resultado-evento.html'">
-          <td class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288zM184 296l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg></td>
-          <td class="data-cell">${r.data}</td>
-          <td class="evento-cell">${r.evento}</td>
-          <td class="modalidade-cell">${r.modalidade}</td>
-          <td class="cidade-cell">${r.cidade}</td>
-        </tr>
-      `).join('');
+    function corDist(km) {
+      const n = parseInt(km, 10);
+      if (n <= 12) return 'verde';
+      if (n <= 15) return 'laranja';
+      if (n <= 22) return 'amarelo';
+      if (n <= 30) return 'salmao';
+      return 'vermelho';
     }
-    renderResultados();
 
-    function filtrar(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('.btn-search');
-      fakeLoadingButton(btn, () => showToast('Filtros aplicados', 'info'), '');
-      return false;
-    }
+    document.getElementById('resLista').innerHTML = eventos.map(ev => `
+      <div class="res-card" onclick="window.location='resultado-evento.html'">
+        <div class="data-badge">
+          <div class="ano">${ev.ano}</div>
+          <div class="dia">${ev.dia}</div>
+          <div class="mes">${ev.mes}</div>
+        </div>
+        <div class="res-card-info">
+          <div class="nome">${ev.nome}</div>
+          <div class="meta">
+            <span><i class="fas fa-map-marker-alt"></i>${ev.local}</span>
+            <span><i class="fas fa-person-running"></i>${ev.conc} concluintes</span>
+          </div>
+          <div class="dist-pills">
+            ${ev.dists.map(d => `
+              <span class="dist-pill ${corDist(d[0])}">
+                <i class="fas fa-person-running"></i> ${d[0]} | ${d[1]} concluintes
+              </span>`).join('')}
+          </div>
+        </div>
+      </div>`).join('');
+
+    // ===== Sidebar de estatísticas =====
+    const statCards = [
+      { cor:'azul', titulo:'2025 - 5K',
+        rows:[['Melhor:','00:16:48','00:14:20'],['Média:','00:44:22','00:38:13'],['Totais:','1.637.861','1.166.013']],
+        total:['3764','2.803.874'] },
+      { cor:'verde', titulo:'2025 - 10K',
+        rows:[['Melhor:','00:34:19','00:28:36'],['Média:','01:07:46','00:58:10'],['Totais:','383.350','525.592']],
+        total:['2245','908.942'] },
+      { cor:'amarelo', titulo:'2025 - 21K',
+        rows:[['Melhor:','01:07:51','01:02:24'],['Média:','02:15:44','02:00:42'],['Totais:','119.888','210.265']],
+        total:['443','330.153'] },
+      { cor:'vermelho', titulo:'2025 - 42K',
+        rows:[['Melhor:','02:34:58','02:13:22'],['Média:','04:27:34','04:04:44'],['Totais:','14.142','47.180']],
+        total:['86','61.322'] }
+    ];
+
+    document.getElementById('statsSide').innerHTML =
+      statCards.map(c => `
+        <div class="stat-card">
+          <div class="stat-card-header ${c.cor}">${c.titulo}</div>
+          ${c.rows.map(r => `
+            <div class="stat-row">
+              <span class="rotulo">${r[0]}</span>
+              <span class="val"><i class="fas fa-venus"></i> ${r[1]}</span>
+              <span class="val"><i class="fas fa-mars"></i> ${r[2]}</span>
+            </div>`).join('')}
+          <div class="stat-row">
+            <span class="rotulo"></span>
+            <span class="val"><i class="fas fa-flag-checkered"></i> ${c.total[0]}</span>
+            <span class="val"><i class="fas fa-person-running"></i> ${c.total[1]}</span>
+          </div>
+        </div>`).join('') + `
+        <div class="side-extra">
+          <div class="side-links">
+            <a href="quem-somos.html">Sobre</a> | <a href="#" onclick="event.preventDefault()">Privacidade</a> | <a href="#" onclick="event.preventDefault()">Ajuda</a>
+          </div>
+          <div class="side-social">
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Strava"><i class="fab fa-strava"></i></a>
+            <a href="#" aria-label="Whatsapp"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>`;
   </script>
 </body>
 </html>
