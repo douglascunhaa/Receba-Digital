@@ -29,7 +29,9 @@
   </header>
 
   <!-- BANNER DO EVENTO -->
-  <section class="evento-banner"></section>
+  <section class="evento-banner">
+    <img src="assets/banner-evento.jpg" alt="5K Pela Paz no Trânsito">
+  </section>
 
   <!-- CONTEÚDO -->
   <section class="evento-content">
@@ -39,8 +41,8 @@
       <div class="evento-section">
         <h1 class="evento-titulo">19º Mountain Bike União<br>Europeia Sunset Edition Ultimate</h1>
         <div class="evento-meta">
-          <span><i class="far fa-calendar"></i> 09/05/2026 - 17:00</span>
-          <span><i class="fas fa-map-marker-alt"></i> Brasília - DF</span>
+          <span><i class="far fa-calendar"></i> 09/05/2026 <span style="color:var(--color-gray-text)">até</span> 28/05/2026</span>
+          <span><i class="fas fa-map-marker-alt"></i> Sorocaba - SP</span>
           <span><i class="fas fa-medal"></i> Bike</span>
         </div>
         <a href="#" class="evento-status-btn" onclick="abrirInscricao(event)">Inscrições aberta</a>
@@ -64,19 +66,19 @@
         <div class="percursos">
           <div class="percurso-item">
             <span class="label"><i class="fas fa-running"></i> 5 KM - ASSOCIADO</span>
-            <button class="ver-mapa" onclick="showToast('Carregando mapa do percurso...', 'info')">Ver mapa</button>
+            <button class="ver-mapa" onclick="showToast('Carregando informações da modalidade...', 'info')">+ Informações</button>
           </div>
           <div class="percurso-item">
             <span class="label"><i class="fas fa-running"></i> 10 KM - ASSOCIADO</span>
-            <button class="ver-mapa" onclick="showToast('Carregando mapa do percurso...', 'info')">Ver mapa</button>
+            <button class="ver-mapa" onclick="showToast('Carregando informações da modalidade...', 'info')">+ Informações</button>
           </div>
           <div class="percurso-item">
             <span class="label"><i class="fas fa-running"></i> 15 KM - ASSOCIADO</span>
-            <button class="ver-mapa" onclick="showToast('Carregando mapa do percurso...', 'info')">Ver mapa</button>
+            <button class="ver-mapa" onclick="showToast('Carregando informações da modalidade...', 'info')">+ Informações</button>
           </div>
           <div class="percurso-item">
             <span class="label"><i class="fas fa-running"></i> 20 KM - ASSOCIADO</span>
-            <button class="ver-mapa" onclick="showToast('Carregando mapa do percurso...', 'info')">Ver mapa</button>
+            <button class="ver-mapa" onclick="showToast('Carregando informações da modalidade...', 'info')">+ Informações</button>
           </div>
         </div>
 
@@ -191,7 +193,7 @@
           <li>Confirmação de pagamento por WhatsApp e e-mail</li>
           <li>Histórico de inscrições</li>
         </ul>
-        <a href="cadastro-1.html" class="btn btn-primary">Criar conta</a>
+        <a href="#" class="btn btn-primary" onclick="event.preventDefault(); showToast('Abrindo suporte ao atleta...', 'info')">Suporte ao Atleta</a>
       </div>
       <div class="servicos-mockup">
         <img src="assets/mockup-atleta.png" alt="Mockup celular atleta">

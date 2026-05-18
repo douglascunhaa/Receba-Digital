@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="css/home.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="has-suporte-bar">
 
   <!-- HEADER -->
   <header class="site-header">
@@ -30,7 +30,7 @@
 
   <!-- HERO -->
   <section class="home-hero">
-    <h1>MUITO ALÉM<br>DO ESPORTE</h1>
+    <img src="assets/banner-home.jpg" alt="5K Pela Paz no Trânsito - Abertura 15/05 às 14h">
   </section>
 
   <!-- SEARCH BAR -->
@@ -79,8 +79,18 @@
   <section class="events-section">
     <div class="container">
       <h2>Eventos em destaques</h2>
-      <div class="events-grid" id="eventosDestaque"></div>
-      <div class="events-grid" id="eventosDestaque2"></div>
+      <div class="destaque-carrossel">
+        <button class="destaque-arrow prev" onclick="moverDestaque(-1)" aria-label="Anterior">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="destaque-track-wrap">
+          <div class="destaque-track" id="destaqueTrack"></div>
+        </div>
+        <button class="destaque-arrow next" onclick="moverDestaque(1)" aria-label="Próximo">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+      <div class="destaque-dots" id="destaqueDots"></div>
     </div>
   </section>
 
@@ -115,7 +125,7 @@
           <li>Confirmação de pagamento por WhatsApp e e-mail</li>
           <li>Histórico de inscrições</li>
         </ul>
-        <a href="cadastro-1.html" class="btn btn-primary">Criar conta</a>
+        <a href="#" class="btn btn-primary" onclick="event.preventDefault(); showToast('Abrindo suporte ao atleta...', 'info')">Suporte ao Atleta</a>
       </div>
       <div class="servicos-mockup">
         <img src="assets/mockup-atleta.png" alt="Mockup celular atleta">
@@ -166,6 +176,11 @@
     </div>
   </footer>
 
+  <!-- BARRA FIXA SUPORTE AO CLIENTE -->
+  <button class="suporte-bar" onclick="showToast('Abrindo canal de suporte ao cliente...', 'info')">
+    <i class="fab fa-whatsapp"></i> Suporte ao cliente
+  </button>
+
   <script src="js/global.js"></script>
   <script>
     // Dados fictícios dos eventos
@@ -193,7 +208,65 @@
       `).join('');
     }
 
-    ['eventosDestaque', 'eventosDestaque2', 'proximosEventos', 'proximosEventos2', 'todosEventos', 'todosEventos2'].forEach(renderEvents);
+    ['proximosEventos', 'proximosEventos2', 'todosEventos', 'todosEventos2'].forEach(renderEvents);
+
+    // Carrossel de eventos em destaque (cartazes)
+    const cartazes = [
+      'assets/cartaz-destaque-1.jpg',
+      'assets/cartaz-destaque-2.jpg',
+      'assets/cartaz-destaque-3.jpg',
+      'assets/cartaz-destaque-4.jpg',
+      'assets/cartaz-destaque-1.jpg',
+      'assets/cartaz-destaque-2.jpg',
+      'assets/cartaz-destaque-3.jpg',
+      'assets/cartaz-destaque-4.jpg'
+    ];
+    const VISIVEIS = 4;
+    let destaqueIdx = 0;
+
+    function renderDestaques() {
+      const track = document.getElementById('destaqueTrack');
+      track.innerHTML = cartazes.map(src => `
+        <div class="destaque-card" onclick="window.location='detalhe-evento.html'">
+          <img src="${src}" alt="Evento em destaque">
+        </div>
+      `).join('');
+
+      const totalPaginas = Math.max(1, cartazes.length - VISIVEIS + 1);
+      const dots = document.getElementById('destaqueDots');
+      dots.innerHTML = '';
+      for (let i = 0; i < totalPaginas; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'destaque-dot' + (i === 0 ? ' active' : '');
+        dot.onclick = () => irParaDestaque(i);
+        dots.appendChild(dot);
+      }
+    }
+
+    function atualizarDestaque() {
+      const track = document.getElementById('destaqueTrack');
+      const card = track.querySelector('.destaque-card');
+      if (!card) return;
+      const cardW = card.offsetWidth + 24;
+      track.style.transform = `translateX(-${destaqueIdx * cardW}px)`;
+      document.querySelectorAll('.destaque-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === destaqueIdx);
+      });
+    }
+
+    function moverDestaque(dir) {
+      const max = cartazes.length - VISIVEIS;
+      destaqueIdx = Math.min(Math.max(destaqueIdx + dir, 0), max);
+      atualizarDestaque();
+    }
+
+    function irParaDestaque(i) {
+      destaqueIdx = i;
+      atualizarDestaque();
+    }
+
+    renderDestaques();
+    window.addEventListener('resize', atualizarDestaque);
 
     function searchEvents(btn) {
       fakeLoadingButton(btn, () => showToast('Busca atualizada!'), 'Buscando...');

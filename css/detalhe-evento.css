@@ -4,8 +4,13 @@
 
 .evento-banner {
   width: 100%;
-  height: 360px;
-  background: url('../assets/banner-evento.jpg') center/cover no-repeat;
+  line-height: 0;
+}
+
+.evento-banner img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .evento-content {
@@ -22,22 +27,23 @@
 .evento-titulo {
   font-size: 26px;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   line-height: 1.2;
 }
 
 .evento-meta {
   display: flex;
-  gap: 24px;
+  flex-direction: column;
+  gap: 10px;
   margin-bottom: 18px;
-  font-size: 13px;
-  color: var(--color-gray-text);
+  font-size: 14px;
+  color: var(--color-black);
 }
 
 .evento-meta span {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .evento-meta i {
