@@ -114,3 +114,34 @@ document.addEventListener('DOMContentLoaded', () => {
     if (href === path) link.classList.add('active');
   });
 });
+
+// Menu mobile — injeta o botão hambúrguer no header e controla a abertura
+(function mobileMenu() {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+  const container = header.querySelector('.container');
+  const logo = container && container.querySelector('.logo');
+  if (!container || !logo) return;
+
+  const toggle = document.createElement('button');
+  toggle.className = 'nav-toggle';
+  toggle.setAttribute('aria-label', 'Abrir menu');
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.innerHTML = '<span></span><span></span><span></span>';
+  logo.insertAdjacentElement('afterend', toggle);
+
+  toggle.addEventListener('click', () => {
+    const open = header.classList.toggle('nav-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+  });
+
+  // Fecha o menu ao clicar em qualquer link do header
+  header.querySelectorAll('.main-nav a, .nav-buttons a').forEach(a => {
+    a.addEventListener('click', () => {
+      header.classList.remove('nav-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Abrir menu');
+    });
+  });
+})();

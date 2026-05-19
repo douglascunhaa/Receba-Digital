@@ -461,3 +461,32 @@
   font-size: 15px;
   font-weight: 700;
 }
+
+/* ==========================================================================
+   RESPONSIVO — PLATAFORMA DO ATLETA
+   ========================================================================== */
+@media (max-width: 860px) {
+  .plataforma .container { grid-template-columns: 1fr; gap: 24px; }
+  .plat-sidebar { position: static; }
+  .saude-card { grid-template-columns: 1fr; }
+  .saude-card .img { min-height: 180px; order: 2; }
+}
+
+@media (max-width: 600px) {
+  .plataforma { padding: 32px 0 60px; }
+  .plat-content h1 { font-size: 23px; }
+  .plat-content h2 { font-size: 19px; }
+  .ficha-wrap { padding: 36px 0; }
+  .ficha-card h1 { font-size: 22px; }
+  .ficha-card .btn-row { flex-direction: column; }
+  .privacy-item { grid-template-columns: 1fr; gap: 12px; }
+  .danger-card { grid-template-columns: 1fr; gap: 14px; }
+  .danger-card .btn { width: 100%; }
+  .parq-list li { grid-template-columns: 1fr; gap: 10px; }
+  .parq-list select { width: 100%; }
+  .amigo-card { grid-template-columns: 1fr; gap: 16px; }
+  .amigo-card .acoes { min-width: 0; flex-direction: row; flex-wrap: wrap; }
+  .amigo-card .acoes .btn { flex: 1; min-width: 120px; }
+  .amigos-form .form-actions { grid-template-columns: 1fr; }
+  .saude-card.preenchida .btn-row { flex-wrap: wrap; }
+}

@@ -161,3 +161,27 @@
 .solucao-bloco.cron .container {
   min-height: 360px;
 }
+
+/* ==========================================================================
+   RESPONSIVO — PARA ORGANIZADORES
+   ========================================================================== */
+@media (max-width: 860px) {
+  .solucao-bloco .container,
+  .solucao-bloco.reverso .container,
+  .solucao-bloco.dark.text-left .container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .solucao-bloco.reverso .solucao-img { order: 0; }
+}
+
+@media (max-width: 768px) {
+  .org-hero { height: 240px; }
+  .org-hero h1 { font-size: 26px; padding: 0 16px; }
+  .solucao-bloco { padding: 52px 0; }
+  .solucao-titulo,
+  .solucao-bloco h2 { font-size: 30px; }
+  .solucao-list li { font-size: 15px; }
+  .solucao-img img { max-height: 300px; }
+  .solucao-bloco.dark.text-left .solucao-img img { max-height: 260px; }
+}

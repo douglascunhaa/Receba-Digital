@@ -279,3 +279,23 @@
 .sidebar-card .btn-block {
   margin-top: 20px;
 }
+
+/* ==========================================================================
+   RESPONSIVO — DETALHE DO EVENTO
+   ========================================================================== */
+@media (max-width: 860px) {
+  .evento-content .container {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .evento-sidebar { position: static; }
+}
+
+@media (max-width: 768px) {
+  .evento-content { padding: 28px 0 50px; }
+  .evento-titulo { font-size: 21px; }
+  .evento-section h3 { font-size: 18px; }
+  .countdown-item .num { font-size: 24px; }
+  .kit-img { max-width: 100%; }
+  .percurso-item { font-size: 13px; }
+}

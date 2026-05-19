@@ -241,8 +241,14 @@
       'assets/cartaz-destaque-3.jpg',
       'assets/cartaz-destaque-4.jpg'
     ];
-    const VISIVEIS = 4;
     let destaqueIdx = 0;
+
+    // Quantidade de cartazes visíveis varia conforme a largura da tela
+    function getVisiveis() {
+      if (window.innerWidth <= 600) return 1;
+      if (window.innerWidth <= 900) return 2;
+      return 4;
+    }
 
     function renderDestaques() {
       const track = document.getElementById('destaqueTrack');
@@ -252,7 +258,7 @@
         </div>
       `).join('');
 
-      const totalPaginas = Math.max(1, cartazes.length - VISIVEIS + 1);
+      const totalPaginas = Math.max(1, cartazes.length - getVisiveis() + 1);
       const dots = document.getElementById('destaqueDots');
       dots.innerHTML = '';
       for (let i = 0; i < totalPaginas; i++) {
@@ -261,6 +267,7 @@
         dot.onclick = () => irParaDestaque(i);
         dots.appendChild(dot);
       }
+      if (destaqueIdx > totalPaginas - 1) destaqueIdx = totalPaginas - 1;
     }
 
     function atualizarDestaque() {
@@ -275,7 +282,7 @@
     }
 
     function moverDestaque(dir) {
-      const max = cartazes.length - VISIVEIS;
+      const max = cartazes.length - getVisiveis();
       destaqueIdx = Math.min(Math.max(destaqueIdx + dir, 0), max);
       atualizarDestaque();
     }
@@ -286,7 +293,16 @@
     }
 
     renderDestaques();
-    window.addEventListener('resize', atualizarDestaque);
+
+    // Ao redimensionar, recalcula nº de cards visíveis, dots e posição
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        renderDestaques();
+        atualizarDestaque();
+      }, 150);
+    });
 
     function searchEvents(btn) {
       fakeLoadingButton(btn, () => showToast('Busca atualizada!'), 'Buscando...');

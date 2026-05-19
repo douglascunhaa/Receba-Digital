@@ -371,3 +371,45 @@
 .event-card:hover .event-card-btn.last {
   background: #e65a00;
 }
+
+/* ==========================================================================
+   RESPONSIVO — HOME
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .events-grid { grid-template-columns: repeat(2, 1fr); }
+  .destaque-card { flex: 0 0 calc((100% - 24px) / 2); }
+  .destaque-arrow.prev { left: 6px; }
+  .destaque-arrow.next { right: 6px; }
+}
+
+@media (max-width: 768px) {
+  .search-bar {
+    grid-template-columns: 1fr;
+    margin: -26px auto 0;
+    padding: 14px;
+    gap: 10px;
+    border-radius: var(--radius);
+  }
+  .search-field input,
+  .search-field select { padding: 13px 0; }
+  .search-bar .btn { width: 100%; padding: 14px; }
+
+  .events-section { padding: 40px 0; }
+  .events-section h2 { font-size: 22px; margin-bottom: 22px; }
+
+  .events-grid { gap: 14px; }
+  .event-card-img { height: 150px; }
+  .event-card-title { font-size: 14px; min-height: 0; }
+  .event-card-body { padding: 14px; }
+
+  .destaque-arrow { width: 38px; height: 38px; font-size: 15px; }
+}
+
+@media (max-width: 600px) {
+  .destaque-card { flex: 0 0 100%; }
+}
+
+@media (max-width: 480px) {
+  .events-grid { grid-template-columns: 1fr; }
+  .event-card-img { height: 190px; }
+}

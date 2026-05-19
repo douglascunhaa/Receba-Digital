@@ -591,7 +591,7 @@
    -------------------------------------------------------------------------- */
 @media (max-width: 900px) {
   .resultados-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .tabela-scroll {
@@ -601,4 +601,39 @@
   .tabela-result {
     min-width: 720px;
   }
+}
+
+@media (max-width: 600px) {
+  .resultados-page,
+  .evento-res-page { padding: 22px 0 70px; }
+
+  .res-titulo { font-size: 19px; }
+
+  .res-abas {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .res-abas::-webkit-scrollbar { display: none; }
+  .res-aba { flex-shrink: 0; white-space: nowrap; }
+
+  .res-card { padding: 14px 12px; gap: 12px; }
+  .data-badge { width: 54px; }
+  .data-badge .dia { font-size: 20px; }
+  .res-card-info .nome { font-size: 14px; }
+
+  .stat-card-header { font-size: 14px; }
+
+  .evento-head-card { padding: 18px 16px; }
+  .evento-head-top { flex-direction: column; gap: 12px; }
+  .evento-head-info .nome { font-size: 16px; }
+  .evento-atualizado { text-align: left; }
+
+  .modalidade-card { max-width: 100%; }
+  .resultado-bar { font-size: 14px; }
+
+  .genero-aba { padding: 12px 10px; font-size: 12px; }
+  .tabela-busca { flex-wrap: wrap; justify-content: flex-start; }
+  .tabela-busca input { width: 100%; }
 }

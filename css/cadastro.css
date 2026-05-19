@@ -119,3 +119,14 @@
 .terms-box p {
   margin-bottom: 12px;
 }
+
+/* ==========================================================================
+   RESPONSIVO — CADASTRO
+   ========================================================================== */
+@media (max-width: 600px) {
+  .cadastro-section { padding: 36px 0 60px; }
+  .cadastro-card h2 { font-size: 23px; }
+  .cadastro-card .subtitle { margin-bottom: 24px; }
+  .progress-steps { margin-bottom: 28px; }
+  .terms-box { height: 210px; padding: 16px; }
+}
