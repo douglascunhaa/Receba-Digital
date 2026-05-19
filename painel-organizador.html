@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RecebeSports — Painel do Organizador</title>
+<meta name="description" content="Painel interno do organizador — RecebeSports / Recebe Digital.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/painel.css">
+</head>
+<body>
+<div class="app collapsed-none" id="app">
+  <div class="scrim" onclick="toggleMobile(false)"></div>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sb">
+    <div class="sb-top">
+      <button class="sb-burger" onclick="toggleSidebar()" title="Recolher menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <span class="sb-brandmark">Painel</span>
+    </div>
+    <nav class="sb-scroll" id="nav"></nav>
+    <div class="sb-foot">
+      <div class="sb-help">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span class="lbl">Central de Ajuda</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <div class="main">
+    <!-- HEADER -->
+    <header class="hd">
+      <div class="row">
+        <button class="hd-icbtn" onclick="toggleMobile(true)" style="display:none" id="mobBurger">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a class="hd-logo" href="#estatisticas"><img src="assets/logo-recebesports.svg" alt="RecebeSports"></a>
+      </div>
+      <div class="hd-right">
+        <label class="hd-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input placeholder="Buscar inscrição, atleta, evento…">
+        </label>
+        <button class="hd-icbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="hd-dot"></span></button>
+        <div class="hd-div"></div>
+        <div class="hd-user">
+          <div class="u-txt">
+            <div class="u-name">Rogério Onorato</div>
+            <div class="u-org">KMS Assessoria · Org. de Eventos</div>
+          </div>
+          <div class="hd-avt">R</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- BREADCRUMB BAR -->
+    <div class="bc">
+      <div class="bc-left">
+        <div class="bc-ic" id="bcIcon"></div>
+        <div class="bc-tt">
+          <div class="bc-trail" id="bcTrail"></div>
+          <h1 class="bc-h1" id="bcTitle"></h1>
+        </div>
+      </div>
+      <div class="bc-right" id="bcActions"></div>
+    </div>
+
+    <!-- CONTENT -->
+    <main class="content" id="content"></main>
+    <div class="foot">© <b>RECEBESPORTS</b> · Sistema de Gestão de Eventos Esportivos · 2026</div>
+  </div>
+</div>
+<script src="assets/painel.js"></script>
+</body>
+</html>

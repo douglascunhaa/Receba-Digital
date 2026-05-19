@@ -22,7 +22,7 @@
         <a href="organizadores.html">Para organizadores</a>
       </nav>
       <div class="nav-buttons">
-        <a href="organizador-login.html" class="btn-nav btn-nav-organizador">Área do Organizador</a>
+        <a href="login-organizador.html" class="btn-nav btn-nav-organizador">Área do Organizador</a>
         <a href="login.html" class="btn-nav btn-nav-atleta">Área do Atleta</a>
       </div>
     </div>
@@ -120,7 +120,7 @@
       const btn = e.target.querySelector('.btn-primary');
       fakeLoadingButton(btn, () => {
         showToast('Acesso autorizado! Redirecionando...', 'success');
-        setTimeout(() => window.location = 'index.html', 1200);
+        setTimeout(() => window.location = 'painel-organizador.html', 1200);
       }, 'Validando...');
       return false;
     }
