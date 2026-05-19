@@ -1,0 +1,2076 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RecebeSports — Painel do Organizador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RECEBESPORTS — SISTEMA INTERNO DO ORGANIZADOR
+   Redesign / Design System  ·  prototipo HTML+CSS+JS
+   ============================================================ */
+:root{
+  /* brand */
+  --brand:#FF6600;          --brand-700:#E25600;   --brand-300:#FFB47A;
+  --brand-tint:#FFF1E6;     --brand-tint-2:#FFE3CC;
+  /* dark navigation */
+  --ink-900:#161719;       --ink-850:#1E2023;     --ink-800:#26282C;
+  --ink-700:#33363B;       --ink-line:#34373D;    --ink-mut:#8E939C;
+  /* surfaces */
+  --bg:#EEF0F3;            --surface:#FFFFFF;     --surface-2:#F7F8FA;
+  --line:#E4E7EC;          --line-2:#EDEFF2;
+  /* text */
+  --tx-1:#15171C;          --tx-2:#5A626E;        --tx-3:#9099A5;
+  /* status */
+  --ok:#1F9D55;   --ok-bg:#E5F5EC;
+  --no:#E03B30;   --no-bg:#FCE9E8;
+  --warn:#D98200; --warn-bg:#FBEFD9;
+  --info:#2F6DE0; --info-bg:#E8F0FE;
+  --grow:#27B36B;   /* running/growth green */
+  /* geometry */
+  --r-s:8px; --r-m:12px; --r-l:16px;
+  --sb-w:248px; --sb-w-min:74px; --hd-h:66px;
+  --shadow-s:0 1px 2px rgba(16,20,28,.05);
+  --shadow-m:0 4px 14px -4px rgba(16,20,28,.12),0 2px 5px -2px rgba(16,20,28,.07);
+  --shadow-l:0 18px 44px -16px rgba(16,20,28,.28);
+  --font-d:"Bricolage Grotesque",sans-serif;
+  --font-b:"Hanken Grotesk",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:var(--font-b);
+  background:var(--bg);
+  color:var(--tx-1);
+  font-size:14px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"tnum";
+}
+::selection{background:var(--brand-tint-2);color:var(--brand-700)}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+a{color:inherit;text-decoration:none}
+input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+.tnum{font-variant-numeric:tabular-nums}
+.num{font-family:var(--font-d);font-variant-numeric:tabular-nums}
+
+/* ---------- scrollbars ---------- */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:#C7CCD4;border-radius:20px;border:3px solid transparent;background-clip:content-box}
+::-webkit-scrollbar-thumb:hover{background:#AAB1BC;background-clip:content-box}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ============================================================
+   APP SHELL
+   ============================================================ */
+.app{display:flex;min-height:100vh}
+
+/* ---------- SIDEBAR ---------- */
+.sb{
+  width:var(--sb-w);flex:none;background:var(--ink-900);
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;z-index:40;
+  transition:width .26s cubic-bezier(.4,0,.2,1);
+}
+.app.collapsed .sb{width:var(--sb-w-min)}
+.sb-top{
+  height:var(--hd-h);display:flex;align-items:center;gap:12px;
+  padding:0 18px;border-bottom:1px solid var(--ink-line);flex:none;
+}
+.sb-burger{
+  width:38px;height:38px;border-radius:10px;flex:none;
+  display:grid;place-items:center;color:#fff;
+  transition:background .15s;
+}
+.sb-burger:hover{background:var(--ink-700)}
+.sb-burger svg{width:19px;height:19px}
+.sb-brandmark{
+  font-family:var(--font-d);font-weight:800;font-size:13px;letter-spacing:.04em;
+  color:var(--ink-mut);text-transform:uppercase;white-space:nowrap;
+  overflow:hidden;transition:opacity .18s;
+}
+.app.collapsed .sb-brandmark{opacity:0;width:0}
+
+.sb-scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding:14px 12px 20px}
+.sb-scroll::-webkit-scrollbar{width:6px}
+.sb-scroll::-webkit-scrollbar-thumb{background:#3a3d44}
+
+.nav-sec{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:#5d626c;font-weight:700;padding:16px 12px 7px;white-space:nowrap}
+.app.collapsed .nav-sec{opacity:0;height:8px;padding:4px 0}
+
+.nav-i{
+  display:flex;align-items:center;gap:12px;width:100%;
+  padding:9px 12px;border-radius:10px;color:#B7BCC4;
+  font-size:13.5px;font-weight:500;white-space:nowrap;position:relative;
+  transition:background .14s,color .14s;
+}
+.nav-i:hover{background:var(--ink-800);color:#fff}
+.nav-i .ic{width:20px;height:20px;flex:none;display:grid;place-items:center}
+.nav-i .ic svg{width:19px;height:19px}
+.nav-i .lbl{flex:1;overflow:hidden;transition:opacity .16s}
+.nav-i .chev{width:14px;height:14px;flex:none;transition:transform .2s;opacity:.6}
+.nav-i.open .chev{transform:rotate(90deg)}
+.app.collapsed .nav-i .lbl,.app.collapsed .nav-i .chev{opacity:0;width:0}
+.nav-i.active{background:linear-gradient(90deg,rgba(255,102,0,.16),rgba(255,102,0,.03));color:#fff;font-weight:600}
+.nav-i.active::before{
+  content:"";position:absolute;left:-12px;top:7px;bottom:7px;width:3.5px;
+  background:var(--brand);border-radius:0 4px 4px 0;
+}
+.nav-i.active .ic{color:var(--brand)}
+
+.nav-sub{overflow:hidden;max-height:0;transition:max-height .26s ease}
+.nav-sub.open{max-height:420px}
+.app.collapsed .nav-sub{max-height:0!important}
+.nav-si{
+  display:flex;align-items:center;gap:10px;
+  padding:7px 12px 7px 44px;border-radius:9px;color:#9ca1ab;
+  font-size:13px;font-weight:500;white-space:nowrap;position:relative;
+  transition:background .14s,color .14s;
+}
+.nav-si::before{content:"";position:absolute;left:23px;top:0;bottom:0;width:1.5px;background:var(--ink-line)}
+.nav-si:hover{background:var(--ink-800);color:#fff}
+.nav-si.active{color:#fff;font-weight:600}
+.nav-si.active::after{content:"";position:absolute;left:18px;top:50%;
+  width:7px;height:7px;margin-top:-3.5px;border-radius:50%;background:var(--brand)}
+
+.sb-foot{padding:14px 12px;border-top:1px solid var(--ink-line);flex:none}
+.sb-help{
+  display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:11px;
+  background:var(--ink-800);color:#cfd3da;font-size:12.5px;font-weight:500;white-space:nowrap;
+}
+.sb-help svg{width:17px;height:17px;flex:none;color:var(--brand)}
+.sb-help .lbl{overflow:hidden;transition:opacity .16s}
+.app.collapsed .sb-help{justify-content:center}
+.app.collapsed .sb-help .lbl{opacity:0;width:0}
+
+/* ---------- MAIN COLUMN ---------- */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+
+/* ---------- HEADER ---------- */
+.hd{
+  height:var(--hd-h);background:var(--ink-850);flex:none;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px 0 24px;position:sticky;top:0;z-index:30;
+}
+.hd-logo{height:30px;display:flex;align-items:center}
+.hd-logo svg{height:30px;width:auto;display:block}
+.hd-right{display:flex;align-items:center;gap:10px}
+.hd-search{
+  display:flex;align-items:center;gap:9px;background:var(--ink-800);
+  border:1px solid var(--ink-line);border-radius:10px;padding:0 13px;height:40px;
+  width:248px;transition:border-color .15s,width .2s;
+}
+.hd-search:focus-within{border-color:var(--brand);width:300px}
+.hd-search svg{width:16px;height:16px;color:var(--ink-mut);flex:none}
+.hd-search input{background:none;border:none;outline:none;color:#fff;width:100%;font-size:13px}
+.hd-search input::placeholder{color:#6b7079}
+.hd-icbtn{
+  width:40px;height:40px;border-radius:10px;display:grid;place-items:center;
+  color:#c4c8cf;position:relative;transition:background .14s,color .14s;
+}
+.hd-icbtn:hover{background:var(--ink-800);color:#fff}
+.hd-icbtn svg{width:19px;height:19px}
+.hd-dot{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;
+  background:var(--brand);border:2px solid var(--ink-850)}
+.hd-div{width:1px;height:30px;background:var(--ink-line);margin:0 4px}
+.hd-user{display:flex;align-items:center;gap:11px;padding:5px 6px 5px 12px;border-radius:12px;
+  transition:background .14s}
+.hd-user:hover{background:var(--ink-800)}
+.hd-user .u-txt{text-align:right;line-height:1.25}
+.hd-user .u-name{color:#fff;font-weight:700;font-size:13px}
+.hd-user .u-org{color:var(--ink-mut);font-size:11px}
+.hd-avt{
+  width:40px;height:40px;border-radius:11px;flex:none;
+  display:grid;place-items:center;font-family:var(--font-d);font-weight:800;
+  font-size:16px;color:#fff;background:linear-gradient(150deg,#FF7A1F,#E25600);
+  box-shadow:0 3px 9px -2px rgba(255,102,0,.55);
+}
+@media(max-width:980px){.hd-search,.hd-user .u-txt{display:none}}
+
+/* ---------- BREADCRUMB BAR ---------- */
+.bc{
+  background:var(--surface);border-bottom:1px solid var(--line);
+  padding:14px 30px;display:flex;align-items:center;justify-content:space-between;
+  flex:none;gap:18px;flex-wrap:wrap;
+}
+.bc-left{display:flex;align-items:center;gap:13px;min-width:0}
+.bc-ic{width:38px;height:38px;border-radius:11px;flex:none;display:grid;place-items:center;
+  background:var(--brand-tint);color:var(--brand-700)}
+.bc-ic svg{width:20px;height:20px}
+.bc-tt{min-width:0}
+.bc-trail{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--tx-3);font-weight:600;
+  text-transform:uppercase;letter-spacing:.05em}
+.bc-trail .sep{color:var(--line);font-size:13px}
+.bc-trail .cur{color:var(--brand-700)}
+.bc-h1{font-family:var(--font-d);font-weight:700;font-size:21px;letter-spacing:-.01em;
+  color:var(--tx-1);line-height:1.15;margin-top:1px}
+.bc-right{display:flex;align-items:center;gap:9px}
+
+/* ---------- CONTENT ---------- */
+.content{padding:26px 30px 60px;flex:1}
+.view{display:none;animation:fade .32s ease both}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ============================================================
+   PRIMITIVES
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;
+  border-radius:10px;font-weight:600;font-size:13px;white-space:nowrap;
+  transition:transform .08s,box-shadow .15s,background .15s,border-color .15s;
+  border:1px solid transparent;
+}
+.btn:active{transform:translateY(1px)}
+.btn svg{width:16px;height:16px}
+.btn-pri{background:var(--brand);color:#fff;box-shadow:0 4px 12px -3px rgba(255,102,0,.5)}
+.btn-pri:hover{background:var(--brand-700)}
+.btn-dark{background:var(--ink-850);color:#fff}
+.btn-dark:hover{background:var(--ink-900)}
+.btn-ghost{background:var(--surface);color:var(--tx-1);border-color:var(--line)}
+.btn-ghost:hover{border-color:#cdd2da;background:var(--surface-2)}
+.btn-soft{background:var(--brand-tint);color:var(--brand-700)}
+.btn-soft:hover{background:var(--brand-tint-2)}
+.btn-ic{width:40px;height:40px;padding:0;justify-content:center}
+.btn-sm{height:33px;padding:0 12px;font-size:12.5px;border-radius:9px}
+.btn-sm svg{width:14px;height:14px}
+
+.chip{display:inline-flex;align-items:center;gap:6px;height:25px;padding:0 10px;
+  border-radius:7px;font-size:11.5px;font-weight:700;letter-spacing:.01em}
+.chip svg{width:12px;height:12px}
+.chip .pdot{width:6px;height:6px;border-radius:50%}
+.c-ok{background:var(--ok-bg);color:var(--ok)}
+.c-no{background:var(--no-bg);color:var(--no)}
+.c-warn{background:var(--warn-bg);color:var(--warn)}
+.c-info{background:var(--info-bg);color:var(--info)}
+.c-mut{background:var(--surface-2);color:var(--tx-2);border:1px solid var(--line)}
+
+.tag{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;
+  font-size:11px;font-weight:700;background:var(--surface-2);color:var(--tx-2);border:1px solid var(--line)}
+
+/* ---------- card ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-l);
+  box-shadow:var(--shadow-s)}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:17px 20px;border-bottom:1px solid var(--line-2)}
+.card-h .ttl{font-family:var(--font-d);font-weight:600;font-size:15px;letter-spacing:-.005em}
+.card-h .sub{font-size:12px;color:var(--tx-3);font-weight:500;margin-top:1px}
+.card-b{padding:20px}
+.card-h .htools{display:flex;align-items:center;gap:7px}
+
+.dot-act{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;
+  color:var(--tx-3);transition:background .14s,color .14s}
+.dot-act:hover{background:var(--surface-2);color:var(--tx-1)}
+.dot-act svg{width:16px;height:16px}
+
+/* ---------- grids ---------- */
+.grid{display:grid;gap:18px}
+.g-2{grid-template-columns:repeat(2,1fr)}
+.g-3{grid-template-columns:repeat(3,1fr)}
+.g-4{grid-template-columns:repeat(4,1fr)}
+.g-5{grid-template-columns:repeat(5,1fr)}
+@media(max-width:1240px){.g-4,.g-5{grid-template-columns:repeat(2,1fr)}.g-3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:860px){.grid{grid-template-columns:1fr!important}}
+.span-2{grid-column:span 2}
+@media(max-width:860px){.span-2{grid-column:span 1}}
+
+/* ---------- KPI ---------- */
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);
+  padding:17px 18px;position:relative;overflow:hidden;box-shadow:var(--shadow-s)}
+.kpi-top{display:flex;align-items:center;justify-content:space-between}
+.kpi-ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center}
+.kpi-ic svg{width:18px;height:18px}
+.kpi-lbl{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--tx-3);margin-top:13px}
+.kpi-val{font-family:var(--font-d);font-weight:700;font-size:27px;letter-spacing:-.02em;
+  margin-top:3px;line-height:1.1}
+.kpi-val .cur{font-size:15px;color:var(--tx-3);font-weight:600;margin-right:2px}
+.kpi-foot{display:flex;align-items:center;gap:6px;margin-top:9px;font-size:11.5px;
+  font-weight:600;color:var(--tx-2)}
+.kpi-delta{display:inline-flex;align-items:center;gap:3px;font-weight:700}
+.kpi-delta svg{width:12px;height:12px}
+.up{color:var(--ok)} .down{color:var(--no)}
+.kpi-spark{position:absolute;right:0;bottom:0;width:96px;height:42px;opacity:.85}
+
+/* ---------- table ---------- */
+.tbl-wrap{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl thead th{
+  text-align:left;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--tx-3);padding:11px 14px;background:var(--surface-2);white-space:nowrap;
+  border-bottom:1px solid var(--line);position:sticky;top:0;
+}
+.tbl thead th:first-child{border-radius:0}
+.tbl tbody td{padding:13px 14px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+.tbl tbody tr{transition:background .12s}
+.tbl tbody tr:hover{background:var(--surface-2)}
+.tbl tbody tr:last-child td{border-bottom:none}
+.t-strong{font-weight:700;color:var(--tx-1)}
+.t-mut{color:var(--tx-3);font-size:12px}
+.t-id{font-family:var(--font-d);font-weight:700;color:var(--brand-700);font-size:12.5px}
+.t-link{color:var(--info);font-weight:600}
+.t-2line .l1{font-weight:600;color:var(--tx-1)}
+.t-2line .l2{color:var(--tx-3);font-size:11.5px;margin-top:1px}
+.ckbox{width:17px;height:17px;border:1.6px solid #c4cad3;border-radius:5px;
+  display:grid;place-items:center;flex:none;cursor:pointer;background:#fff;transition:.12s}
+.ckbox:hover{border-color:var(--brand)}
+.ckbox svg{width:11px;height:11px;color:#fff;opacity:0}
+.ckbox.on{background:var(--brand);border-color:var(--brand)}
+.ckbox.on svg{opacity:1}
+.row-acts{display:flex;align-items:center;gap:3px}
+.ra{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;
+  color:var(--tx-3);transition:.13s}
+.ra:hover{background:var(--brand-tint);color:var(--brand-700)}
+.ra svg{width:15px;height:15px}
+
+/* avatar mini */
+.avt-s{width:34px;height:34px;border-radius:9px;flex:none;display:grid;place-items:center;
+  font-weight:700;font-size:13px;color:#fff;font-family:var(--font-d)}
+
+/* toolbar */
+.toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:15px 20px;border-bottom:1px solid var(--line-2)}
+.tb-count{font-family:var(--font-d);font-weight:600;font-size:14px}
+.tb-count b{color:var(--brand-700)}
+.tb-spacer{flex:1}
+.fld{display:flex;flex-direction:column;gap:6px}
+.fld-lbl{font-size:11.5px;font-weight:700;color:var(--tx-2);display:flex;align-items:center;gap:4px}
+.fld-lbl .req{color:var(--brand)}
+.inp,.sel{
+  height:40px;border:1px solid var(--line);border-radius:10px;background:#fff;
+  padding:0 13px;font-size:13px;color:var(--tx-1);outline:none;width:100%;
+  transition:border-color .14s,box-shadow .14s;
+}
+.inp::placeholder{color:var(--tx-3)}
+.inp:focus,.sel:focus{border-color:var(--brand);box-shadow:0 0 0 3.5px rgba(255,102,0,.13)}
+.inp:disabled{background:var(--surface-2);color:var(--tx-3)}
+textarea.inp{height:auto;padding:11px 13px;resize:vertical;line-height:1.55}
+.sel{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239099A5' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
+.inp-ic{position:relative}
+.inp-ic svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);
+  width:16px;height:16px;color:var(--tx-3)}
+.inp-ic .inp{padding-left:38px}
+.inp-suffix{position:absolute;right:11px;top:50%;transform:translateY(-50%);
+  width:24px;height:24px;border-radius:7px;display:grid;place-items:center;color:var(--tx-3)}
+.search-w{position:relative;flex:1;min-width:220px}
+
+/* pagination */
+.pager{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:14px 20px;flex-wrap:wrap}
+.pager-info{font-size:12.5px;color:var(--tx-3);font-weight:500}
+.pages{display:flex;align-items:center;gap:4px}
+.pg{min-width:34px;height:34px;padding:0 8px;border-radius:9px;display:grid;place-items:center;
+  font-size:13px;font-weight:600;color:var(--tx-2);border:1px solid transparent;transition:.13s}
+.pg:hover{background:var(--surface-2)}
+.pg.on{background:var(--ink-850);color:#fff}
+.pg.dis{opacity:.4;pointer-events:none}
+.pg svg{width:15px;height:15px}
+
+/* segmented tabs */
+.tabs{display:flex;gap:3px;background:var(--surface-2);border:1px solid var(--line);
+  border-radius:12px;padding:4px}
+.tab{padding:8px 16px;border-radius:9px;font-size:13px;font-weight:600;color:var(--tx-2);
+  display:flex;align-items:center;gap:7px;transition:.14s;white-space:nowrap}
+.tab svg{width:15px;height:15px}
+.tab:hover{color:var(--tx-1)}
+.tab.on{background:var(--surface);color:var(--brand-700);box-shadow:var(--shadow-s)}
+
+/* toggle */
+.tg{width:38px;height:22px;border-radius:20px;background:#cfd4dc;position:relative;
+  flex:none;transition:background .18s;cursor:pointer}
+.tg::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;
+  border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .18s}
+.tg.on{background:var(--brand)}
+.tg.on::after{transform:translateX(16px)}
+
+/* section subtitle */
+.sec-tt{display:flex;align-items:center;gap:9px;margin:4px 0 13px;
+  font-family:var(--font-d);font-weight:600;font-size:15px}
+.sec-tt .bar{width:4px;height:17px;border-radius:3px;background:var(--brand)}
+.sec-tt .ic{width:30px;height:30px;border-radius:8px;background:var(--brand-tint);
+  color:var(--brand-700);display:grid;place-items:center}
+.sec-tt .ic svg{width:16px;height:16px}
+
+/* progress */
+.bar-track{height:8px;border-radius:6px;background:var(--line-2);overflow:hidden}
+.bar-fill{height:100%;border-radius:6px;background:var(--brand)}
+
+/* list-row used in distance/category breakdowns */
+.lrow{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--line-2)}
+.lrow:last-child{border-bottom:none}
+.lrow .sw{width:11px;height:11px;border-radius:4px;flex:none}
+.lrow .ln{flex:1;font-weight:600;font-size:13px;color:var(--tx-1);min-width:0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lrow .lv{font-family:var(--font-d);font-weight:700;font-size:13.5px}
+.lrow .lp{font-size:11.5px;color:var(--tx-3);font-weight:600;width:48px;text-align:right}
+
+/* mini def list */
+.defs{display:grid;grid-template-columns:1fr;gap:1px}
+.def{display:flex;justify-content:space-between;gap:14px;padding:9px 0;
+  border-bottom:1px dashed var(--line);font-size:13px}
+.def:last-child{border-bottom:none}
+.def .k{color:var(--tx-2);font-weight:500}
+.def .v{font-weight:700;color:var(--tx-1);text-align:right}
+
+/* banner */
+.banner{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:11px;
+  font-size:13px;font-weight:600}
+.banner svg{width:18px;height:18px;flex:none}
+.banner-ok{background:var(--ok-bg);color:var(--ok)}
+.banner-warn{background:var(--warn-bg);color:var(--warn)}
+
+/* upload zone */
+.upz{border:2px dashed var(--line);border-radius:var(--r-m);background:var(--surface-2);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  padding:30px 20px;text-align:center;transition:.15s;cursor:pointer;color:var(--tx-3)}
+.upz:hover{border-color:var(--brand-300);background:var(--brand-tint);color:var(--brand-700)}
+.upz svg{width:30px;height:30px}
+.upz .ut{font-weight:700;font-size:13px}
+.upz .us{font-size:11.5px}
+
+/* form group panel */
+.fpanel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-l);
+  box-shadow:var(--shadow-s);overflow:hidden}
+.fpanel-h{display:flex;align-items:center;gap:9px;padding:15px 20px;
+  border-bottom:1px solid var(--line-2);background:var(--surface-2)}
+.fpanel-h .ic{width:30px;height:30px;border-radius:8px;background:var(--brand);color:#fff;
+  display:grid;place-items:center}
+.fpanel-h .ic svg{width:16px;height:16px}
+.fpanel-h .tt{font-family:var(--font-d);font-weight:600;font-size:14px;letter-spacing:.01em}
+.fpanel-b{padding:20px}
+.fgrid{display:grid;gap:15px 16px}
+
+/* tooltip-ish footer */
+.foot{text-align:center;padding:24px;color:var(--tx-3);font-size:12px}
+.foot b{color:var(--brand-700);font-weight:700}
+
+/* misc helpers */
+.row{display:flex;align-items:center;gap:10px}
+.muted{color:var(--tx-3)}
+.hint{font-size:11.5px;color:var(--tx-3)}
+.ev-pill{display:inline-flex;align-items:center;gap:8px;background:var(--surface-2);
+  border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-size:12.5px;font-weight:600;
+  white-space:nowrap}
+.ev-pill .num{color:var(--brand-700)}
+
+/* mobile overlay */
+.scrim{position:fixed;inset:0;background:rgba(15,18,24,.5);z-index:35;display:none}
+@media(max-width:760px){
+  .sb{position:fixed;left:0;transform:translateX(-100%);transition:transform .26s}
+  .app.mobopen .sb{transform:none}
+  .app.mobopen .scrim{display:block}
+  .content{padding:18px 14px 50px}
+  .bc{padding:13px 16px}
+}
+
+/* ── lotes de inscrição ── */
+.lote-row{display:flex;align-items:flex-end;gap:14px;padding:16px 2px;flex-wrap:wrap}
+.lote-row .fld{flex:1;min-width:150px}
+.lote-tag{display:inline-flex;align-items:center;height:38px;padding:0 14px;border-radius:9px;
+  background:var(--brand);color:#fff;font-family:var(--font-d);font-weight:600;font-size:12.5px;
+  white-space:nowrap;margin-bottom:1px}
+.lote-arrow{display:flex;align-items:center;color:var(--tx-3);margin-bottom:9px}
+.lote-arrow svg{width:18px;height:18px}
+
+/* ── rich-text toolbar ── */
+.rt-toolbar{display:flex;flex-wrap:wrap;gap:4px;padding:8px;background:var(--surface-2);
+  border:1px solid var(--line);border-bottom:none;border-radius:10px 10px 0 0}
+.rt-btn{height:30px;min-width:32px;padding:0 9px;border-radius:7px;border:1px solid transparent;
+  background:transparent;color:var(--tx-2);font-family:var(--font-b);font-size:12px;font-weight:700;
+  cursor:pointer;transition:.13s}
+.rt-btn:hover{background:var(--surface);border-color:var(--line);color:var(--tx-1)}
+
+/* ── map mock ── */
+.map-mock{position:relative;height:240px;border-radius:0 0 12px 12px;overflow:hidden;
+  background:linear-gradient(135deg,#E8EDF2 0%,#DCE4EA 100%)}
+.map-grid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(110,125,140,.13) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(110,125,140,.13) 1px,transparent 1px);
+  background-size:34px 34px}
+.map-grid::after{content:"";position:absolute;left:-10%;top:38%;width:130%;height:13px;
+  background:rgba(255,102,0,.22);transform:rotate(-9deg);border-radius:8px}
+.map-grid::before{content:"";position:absolute;left:18%;top:-10%;width:11px;height:130%;
+  background:rgba(47,109,224,.16);transform:rotate(7deg)}
+.map-pin{position:absolute;left:50%;top:48%;transform:translate(-50%,-100%);
+  width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+  color:var(--brand);filter:drop-shadow(0 6px 10px rgba(15,18,24,.28))}
+.map-pin svg{width:42px;height:42px}
+.map-pin::after{content:"";position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);
+  width:16px;height:5px;border-radius:50%;background:rgba(15,18,24,.25)}
+
+/* ── 2-column form layout ── */
+.form-2col{display:grid;grid-template-columns:1.55fr 1fr;gap:18px;align-items:start}
+@media(max-width:980px){.form-2col{grid-template-columns:1fr}}
+
+/* ── report summary aside ── */
+.rep-aside{display:flex;flex-direction:column;gap:14px}
+.rep-sum{background:var(--ink-900);border-radius:var(--r-l);padding:20px;color:#fff;
+  position:relative;overflow:hidden}
+.rep-sum::after{content:"";position:absolute;right:-30px;top:-30px;width:130px;height:130px;
+  border-radius:50%;background:radial-gradient(circle,rgba(255,102,0,.32),transparent 70%)}
+.rep-sum h4{font-family:var(--font-d);font-size:13px;font-weight:600;letter-spacing:.04em;
+  text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:14px;position:relative}
+.rep-sum .rs-row{display:flex;justify-content:space-between;align-items:center;
+  padding:9px 0;border-bottom:1px solid rgba(255,255,255,.09);font-size:13px;position:relative}
+.rep-sum .rs-row:last-of-type{border-bottom:none}
+.rep-sum .rs-row .k{color:rgba(255,255,255,.62);font-weight:500}
+.rep-sum .rs-row .v{font-family:var(--font-d);font-weight:600;color:#fff}
+.rep-fmt{display:flex;gap:8px;flex-wrap:wrap}
+.fmt-chip{flex:1;min-width:74px;display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:13px 8px;border-radius:11px;border:1.5px solid var(--line);background:var(--surface);
+  cursor:pointer;transition:.14s;font-size:11.5px;font-weight:700;color:var(--tx-2)}
+.fmt-chip svg{width:20px;height:20px;color:var(--tx-3)}
+.fmt-chip:hover{border-color:#cdd2da;background:var(--surface-2)}
+.fmt-chip.on{border-color:var(--brand);background:var(--brand-tint);color:var(--brand-700)}
+.fmt-chip.on svg{color:var(--brand)}
+
+/* ── info-note ── */
+.inote{display:flex;gap:11px;padding:14px 16px;border-radius:11px;background:var(--info-bg);
+  border:1px solid rgba(47,109,224,.2);font-size:12.5px;color:var(--tx-2);line-height:1.55}
+.inote svg{width:17px;height:17px;color:var(--info);flex-shrink:0;margin-top:1px}
+
+/* ── file uploader ── */
+.uploader{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;
+  width:184px;min-height:158px;flex:none;border:1.6px dashed #cdd2da;border-radius:14px;
+  background:var(--surface-2);cursor:pointer;transition:.15s;text-align:center;padding:16px}
+.uploader:hover{border-color:var(--brand);background:var(--brand-tint)}
+.up-ic{width:42px;height:42px;border-radius:11px;background:var(--surface);
+  display:flex;align-items:center;justify-content:center;color:var(--brand);box-shadow:var(--shadow-s)}
+.up-ic svg{width:20px;height:20px}
+.up-t{font-family:var(--font-d);font-weight:600;font-size:12.5px;color:var(--tx-1)}
+.up-s{font-size:11px;color:var(--tx-3);font-weight:500}
+
+/* ── form section divider ── */
+.fsep{display:flex;align-items:center;gap:8px;margin:22px 0 4px;
+  font-family:var(--font-d);font-weight:600;font-size:12px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--tx-2)}
+.fsep svg{width:14px;height:14px;color:var(--brand)}
+.fsep::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* ── org top row (uploader + fields) ── */
+.org-top{display:flex;gap:20px;align-items:flex-start}
+@media(max-width:620px){.org-top{flex-direction:column}.uploader{width:100%}}
+
+/* ── toggle switch ── */
+.tgl{position:relative;width:38px;height:22px;border-radius:99px;border:none;
+  background:#cdd2da;cursor:pointer;transition:.16s;flex:none;padding:0}
+.tgl span{position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;
+  background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:.16s}
+.tgl.on{background:var(--brand)}
+.tgl.on span{transform:translateX(16px)}
+.switch-row{display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:600;
+  color:var(--tx-2);cursor:pointer;padding:3px 0}
+.tgl-grid{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+
+</style>
+</head>
+<body>
+<div class="app collapsed-none" id="app">
+  <div class="scrim" onclick="toggleMobile(false)"></div>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sb">
+    <div class="sb-top">
+      <button class="sb-burger" onclick="toggleSidebar()" title="Recolher menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <span class="sb-brandmark">Painel</span>
+    </div>
+    <nav class="sb-scroll" id="nav"></nav>
+    <div class="sb-foot">
+      <div class="sb-help">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span class="lbl">Central de Ajuda</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <div class="main">
+    <!-- HEADER -->
+    <header class="hd">
+      <div class="row">
+        <button class="hd-icbtn" onclick="toggleMobile(true)" style="display:none" id="mobBurger">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a class="hd-logo" href="#estatisticas"><svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 64.738 12.641" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xodm="http://www.corel.com/coreldraw/odm/2003"> <defs> <mask id="id0"> <linearGradient id="id1" gradientUnits="userSpaceOnUse" x1="16.462" y1="2.964" x2="7.982" y2="4.091"> <stop offset="0" style="stop-opacity:1; stop-color:white"/> <stop offset="1" style="stop-opacity:0; stop-color:white"/> </linearGradient> <rect style="fill:url(#id1)" x="4.754" y="2.728" width="9.332" height="3.25"/> </mask> </defs> <g id="Camada_x0020_1"> <metadata id="CorelCorpID_0Corel-Layer"/> <g id="_2185462239792"> <path fill="#FFFFFF" d="M14.459 8.341l0 -4.356 0.564 0 0 1.187 -0.058 -0.208c0.122,-0.332 0.326,-0.585 0.614,-0.759 0.287,-0.174 0.644,-0.261 1.07,-0.261l0 0.572c-0.022,0 -0.044,-0.001 -0.066,-0.004 -0.022,-0.003 -0.045,-0.004 -0.067,-0.004 -0.459,0 -0.818,0.14 -1.078,0.419 -0.26,0.279 -0.39,0.676 -0.39,1.19l0 2.224 -0.589 0zm4.673 0.041c-0.454,0 -0.852,-0.095 -1.195,-0.286 -0.343,-0.191 -0.611,-0.453 -0.805,-0.788 -0.194,-0.335 -0.29,-0.718 -0.29,-1.149 0,-0.432 0.092,-0.813 0.278,-1.145 0.185,-0.332 0.439,-0.593 0.763,-0.784 0.323,-0.191 0.687,-0.286 1.091,-0.286 0.409,0 0.773,0.092 1.091,0.278 0.318,0.185 0.568,0.445 0.751,0.78 0.182,0.334 0.273,0.72 0.273,1.157 0,0.028 -0.001,0.057 -0.004,0.087 -0.002,0.03 -0.004,0.062 -0.004,0.095l-3.791 0 0 -0.439 3.476 0 -0.232 0.174c0,-0.315 -0.068,-0.596 -0.204,-0.842 -0.135,-0.246 -0.319,-0.438 -0.551,-0.577 -0.233,-0.138 -0.501,-0.207 -0.805,-0.207 -0.299,0 -0.567,0.069 -0.805,0.207 -0.238,0.139 -0.423,0.332 -0.556,0.581 -0.132,0.249 -0.199,0.534 -0.199,0.855l0 0.091c0,0.332 0.073,0.623 0.22,0.875 0.147,0.252 0.351,0.448 0.614,0.589 0.263,0.141 0.563,0.212 0.9,0.212 0.266,0 0.513,-0.047 0.743,-0.141 0.229,-0.094 0.427,-0.238 0.593,-0.432l0.332 0.382c-0.194,0.232 -0.436,0.409 -0.726,0.531 -0.291,0.122 -0.61,0.182 -0.958,0.182zm4.573 0c-0.432,0 -0.817,-0.095 -1.158,-0.286 -0.34,-0.191 -0.607,-0.453 -0.8,-0.788 -0.194,-0.335 -0.291,-0.718 -0.291,-1.149 0,-0.437 0.097,-0.821 0.291,-1.153 0.193,-0.332 0.46,-0.592 0.8,-0.78 0.341,-0.188 0.726,-0.282 1.158,-0.282 0.37,0 0.705,0.072 1.004,0.215 0.298,0.144 0.533,0.36 0.705,0.648l-0.44 0.298c-0.149,-0.221 -0.335,-0.384 -0.556,-0.489 -0.221,-0.105 -0.462,-0.158 -0.722,-0.158 -0.309,0 -0.589,0.071 -0.837,0.212 -0.249,0.141 -0.446,0.338 -0.59,0.593 -0.143,0.254 -0.215,0.553 -0.215,0.896 0,0.343 0.072,0.642 0.215,0.896 0.144,0.254 0.341,0.452 0.59,0.593 0.248,0.141 0.528,0.212 0.837,0.212 0.26,0 0.501,-0.053 0.722,-0.158 0.221,-0.105 0.407,-0.265 0.556,-0.481l0.44 0.299c-0.172,0.282 -0.407,0.496 -0.705,0.643 -0.299,0.146 -0.634,0.219 -1.004,0.219zm4.241 0c-0.453,0 -0.852,-0.095 -1.195,-0.286 -0.343,-0.191 -0.611,-0.453 -0.804,-0.788 -0.194,-0.335 -0.291,-0.718 -0.291,-1.149 0,-0.432 0.093,-0.813 0.278,-1.145 0.186,-0.332 0.44,-0.593 0.763,-0.784 0.324,-0.191 0.688,-0.286 1.091,-0.286 0.41,0 0.773,0.092 1.091,0.278 0.319,0.185 0.569,0.445 0.751,0.78 0.183,0.334 0.274,0.72 0.274,1.157 0,0.028 -0.001,0.057 -0.004,0.087 -0.003,0.03 -0.004,0.062 -0.004,0.095l-3.792 0 0 -0.439 3.477 0 -0.233 0.174c0,-0.315 -0.068,-0.596 -0.203,-0.842 -0.136,-0.246 -0.319,-0.438 -0.552,-0.577 -0.232,-0.138 -0.5,-0.207 -0.805,-0.207 -0.298,0 -0.566,0.069 -0.804,0.207 -0.238,0.139 -0.423,0.332 -0.556,0.581 -0.133,0.249 -0.199,0.534 -0.199,0.855l0 0.091c0,0.332 0.073,0.623 0.22,0.875 0.146,0.252 0.351,0.448 0.614,0.589 0.262,0.141 0.562,0.212 0.9,0.212 0.265,0 0.513,-0.047 0.742,-0.141 0.23,-0.094 0.427,-0.238 0.593,-0.432l0.332 0.382c-0.193,0.232 -0.435,0.409 -0.726,0.531 -0.29,0.122 -0.609,0.182 -0.958,0.182zm5.013 0c-0.382,0 -0.725,-0.087 -1.029,-0.261 -0.304,-0.174 -0.545,-0.427 -0.722,-0.759 -0.177,-0.332 -0.265,-0.733 -0.265,-1.203 0,-0.476 0.09,-0.878 0.27,-1.207 0.179,-0.329 0.421,-0.58 0.726,-0.751 0.304,-0.171 0.644,-0.257 1.02,-0.257 0.415,0 0.787,0.092 1.116,0.278 0.329,0.185 0.588,0.444 0.776,0.775 0.188,0.332 0.282,0.719 0.282,1.162 0,0.437 -0.094,0.823 -0.282,1.157 -0.188,0.335 -0.447,0.596 -0.776,0.784 -0.329,0.188 -0.701,0.282 -1.116,0.282zm-2.248 -0.041l0 -6.156 0.589 0 0 3.086 -0.083 0.88 0.058 0.879 0 1.311 -0.564 0zm2.207 -0.481c0.309,0 0.586,-0.071 0.829,-0.212 0.244,-0.141 0.437,-0.34 0.581,-0.597 0.144,-0.257 0.216,-0.555 0.216,-0.892 0,-0.343 -0.072,-0.642 -0.216,-0.896 -0.144,-0.255 -0.337,-0.452 -0.581,-0.593 -0.243,-0.141 -0.52,-0.212 -0.829,-0.212 -0.31,0 -0.588,0.071 -0.834,0.212 -0.246,0.141 -0.44,0.338 -0.581,0.593 -0.141,0.254 -0.212,0.553 -0.212,0.896 0,0.337 0.071,0.635 0.212,0.892 0.141,0.257 0.335,0.456 0.581,0.597 0.246,0.141 0.524,0.212 0.834,0.212zm4.871 0.522c-0.453,0 -0.851,-0.095 -1.194,-0.286 -0.343,-0.191 -0.611,-0.453 -0.805,-0.788 -0.194,-0.335 -0.29,-0.718 -0.29,-1.149 0,-0.432 0.092,-0.813 0.278,-1.145 0.185,-0.332 0.439,-0.593 0.763,-0.784 0.323,-0.191 0.687,-0.286 1.091,-0.286 0.409,0 0.773,0.092 1.091,0.278 0.318,0.185 0.568,0.445 0.751,0.78 0.182,0.334 0.273,0.72 0.273,1.157 0,0.028 -0.001,0.057 -0.004,0.087 -0.003,0.03 -0.004,0.062 -0.004,0.095l-3.791 0 0 -0.439 3.476 0 -0.232 0.174c0,-0.315 -0.068,-0.596 -0.204,-0.842 -0.135,-0.246 -0.319,-0.438 -0.551,-0.577 -0.233,-0.138 -0.501,-0.207 -0.805,-0.207 -0.299,0 -0.567,0.069 -0.805,0.207 -0.238,0.139 -0.423,0.332 -0.556,0.581 -0.133,0.249 -0.199,0.534 -0.199,0.855l0 0.091c0,0.332 0.073,0.623 0.22,0.875 0.146,0.252 0.351,0.448 0.614,0.589 0.263,0.141 0.563,0.212 0.9,0.212 0.266,0 0.513,-0.047 0.743,-0.141 0.229,-0.094 0.427,-0.238 0.593,-0.432l0.332 0.382c-0.194,0.232 -0.436,0.409 -0.726,0.531 -0.291,0.122 -0.61,0.182 -0.959,0.182z"/> <path fill="#FFFFFF" d="M41.898 8.407c-0.382,0 -0.748,-0.045 -1.099,-0.137 -0.352,-0.091 -0.629,-0.206 -0.834,-0.344l0.431 -0.929c0.205,0.127 0.447,0.231 0.726,0.311 0.28,0.08 0.555,0.12 0.826,0.12 0.298,0 0.51,-0.036 0.634,-0.108 0.125,-0.071 0.187,-0.171 0.187,-0.298 0,-0.105 -0.048,-0.184 -0.145,-0.237 -0.097,-0.052 -0.225,-0.092 -0.386,-0.12 -0.16,-0.028 -0.336,-0.055 -0.527,-0.083 -0.191,-0.028 -0.383,-0.065 -0.576,-0.112 -0.194,-0.047 -0.371,-0.117 -0.531,-0.212 -0.161,-0.094 -0.289,-0.221 -0.386,-0.381 -0.097,-0.161 -0.145,-0.368 -0.145,-0.622 0,-0.282 0.081,-0.531 0.244,-0.747 0.164,-0.216 0.4,-0.386 0.71,-0.51 0.31,-0.125 0.68,-0.187 1.112,-0.187 0.304,0 0.614,0.033 0.929,0.1 0.315,0.066 0.578,0.163 0.788,0.29l-0.431 0.921c-0.216,-0.127 -0.433,-0.214 -0.652,-0.261 -0.218,-0.047 -0.43,-0.071 -0.634,-0.071 -0.288,0 -0.498,0.039 -0.631,0.116 -0.133,0.078 -0.199,0.177 -0.199,0.299 0,0.11 0.048,0.193 0.145,0.249 0.097,0.055 0.225,0.099 0.386,0.132 0.16,0.034 0.336,0.063 0.527,0.088 0.191,0.024 0.383,0.062 0.576,0.112 0.194,0.049 0.37,0.12 0.527,0.211 0.158,0.091 0.286,0.216 0.386,0.374 0.1,0.157 0.149,0.363 0.149,0.618 0,0.276 -0.083,0.521 -0.249,0.734 -0.166,0.213 -0.405,0.38 -0.717,0.502 -0.313,0.121 -0.693,0.182 -1.141,0.182zm5.114 0c-0.376,0 -0.705,-0.083 -0.987,-0.249 -0.282,-0.166 -0.502,-0.419 -0.66,-0.759 -0.158,-0.34 -0.236,-0.77 -0.236,-1.29 0,-0.525 0.074,-0.957 0.224,-1.294 0.149,-0.338 0.365,-0.589 0.647,-0.755 0.282,-0.166 0.619,-0.249 1.012,-0.249 0.42,0 0.798,0.095 1.132,0.286 0.335,0.191 0.6,0.458 0.797,0.801 0.196,0.343 0.294,0.747 0.294,1.211 0,0.47 -0.098,0.877 -0.294,1.22 -0.197,0.343 -0.462,0.608 -0.797,0.796 -0.334,0.188 -0.712,0.282 -1.132,0.282zm-2.638 1.543l0 -6.073 1.236 0 0 0.913 -0.025 1.327 0.083 1.32 0 2.513 -1.294 0zm2.414 -2.605c0.216,0 0.408,-0.049 0.576,-0.149 0.169,-0.1 0.305,-0.242 0.407,-0.427 0.102,-0.186 0.153,-0.405 0.153,-0.66 0,-0.26 -0.051,-0.481 -0.153,-0.664 -0.102,-0.182 -0.238,-0.323 -0.407,-0.423 -0.168,-0.099 -0.36,-0.149 -0.576,-0.149 -0.216,0 -0.409,0.05 -0.581,0.149 -0.171,0.1 -0.307,0.241 -0.406,0.423 -0.1,0.183 -0.15,0.404 -0.15,0.664 0,0.255 0.05,0.474 0.15,0.66 0.099,0.185 0.235,0.327 0.406,0.427 0.172,0.1 0.365,0.149 0.581,0.149zm5.006 1.062c-0.476,0 -0.898,-0.099 -1.265,-0.298 -0.368,-0.199 -0.659,-0.472 -0.871,-0.818 -0.213,-0.345 -0.32,-0.739 -0.32,-1.182 0,-0.448 0.107,-0.845 0.32,-1.19 0.212,-0.346 0.503,-0.617 0.871,-0.813 0.367,-0.197 0.789,-0.295 1.265,-0.295 0.47,0 0.89,0.098 1.261,0.295 0.371,0.196 0.661,0.466 0.871,0.808 0.21,0.343 0.315,0.742 0.315,1.195 0,0.443 -0.105,0.837 -0.315,1.182 -0.21,0.346 -0.5,0.619 -0.871,0.818 -0.371,0.199 -0.791,0.298 -1.261,0.298zm0 -1.062c0.216,0 0.409,-0.049 0.581,-0.149 0.171,-0.1 0.307,-0.242 0.406,-0.427 0.1,-0.186 0.15,-0.405 0.15,-0.66 0,-0.26 -0.05,-0.481 -0.15,-0.664 -0.099,-0.182 -0.235,-0.323 -0.406,-0.423 -0.172,-0.099 -0.365,-0.149 -0.581,-0.149 -0.216,0 -0.409,0.05 -0.581,0.149 -0.171,0.1 -0.308,0.241 -0.411,0.423 -0.102,0.183 -0.153,0.404 -0.153,0.664 0,0.255 0.051,0.474 0.153,0.66 0.103,0.185 0.24,0.327 0.411,0.427 0.172,0.1 0.365,0.149 0.581,0.149zm2.882 0.996l0 -4.464 1.236 0 0 1.261 -0.174 -0.365c0.133,-0.315 0.346,-0.554 0.639,-0.717 0.293,-0.163 0.65,-0.245 1.07,-0.245l0 1.195c-0.055,-0.006 -0.105,-0.01 -0.149,-0.013 -0.045,-0.003 -0.092,-0.004 -0.141,-0.004 -0.354,0 -0.64,0.101 -0.859,0.303 -0.218,0.202 -0.328,0.516 -0.328,0.942l0 2.107 -1.294 0zm5.097 0.066c-0.525,0 -0.934,-0.134 -1.228,-0.402 -0.293,-0.268 -0.439,-0.668 -0.439,-1.199l0 -3.916 1.294 0 0 3.899c0,0.189 0.05,0.334 0.149,0.436 0.1,0.102 0.235,0.154 0.407,0.154 0.205,0 0.379,-0.056 0.523,-0.166l0.348 0.912c-0.133,0.094 -0.292,0.165 -0.477,0.212 -0.185,0.047 -0.378,0.07 -0.577,0.07zm-2.356 -3.534l0 -0.996 3.095 0 0 0.996 -3.095 0zm5.214 3.534c-0.382,0 -0.748,-0.045 -1.1,-0.137 -0.351,-0.091 -0.629,-0.206 -0.833,-0.344l0.431 -0.929c0.205,0.127 0.447,0.231 0.726,0.311 0.279,0.08 0.554,0.12 0.825,0.12 0.299,0 0.511,-0.036 0.635,-0.108 0.125,-0.071 0.187,-0.171 0.187,-0.298 0,-0.105 -0.049,-0.184 -0.145,-0.237 -0.097,-0.052 -0.226,-0.092 -0.386,-0.12 -0.161,-0.028 -0.336,-0.055 -0.527,-0.083 -0.191,-0.028 -0.383,-0.065 -0.577,-0.112 -0.193,-0.047 -0.37,-0.117 -0.531,-0.212 -0.16,-0.094 -0.289,-0.221 -0.385,-0.381 -0.097,-0.161 -0.146,-0.368 -0.146,-0.622 0,-0.282 0.082,-0.531 0.245,-0.747 0.163,-0.216 0.4,-0.386 0.709,-0.51 0.31,-0.125 0.681,-0.187 1.112,-0.187 0.304,0 0.614,0.033 0.929,0.1 0.316,0.066 0.578,0.163 0.789,0.29l-0.432 0.921c-0.216,-0.127 -0.433,-0.214 -0.651,-0.261 -0.219,-0.047 -0.43,-0.071 -0.635,-0.071 -0.287,0 -0.498,0.039 -0.63,0.116 -0.133,0.078 -0.199,0.177 -0.199,0.299 0,0.11 0.048,0.193 0.145,0.249 0.096,0.055 0.225,0.099 0.386,0.132 0.16,0.034 0.336,0.063 0.526,0.088 0.191,0.024 0.383,0.062 0.577,0.112 0.194,0.049 0.369,0.12 0.527,0.211 0.157,0.091 0.286,0.216 0.386,0.374 0.099,0.157 0.149,0.363 0.149,0.618 0,0.276 -0.083,0.521 -0.249,0.734 -0.166,0.213 -0.405,0.38 -0.718,0.502 -0.312,0.121 -0.692,0.182 -1.14,0.182z"/> <path fill="#FF6600" d="M25.745 12.338c-3.905,-0.485 -17.212,-3.489 -18.037,-6.233 -0.811,-2.622 7.943,-0.738 6.339,-3.885 -0.812,-2.072 -9.893,-2.34 -14.047,-2.182l3.171 2.314c2.47,-0.096 5.111,0.006 7.05,0.392 -1.747,0.466 -4.626,0.663 -5.46,1.978 -2.911,4.619 18.72,9.146 20.984,7.616z"/> <path fill="#FF6600" style="mask:url(#id0)" d="M7.676 5.978c-0.465,-2.063 5.31,-1.078 6.41,-2.571 -0.761,-0.181 -4.475,-0.786 -3.865,-0.663 -1.747,0.465 -4.626,0.663 -5.46,1.978 -0.087,0.138 0.669,0.589 0.616,0.723l2.299 0.533z"/> </g> </g> </svg></a>
+      </div>
+      <div class="hd-right">
+        <label class="hd-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input placeholder="Buscar inscrição, atleta, evento…">
+        </label>
+        <button class="hd-icbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="hd-dot"></span></button>
+        <div class="hd-div"></div>
+        <div class="hd-user">
+          <div class="u-txt">
+            <div class="u-name">Rogério Onorato</div>
+            <div class="u-org">KMS Assessoria · Org. de Eventos</div>
+          </div>
+          <div class="hd-avt">R</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- BREADCRUMB BAR -->
+    <div class="bc">
+      <div class="bc-left">
+        <div class="bc-ic" id="bcIcon"></div>
+        <div class="bc-tt">
+          <div class="bc-trail" id="bcTrail"></div>
+          <h1 class="bc-h1" id="bcTitle"></h1>
+        </div>
+      </div>
+      <div class="bc-right" id="bcActions"></div>
+    </div>
+
+    <!-- CONTENT -->
+    <main class="content" id="content"></main>
+    <div class="foot">© <b>RECEBESPORTS</b> · Sistema de Gestão de Eventos Esportivos · 2026</div>
+  </div>
+</div>
+<script>
+/* ============================================================
+   ICON LIBRARY  (stroke, 24-grid)
+   ============================================================ */
+const I = {
+  pie:'<path d="M21.2 15.9A10 10 0 1 1 8 2.8"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>',
+  trend:'<path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/><circle cx="7" cy="14" r="1.4"/><circle cx="11" cy="10" r="1.4"/><circle cx="14" cy="13" r="1.4"/><circle cx="19" cy="7" r="1.4"/>',
+  gear:'<circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 0 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 0 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 0 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+  report:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 17v-3"/><path d="M12 17v-6"/><path d="M16 17v-2"/>',
+  users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/>',
+  user:'<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  ticket:'<path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2 2 2 0 0 0 0 6 2 2 0 0 1-2 2H5a2 2 0 0 1-2-2 2 2 0 0 0 0-6z"/><path d="M9 7v2M9 13v2M9 19v-2"/>',
+  calendar:'<rect x="3" y="4" width="18" height="18" rx="2.5"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+  file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>',
+  building:'<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M9 6h.01M15 6h.01M9 10h.01M15 10h.01M9 14h.01M15 14h.01"/>',
+  list:'<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>',
+  layers:'<path d="M12 2 2 7l10 5 10-5z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/>',
+  database:'<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5M3 12a9 3 0 0 0 18 0"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  external:'<path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>',
+  plus:'<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+  dots:'<circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/>',
+  search:'<circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+  filter:'<polygon points="22 3 2 3 10 12.5 10 19 14 21 14 12.5 22 3"/>',
+  download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>',
+  edit:'<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/>',
+  eye:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
+  chevL:'<polyline points="15 18 9 12 15 6"/>',
+  chevR:'<polyline points="9 18 15 12 9 6"/>',
+  chevD:'<polyline points="6 9 12 15 18 9"/>',
+  chevsL:'<polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/>',
+  chevsR:'<polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/>',
+  check:'<polyline points="20 6 9 17 4 12"/>',
+  x:'<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+  mapPin:'<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
+  mail:'<rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m22 7-10 6L2 7"/>',
+  phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>',
+  lock:'<rect x="3" y="11" width="18" height="11" rx="2.5"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  image:'<rect x="3" y="3" width="18" height="18" rx="2.5"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/>',
+  upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>',
+  save:'<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/>',
+  okc:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
+  warnc:'<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+  up:'<line x1="12" y1="19" x2="12" y2="5"/><polyline points="6 11 12 5 18 11"/>',
+  down:'<line x1="12" y1="5" x2="12" y2="19"/><polyline points="6 13 12 19 18 13"/>',
+  trash:'<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+  globe:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/>',
+  shirt:'<path d="M20.4 7 16 4a4 4 0 0 1-8 0L3.6 7 6 11l2-1v9a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-9l2 1z"/>',
+  trophy:'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.7V17a2 2 0 0 1-2 2H7M14 14.7V17a2 2 0 0 0 2 2h1M18 2H6v7a6 6 0 0 0 12 0z"/>',
+  wallet:'<path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h15a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5"/><path d="M16 12h.01"/>',
+  card:'<rect x="2" y="5" width="20" height="14" rx="2.5"/><line x1="2" y1="10" x2="22" y2="10"/>',
+  flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>',
+  run:'<circle cx="13" cy="4" r="2"/><path d="m5 22 4-7 3 2 1 5M16 22l-2-7-3-3 2-5 3 3 3 1"/>',
+  pin2:'<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/>',
+  bank:'<path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>',
+  arrowR:'<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>',
+  copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+  refresh:'<path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/>',
+  bolt:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+  target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  print:'<polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>',
+  star:'<polygon points="12 2 15.1 8.6 22 9.3 17 14.1 18.2 21 12 17.6 5.8 21 7 14.1 2 9.3 8.9 8.6"/>',
+  city:'<path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/>',
+  inbox:'<polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.5 5.1 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.9A2 2 0 0 0 16.8 4H7.2a2 2 0 0 0-1.7 1.1z"/>',
+  doc2:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>',
+  hash:'<line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/>',
+};
+const ic=(n,cls='')=>`<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${I[n]||''}</svg>`;
+const icf=(n,cls='')=>`<svg class="${cls}" viewBox="0 0 24 24" fill="currentColor">${I[n]||''}</svg>`;
+
+/* ============================================================
+   NAVIGATION CONFIG
+   ============================================================ */
+const NAV=[
+  {id:'estatisticas',label:'Estatísticas do Evento',icon:'pie'},
+  {id:'financeiro',label:'Dashboard Financeiro',icon:'trend'},
+  {sec:'Auto Gestão'},
+  {id:'autogestao',label:'Auto Gestão',icon:'gear',children:[
+    {id:'inscricoes',label:'Consulta de Inscrições',icon:'ticket'},
+    {id:'cupons',label:'Cupons de Desconto',icon:'bolt'},
+    {id:'eventos',label:'Gestão de Eventos',icon:'calendar'},
+    {id:'contratos',label:'Meus Contratos',icon:'file'},
+    {id:'organizador',label:'Meu Cadastro',icon:'building'},
+    {id:'usuarios',label:'Usuários',icon:'users'},
+  ]},
+  {sec:'Relatórios'},
+  {id:'relatorios',label:'Relatórios',icon:'report',children:[
+    {id:'rel-crono',label:'Cronometragem',icon:'clock'},
+    {id:'rel-crono-r',label:'Cronometragem Reduzida',icon:'pin2'},
+    {id:'rel-inscricoes',label:'Inscrições',icon:'list'},
+    {id:'rel-agrupadas',label:'Inscrições Agrupadas',icon:'layers'},
+    {id:'rel-externas',label:'Inscrições Externas',icon:'external'},
+    {id:'rel-base',label:'Base Completa',icon:'database'},
+  ]},
+];
+
+/* ============================================================
+   CHART HELPERS  (hand-built SVG)
+   ============================================================ */
+function areaChart(data,{h=210,labels=[],grad='#27B36B',line='#1F9D55',cmp=null}={}){
+  const w=1000,pl=10,pr=10,pt=14,pb=26;
+  const max=Math.max(...data,...(cmp||[]))*1.18||1;
+  const iw=w-pl-pr,ih=h-pt-pb;
+  const X=i=>pl+(i/(data.length-1))*iw;
+  const Y=v=>pt+ih-(v/max)*ih;
+  const pts=data.map((v,i)=>[X(i),Y(v)]);
+  // smooth path
+  const smooth=p=>{let d=`M${p[0][0]},${p[0][1]}`;for(let i=0;i<p.length-1;i++){const c=p[i],n=p[i+1],mx=(c[0]+n[0])/2;d+=` C${mx},${c[1]} ${mx},${n[1]} ${n[0]},${n[1]}`;}return d;};
+  const lp=smooth(pts);
+  const ap=lp+` L${X(data.length-1)},${pt+ih} L${pl},${pt+ih} Z`;
+  let grid='';for(let g=0;g<=3;g++){const y=pt+(g/3)*ih;grid+=`<line x1="${pl}" y1="${y}" x2="${w-pr}" y2="${y}" stroke="#EDEFF2" stroke-width="1"/>`;}
+  let cmpPath='';
+  if(cmp){const cp=cmp.map((v,i)=>[X(i),Y(v)]);cmpPath=`<path d="${smooth(cp)}" fill="none" stroke="#C7CCD4" stroke-width="2" stroke-dasharray="4 4"/>`;}
+  let xlab='';
+  const step=Math.ceil(labels.length/9);
+  labels.forEach((l,i)=>{if(i%step===0){xlab+=`<text x="${X(i)}" y="${h-7}" font-size="11" fill="#9099A5" text-anchor="middle" font-weight="600">${l}</text>`;}});
+  const gid='g'+Math.random().toString(36).slice(2,7);
+  const last=pts[pts.length-1];
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%;height:${h}px;display:block">
+    <defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="${grad}" stop-opacity=".34"/>
+      <stop offset="1" stop-color="${grad}" stop-opacity="0"/></linearGradient></defs>
+    ${grid}${cmpPath}
+    <path d="${ap}" fill="url(#${gid})"/>
+    <path d="${lp}" fill="none" stroke="${line}" stroke-width="2.6" stroke-linejoin="round"/>
+    ${xlab}
+    <circle cx="${last[0]}" cy="${last[1]}" r="5" fill="#fff" stroke="${line}" stroke-width="2.6"/>
+  </svg>`;
+}
+function sparkline(data,color){
+  const w=120,h=42,max=Math.max(...data)||1,min=Math.min(...data);
+  const X=i=>(i/(data.length-1))*w, Y=v=>h-2-((v-min)/((max-min)||1))*(h-8);
+  let d='M'+X(0)+','+Y(data[0]);
+  for(let i=1;i<data.length;i++)d+=' L'+X(i)+','+Y(data[i]);
+  const a=d+` L${w},${h} L0,${h} Z`;
+  const gid='s'+Math.random().toString(36).slice(2,7);
+  return `<svg class="kpi-spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <defs><linearGradient id="${gid}" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0" stop-color="${color}" stop-opacity=".28"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>
+    <path d="${a}" fill="url(#${gid})"/><path d="${d}" fill="none" stroke="${color}" stroke-width="2.2"/></svg>`;
+}
+function donut(segs,{size=176,center=''}={}){
+  const r=size/2-16,c=size/2,circ=2*Math.PI*r;
+  const total=segs.reduce((s,x)=>s+x.v,0)||1;
+  let off=0,rings='';
+  segs.forEach(s=>{
+    const len=(s.v/total)*circ;
+    rings+=`<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${s.color}" stroke-width="20"
+      stroke-dasharray="${len-2.5} ${circ-len+2.5}" stroke-dashoffset="${-off}" stroke-linecap="round"
+      transform="rotate(-90 ${c} ${c})"/>`;
+    off+=len;
+  });
+  return `<svg viewBox="0 0 ${size} ${size}" style="width:${size}px;height:${size}px">
+    <circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#EDEFF2" stroke-width="20"/>
+    ${rings}
+    ${center?`<text x="${c}" y="${c-3}" text-anchor="middle" font-size="26" font-weight="800" font-family="Bricolage Grotesque" fill="#15171C">${center.split('|')[0]}</text>
+    <text x="${c}" y="${c+16}" text-anchor="middle" font-size="11" font-weight="700" fill="#9099A5">${center.split('|')[1]||''}</text>`:''}
+  </svg>`;
+}
+function gauge(pct,{label='',sub=''}={}){
+  const size=240,c=size/2,r=92,sw=20;
+  const start=Math.PI*0.82,end=Math.PI*2.18;
+  const pol=(ang)=>[c+r*Math.cos(ang),c+r*Math.sin(ang)];
+  const arc=(a0,a1,col,width)=>{
+    const[x0,y0]=pol(a0),[x1,y1]=pol(a1);
+    const large=(a1-a0)>Math.PI?1:0;
+    return `<path d="M${x0},${y0} A${r},${r} 0 ${large} 1 ${x1},${y1}" fill="none" stroke="${col}" stroke-width="${width}" stroke-linecap="round"/>`;
+  };
+  const p=Math.min(pct,100)/100;
+  const ang=start+(end-start)*p;
+  // colored bg track segmented
+  let track='';
+  const segCols=['#E03B30','#E08600','#27B36B','#1F9D55'];
+  for(let i=0;i<4;i++){
+    const a0=start+(end-start)*(i/4)+ (i?0.03:0);
+    const a1=start+(end-start)*((i+1)/4)-0.03;
+    track+=arc(a0,a1,segCols[i],8);
+  }
+  const[nx,ny]=pol(ang);
+  return `<svg viewBox="0 0 ${size} ${size-44}" style="width:100%;max-width:280px">
+    ${track}
+    ${arc(start,ang,'#FF6600',sw)}
+    <circle cx="${nx}" cy="${ny}" r="9" fill="#fff" stroke="#FF6600" stroke-width="4"/>
+    <text x="${c}" y="${c+4}" text-anchor="middle" font-size="34" font-weight="800" font-family="Bricolage Grotesque" fill="#15171C">${label}</text>
+    <text x="${c}" y="${c+26}" text-anchor="middle" font-size="12" font-weight="700" fill="#9099A5">${sub}</text>
+  </svg>`;
+}
+
+/* ============================================================
+   SHARED UI COMPONENTS
+   ============================================================ */
+function kpi({label,val,cur,icon,tint,delta,foot,spark,sparkColor,valColor}){
+  return `<div class="kpi">
+    <div class="kpi-top">
+      <div class="kpi-ic" style="background:${tint[0]};color:${tint[1]}">${ic(icon)}</div>
+      ${delta?`<span class="kpi-delta ${delta.dir}">${ic(delta.dir)} ${delta.v}</span>`:''}
+    </div>
+    <div class="kpi-lbl">${label}</div>
+    <div class="kpi-val" ${valColor?`style="color:${valColor}"`:''}>${cur?`<span class="cur">${cur}</span>`:''}${val}</div>
+    ${foot?`<div class="kpi-foot">${foot}</div>`:''}
+    ${spark?sparkline(spark,sparkColor||'#27B36B'):''}
+  </div>`;
+}
+function chip(type,txt,dot){
+  const map={ok:'c-ok',no:'c-no',warn:'c-warn',info:'c-info',mut:'c-mut'};
+  return `<span class="chip ${map[type]}">${dot?`<span class="pdot" style="background:currentColor"></span>`:''}${txt}</span>`;
+}
+function pager(total,perPage,active,pages){
+  pages=pages||Math.ceil(total/perPage);
+  let btns=`<button class="pg ${active<=1?'dis':''}">${ic('chevsL')}</button><button class="pg ${active<=1?'dis':''}">${ic('chevL')}</button>`;
+  for(let i=1;i<=Math.min(pages,5);i++)btns+=`<button class="pg ${i===active?'on':''}">${i}</button>`;
+  btns+=`<button class="pg">${ic('chevR')}</button><button class="pg">${ic('chevsR')}</button>`;
+  return `<div class="pager">
+    <span class="pager-info">Exibindo <b>1–${perPage}</b> de <b>${total}</b> registros</span>
+    <div class="pages">${btns}</div>
+  </div>`;
+}
+function avatar(name,bg){
+  const init=name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+  return `<span class="avt-s" style="background:${bg}">${init}</span>`;
+}
+const PAL=['#FF6600','#2F6DE0','#27B36B','#9B5DE5','#E0362C','#D98200','#0FB5BA','#E84393'];
+const colorFor=s=>PAL[[...s].reduce((a,c)=>a+c.charCodeAt(0),0)%PAL.length];
+</script>
+<script>
+/* ============================================================
+   MOCK DATA
+   ============================================================ */
+const DAYS=['29/10','31/10','02/11','04/11','06/11','08/11','10/11','12/11','14/11','16/11','18/11','20/11','22/11','24/11','26/11','28/11','30/11','02/12','04/12','06/12','08/12','10/12','12/12','14/12','16/12'];
+const SERIE=[8,11,9,14,10,16,13,19,15,21,17,22,19,24,26,28,31,30,34,36,42,55,78,118,142];
+const SERIE_CMP=[6,8,7,10,9,11,10,13,11,14,12,15,13,16,17,18,20,19,22,24,28,40,52,70,90];
+
+/* ============================================================
+   VIEW · ESTATÍSTICAS DO EVENTO
+   ============================================================ */
+function vEstatisticas(){
+  const distancias=[
+    {n:'Corrida 5 KM',v:366,p:77,c:'#FF6600'},
+    {n:'Corrida 10 KM',v:88,p:18,c:'#2F6DE0'},
+    {n:'Caminhada 3 KM',v:24,p:5,c:'#27B36B'},
+  ];
+  const categorias=[
+    {n:'Geral',v:423,p:88,c:'#FF6600'},
+    {n:'60 anos ou mais',v:49,p:10,c:'#2F6DE0'},
+    {n:'PCD',v:6,p:2,c:'#9B5DE5'},
+  ];
+  const pgto=[
+    {n:'PIX',v:432,p:'90,4%',c:'#27B36B'},
+    {n:'Cartão de Crédito',v:40,p:'8,4%',c:'#2F6DE0'},
+    {n:'Boleto',v:6,p:'1,3%',c:'#D98200'},
+  ];
+  const camisas=[['M',147],['G',107],['P',82],['BLG',67],['GG',37],['PP',29],['EG',6],['EXG',3]];
+  const cidades=[['Três Lagoas/MS',239],['Andradina/SP',106],['Santa Fé do Sul/SP',24],['Castilho/SP',19],['Mirandópolis/SP',16],['Brasilândia/MS',9]];
+  const estados=[['MS',264],['SP',212],['PR',1],['CE',1]];
+  const equipes=[['Hidalgo Treinamento',31],['Elite Run',23],['Camila Treinadora',12],['Marcha Lenta',10],['Hidalgo',9],['Zupa Hybrid Club',9]];
+
+  const lbar=(arr,max,fmt)=>arr.map(([n,v])=>`
+    <div style="padding:8px 0">
+      <div class="row" style="justify-content:space-between;margin-bottom:6px">
+        <span style="font-weight:600;font-size:13px">${n}</span>
+        <span class="num" style="font-weight:700;font-size:13px">${fmt?fmt(v):v}</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.max(4,v/max*100)}%;background:${colorFor(n)}"></div></div>
+    </div>`).join('');
+
+  return `
+  <!-- filter bar -->
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-b" style="display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap;padding:18px 20px">
+      <div class="fld" style="flex:1;min-width:300px">
+        <span class="fld-lbl">Evento selecionado</span>
+        <select class="sel">
+          <option>3989 · 3ª Corrida e Caminhada Clodoaldo Run · Três Lagoas/MS</option>
+          <option>4142 · 2ª Cascalheira Trail Run · Três Lagoas/MS</option>
+        </select>
+      </div>
+      <div class="fld"><span class="fld-lbl">Período de</span>
+        <div class="inp-ic"><span style="left:auto;right:13px">${ic('calendar')}</span><input class="inp" value="29/10/2025" style="width:160px;padding-left:13px"></div></div>
+      <div class="fld"><span class="fld-lbl">Período até</span>
+        <div class="inp-ic"><span style="left:auto;right:13px">${ic('calendar')}</span><input class="inp" value="16/12/2025" style="width:160px;padding-left:13px"></div></div>
+      <button class="btn btn-pri">${ic('filter')} Aplicar filtros</button>
+    </div>
+  </div>
+
+  <!-- KPI row -->
+  <div class="grid g-4" style="margin-bottom:20px">
+    ${kpi({label:'Inscrições Confirmadas',val:'478',icon:'check',tint:['#E5F5EC','#1F9D55'],delta:{dir:'up',v:'+34 hoje'},foot:'Atualizado há 2 min',spark:SERIE,sparkColor:'#27B36B'})}
+    ${kpi({label:'Inscrições em Aberto',val:'0',icon:'inbox',tint:['#E8F0FE','#2F6DE0'],foot:'Nenhum pagamento pendente'})}
+    ${kpi({label:'Limite de Inscritos',val:'100%',icon:'target',tint:['#FFF1E6','#E25600'],foot:'478 de 478 vagas preenchidas'})}
+    ${kpi({label:'Receita Confirmada',val:'23.430',cur:'R$',icon:'wallet',tint:['#F3ECFB','#9B5DE5'],delta:{dir:'up',v:'+7,2%'},foot:'Ticket médio R$ 49,02'})}
+  </div>
+
+  <!-- chart + gauge -->
+  <div class="grid" style="grid-template-columns:2fr 1fr;margin-bottom:20px">
+    <div class="card">
+      <div class="card-h">
+        <div><div class="ttl">Inscrições por dia</div><div class="sub">Volume diário desde a abertura das inscrições</div></div>
+        <div class="row" style="gap:14px">
+          <span class="row" style="gap:6px;font-size:11.5px;font-weight:700;color:var(--tx-2)"><span style="width:14px;height:3px;border-radius:2px;background:#1F9D55"></span>Este evento</span>
+          <span class="row" style="gap:6px;font-size:11.5px;font-weight:700;color:var(--tx-3)"><span style="width:14px;height:0;border-top:2px dashed #C7CCD4"></span>Evento anterior</span>
+        </div>
+      </div>
+      <div class="card-b" style="padding:18px 16px 12px">${areaChart(SERIE,{h:286,labels:DAYS,cmp:SERIE_CMP})}</div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div class="ttl">Ocupação do Evento</div></div>
+      <div class="card-b" style="text-align:center">
+        ${gauge(100,{label:'100%',sub:'LIMITE ATINGIDO'})}
+        <div class="ev-pill" style="margin-top:6px;border-color:var(--ok-bg);background:var(--ok-bg);color:var(--ok)">
+          ${ic('check')} <span><b class="num">478</b> / 478 vagas</span></div>
+        <p class="hint" style="margin-top:12px">O evento atingiu o número máximo de inscrições permitido.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- breakdown row -->
+  <div class="grid g-3" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-h"><div class="ttl">Inscrições por Distância</div></div>
+      <div class="card-b">
+        ${distancias.map(d=>`
+          <div style="margin-bottom:14px">
+            <div class="row" style="justify-content:space-between;margin-bottom:7px">
+              <span class="row" style="gap:8px;font-weight:600"><span class="sw" style="width:11px;height:11px;border-radius:4px;background:${d.c}"></span>${d.n}</span>
+              <span><b class="num" style="font-size:15px">${d.v}</b> <span class="hint">${d.p}%</span></span>
+            </div>
+            <div class="bar-track"><div class="bar-fill" style="width:${d.p}%;background:${d.c}"></div></div>
+          </div>`).join('')}
+        <div class="def" style="border-top:1px dashed var(--line);margin-top:6px;padding-top:11px">
+          <span class="k">Total de modalidades</span><span class="v num">3</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div class="ttl">Inscrições por Categoria</div></div>
+      <div class="card-b">
+        ${categorias.map(d=>`
+          <div style="margin-bottom:14px">
+            <div class="row" style="justify-content:space-between;margin-bottom:7px">
+              <span class="row" style="gap:8px;font-weight:600"><span class="sw" style="width:11px;height:11px;border-radius:4px;background:${d.c}"></span>${d.n}</span>
+              <span><b class="num" style="font-size:15px">${d.v}</b> <span class="hint">${d.p}%</span></span>
+            </div>
+            <div class="bar-track"><div class="bar-fill" style="width:${d.p}%;background:${d.c}"></div></div>
+          </div>`).join('')}
+        <div class="def" style="border-top:1px dashed var(--line);margin-top:6px;padding-top:11px">
+          <span class="k">Lote ativo</span><span class="v">Lote 1 · <span class="num">478</span> (100%)</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div class="ttl">Meios de Pagamento</div></div>
+      <div class="card-b" style="display:flex;align-items:center;gap:16px">
+        <div style="flex:none">${donut(pgto.map(p=>({v:p.v,color:p.c})),{size:150,center:'478|INSCRIÇÕES'})}</div>
+        <div style="flex:1">
+          ${pgto.map(p=>`<div class="lrow">
+            <span class="sw" style="background:${p.c}"></span>
+            <span class="ln">${p.n}</span>
+            <span class="lv num">${p.v}</span>
+            <span class="lp">${p.p}</span></div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- last row -->
+  <div class="grid g-3">
+    <div class="card">
+      <div class="card-h"><div class="ttl">Camisetas por Tamanho</div><span class="tag">478 peças</span></div>
+      <div class="card-b">${lbar(camisas,147)}</div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div class="ttl">Top Cidades</div><span class="tag">42 cidades</span></div>
+      <div class="card-b">${lbar(cidades,239)}</div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div class="ttl">Equipes &amp; Estados</div></div>
+      <div class="card-b">
+        <div class="sec-tt" style="font-size:12px;margin:0 0 8px"><span class="bar" style="height:13px"></span>Por Estado</div>
+        ${lbar(estados,264)}
+        <div class="sec-tt" style="font-size:12px;margin:14px 0 8px"><span class="bar" style="height:13px"></span>Top Equipes</div>
+        ${lbar(equipes,31)}
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ============================================================
+   VIEW · DASHBOARD FINANCEIRO
+   ============================================================ */
+function vFinanceiro(){
+  const FSER=[3,28,12,9,21,7,5,14,9,6,11,4,8,3,5,9,12,7,15,6,9,11,4,8,13,6,9,5,11,4];
+  const FDAYS=['13/01','15/01','17/01','19/01','21/01','23/01','25/01','27/01','30/01','01/02','04/02','06/02','08/02','10/02','12/02','19/02','01/03','03/03','25/03','27/03','01/04','03/04','05/04','07/04','12/04','14/04','16/04','18/04','20/04','22/04'];
+  const adiant=[
+    ['ACERTO FINAL','27/04/2026','1.038,35'],
+    ['Solicitação de Adiantamento · Evento 5','16/04/2026','1.500,00'],
+    ['Solicitação de Adiantamento · Evento 4','10/04/2026','2.000,00'],
+    ['Solicitação de Adiantamento · Evento 3','04/04/2026','2.700,00'],
+    ['Solicitação de Adiantamento · Evento 2','01/03/2026','2.800,00'],
+    ['Solicitação de Adiantamento · Evento 1','15/01/2026','1.800,00'],
+  ];
+  const servicos=[
+    ['Ant. cartões','27/04/2026','D','7,65'],
+    ['Adiantamento 5','16/04/2026','D','6,00'],
+    ['Adiantamento 4','13/04/2026','D','12,00'],
+    ['Adiantamento 3','06/04/2026','D','12,00'],
+    ['Adiantamento 2','02/03/2026','D','12,00'],
+    ['Adiantamento 1','16/01/2026','D','12,00'],
+  ];
+  const payCard=(label,icon,col,count,val)=>`
+    <div class="card" style="padding:16px 17px;border-radius:12px">
+      <div class="row" style="justify-content:space-between">
+        <div class="kpi-ic" style="background:${col}22;color:${col}">${ic(icon)}</div>
+        <span class="tag">${count} transações</span>
+      </div>
+      <div class="kpi-lbl" style="margin-top:13px">${label}</div>
+      <div class="kpi-val" style="font-size:22px"><span class="cur">R$</span>${val}</div>
+    </div>`;
+  return `
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-b" style="display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap;padding:18px 20px">
+      <div class="fld" style="flex:1;min-width:280px"><span class="fld-lbl">Evento</span>
+        <select class="sel"><option>4142 · 00 · 03/05/2026 · Acerto Financeiro</option></select></div>
+      <div class="fld"><span class="fld-lbl">De</span><div class="inp-ic"><span style="left:auto;right:13px">${ic('calendar')}</span><input class="inp" placeholder="DD/MM/AAAA" style="width:150px;padding-left:13px"></div></div>
+      <div class="fld"><span class="fld-lbl">Até</span><div class="inp-ic"><span style="left:auto;right:13px">${ic('calendar')}</span><input class="inp" placeholder="DD/MM/AAAA" style="width:150px;padding-left:13px"></div></div>
+      <button class="btn btn-pri">${ic('filter')} Filtrar</button>
+    </div>
+  </div>
+
+  <!-- main KPIs + saldo -->
+  <div class="grid" style="grid-template-columns:repeat(3,1fr) 1.15fr;margin-bottom:20px">
+    ${kpi({label:'Total Arrecadado',val:'11.998,00',cur:'R$',icon:'wallet',tint:['#E5F5EC','#1F9D55'],delta:{dir:'up',v:'144 inscr.'},foot:'Bruto do período'})}
+    ${kpi({label:'Valores em Aberto',val:'0,00',cur:'R$',icon:'clock',tint:['#E8F0FE','#2F6DE0'],foot:'Sem boletos pendentes'})}
+    ${kpi({label:'Inscrições Bloqueadas',val:'0,00',cur:'R$',icon:'lock',tint:['#FBEFD9','#D98200'],foot:'Nenhuma pendência'})}
+    <div class="kpi" style="background:linear-gradient(150deg,#2A1410,#1E2023);border-color:#3a2a22">
+      <div class="kpi-top">
+        <div class="kpi-ic" style="background:rgba(255,102,0,.18);color:#FF8A3D">${ic('bank')}</div>
+        <span class="chip" style="background:rgba(224,59,48,.18);color:#FF7A6E">Atenção</span>
+      </div>
+      <div class="kpi-lbl" style="color:#9aa0aa">Saldo Disponível</div>
+      <div class="kpi-val" style="color:#FF6B5E"><span class="cur" style="color:#8a8f99">R$</span>−42,50</div>
+      <div class="kpi-foot" style="color:#cfd3da"><a class="row" style="gap:5px;color:#FF8A3D;font-weight:700">${ic('eye')} Entenda o saldo</a></div>
+    </div>
+  </div>
+
+  <!-- payment method cards -->
+  <div class="grid g-4" style="margin-bottom:20px">
+    ${payCard('Recebido via PIX','pix'in I?'pix':'wallet','#27B36B',128,'10.723,00')}
+    ${payCard('Recebido via Cartão','card','#2F6DE0',16,'1.232,50')}
+    ${payCard('Recebido via Boleto','file','#D98200',0,'0,00')}
+    ${payCard('Descontos &amp; Estornos','refresh','#9B5DE5',3,'98,00')}
+  </div>
+
+  <!-- chart + donut -->
+  <div class="grid" style="grid-template-columns:2fr 1fr;margin-bottom:20px">
+    <div class="card">
+      <div class="card-h"><div><div class="ttl">Inscrições por dia</div><div class="sub">Entradas financeiras diárias</div></div>
+        <span class="tag">Hoje · R$ 0,00</span></div>
+      <div class="card-b" style="padding:14px 16px 8px">${areaChart(FSER,{h:220,labels:FDAYS,grad:'#FF6600',line:'#E25600'})}</div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div class="ttl">Por Método de Pagamento</div></div>
+      <div class="card-b" style="text-align:center">
+        ${donut([{v:10723,color:'#27B36B'},{v:1232,color:'#2F6DE0'},{v:1,color:'#D98200'}],{size:168,center:'144|TRANSAÇÕES'})}
+        <div style="margin-top:6px">
+          <div class="lrow"><span class="sw" style="background:#27B36B"></span><span class="ln">PIX</span><span class="lv num">89,4%</span></div>
+          <div class="lrow"><span class="sw" style="background:#2F6DE0"></span><span class="ln">Cartão de Crédito</span><span class="lv num">10,3%</span></div>
+          <div class="lrow"><span class="sw" style="background:#D98200"></span><span class="ln">Boleto</span><span class="lv num">0,3%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- distances financial -->
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-h"><div class="ttl">Arrecadação por Distância</div></div>
+    <div class="card-b grid g-2">
+      <div>
+        <div class="row" style="justify-content:space-between;margin-bottom:8px">
+          <span class="row" style="gap:8px;font-weight:700">${ic('run')} Corrida 7 KM</span>
+          <span><b class="num">136</b> inscr. · <b class="num" style="color:var(--ok)">R$ 13.305</b></span></div>
+        <div class="bar-track" style="height:11px"><div class="bar-fill" style="width:96%;background:#27B36B"></div></div>
+      </div>
+      <div>
+        <div class="row" style="justify-content:space-between;margin-bottom:8px">
+          <span class="row" style="gap:8px;font-weight:700">${ic('flag')} Caminhada</span>
+          <span><b class="num">7</b> inscr. · <b class="num" style="color:var(--ok)">R$ 595</b></span></div>
+        <div class="bar-track" style="height:11px"><div class="bar-fill" style="width:14%;background:#2F6DE0"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- tables -->
+  <div class="grid g-2">
+    <div class="card">
+      <div class="card-h"><div class="ttl">Adiantamentos Realizados</div><span class="tag">${adiant.length} lançamentos</span></div>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>Descrição</th><th>Data</th><th style="text-align:right">Valor</th><th style="text-align:center">Compr.</th></tr></thead>
+        <tbody>${adiant.map(([d,dt,v])=>`<tr>
+          <td><div class="t-2line"><div class="l1">${d}</div><div class="l2">Responsável: ALE · ${chip('ok','PAGO')}</div></div></td>
+          <td class="t-mut num">${dt}</td>
+          <td style="text-align:right" class="t-strong num">R$ ${v}</td>
+          <td style="text-align:center"><button class="ra" style="margin:0 auto">${ic('download')}</button></td>
+        </tr>`).join('')}</tbody>
+      </table></div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div class="ttl">Serviços Contratados</div><span class="tag">${servicos.length} serviços</span></div>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>Serviço</th><th>Data</th><th style="text-align:center">Tipo</th><th style="text-align:right">Valor</th></tr></thead>
+        <tbody>${servicos.map(([d,dt,t,v])=>`<tr>
+          <td><div class="t-2line"><div class="l1">${d}</div><div class="l2">Responsável: ALE</div></div></td>
+          <td class="t-mut num">${dt}</td>
+          <td style="text-align:center"><span class="tag">${t}</span></td>
+          <td style="text-align:right" class="num" style="color:var(--no)">− R$ ${v}</td>
+        </tr>`).join('')}</tbody>
+      </table></div>
+    </div>
+  </div>`;
+}
+</script>
+<script>
+/* ============================================================
+   VIEW · CONSULTA DE INSCRIÇÕES
+   ============================================================ */
+function vInscricoes(){
+  const rows=[
+    ['00414200166','23/04/2026 22:02','91,50','PIX','ok','PAGO','Mariana Rodrigues Duarte','024.889.081-69','F','Hidalgo Treinamento','Corrida 7 KM','P'],
+    ['00414200165','23/04/2026 20:21','91,50','PIX','no','CANCELADA','Laudineia C. da Silva Leal','795.692.261-53','F','Reviva Cascalheira','Caminhada','P'],
+    ['00414200164','22/04/2026 15:33','49,00','Cartão','ok','PAGO','Edson Santana','365.339.801-06','M','Ribas','Corrida 7 KM','GG'],
+    ['00414200163','21/04/2026 20:31','91,50','PIX','ok','PAGO','Carolina Carreira','435.443.418-08','F','Equipe Carreira','Corrida 7 KM','M'],
+    ['00414200162','20/04/2026 22:22','91,50','PIX','ok','PAGO','Tawani H. P. Machado','453.609.648-55','F','Papaléguas','Corrida 7 KM','G'],
+    ['00414200161','20/04/2026 16:57','91,50','PIX','ok','PAGO','Everton Nascimento da Silva','390.933.688-42','M','—','Corrida 7 KM','GG'],
+    ['00414200160','19/04/2026 13:11','91,50','PIX','ok','PAGO','Camila A. A. Guimarães','053.894.481-11','F','—','Corrida 7 KM','PP'],
+    ['00414200159','19/04/2026 12:54','91,50','PIX','warn','ESTORNADA','Otávio V. de Lima Bueno','083.433.911-01','M','—','Corrida 7 KM','P'],
+    ['00414200158','18/04/2026 06:04','91,50','PIX','ok','PAGO','Clodoaldo Araújo Lima','351.097.852-87','M','Nenhuma','Corrida 7 KM','G'],
+    ['00414200157','18/04/2026 02:35','91,50','PIX','ok','PAGO','Brenner Soares','067.241.441-40','M','—','Corrida 7 KM','G'],
+  ];
+  const st={ok:['ok','PAGO'],no:['no','CANCELADA'],warn:['warn','ESTORNADA']};
+  return `
+  <div class="card">
+    <div class="toolbar">
+      <div class="fld" style="flex:1;min-width:320px">
+        <span class="fld-lbl">Evento <span class="req">*</span></span>
+        <select class="sel"><option>4142 · 03/05/2026 · 2ª Cascalheira Trail Run · Três Lagoas/MS</option></select>
+      </div>
+      <div class="fld" style="width:230px"><span class="fld-lbl">Filtrar por CPF</span>
+        <div class="inp-ic">${ic('search')}<input class="inp" placeholder="000.000.000-00"></div></div>
+      <div class="fld"><span class="fld-lbl">&nbsp;</span><button class="btn btn-pri">${ic('filter')} Buscar</button></div>
+    </div>
+    <div class="toolbar" style="border-bottom:1px solid var(--line-2)">
+      <span class="tb-count"><b>172</b> inscrições realizadas</span>
+      <span class="row" style="gap:6px">${chip('ok','152 pagas')}${chip('no','15 canceladas')}${chip('warn','5 estornadas')}</span>
+      <span class="tb-spacer"></span>
+      <button class="btn btn-ghost btn-sm">${ic('download')} Exportar</button>
+      <button class="btn btn-ghost btn-sm btn-ic">${ic('dots')}</button>
+    </div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr>
+        <th>Ações</th><th>Inscrição</th><th>Valor</th><th>Status</th><th>Pagamento</th>
+        <th>Atleta</th><th>Equipe</th><th>Categoria</th>
+      </tr></thead>
+      <tbody>${rows.map(r=>`<tr>
+        <td><div class="row-acts"><button class="ra">${ic('eye')}</button><button class="ra">${ic('edit')}</button><button class="ra">${ic('dots')}</button></div></td>
+        <td><div class="t-2line"><div class="l1 t-id">#${r[0]}</div><div class="l2">${r[1]}</div></div></td>
+        <td class="t-strong num">R$ ${r[2]}</td>
+        <td>${chip(st[r[4]][0],st[r[4]][1])}</td>
+        <td><span class="row" style="gap:7px"><span class="kpi-ic" style="width:26px;height:26px;border-radius:7px;background:var(--surface-2);color:var(--tx-2)">${ic(r[3]==='Cartão'?'card':'wallet')}</span><span style="font-weight:600">${r[3]}</span></span></td>
+        <td><div class="row" style="gap:9px">${avatar(r[6],colorFor(r[6]))}
+          <div class="t-2line"><div class="l1">${r[6]}</div><div class="l2">CPF ${r[7]} · ${r[8]}</div></div></div></td>
+        <td><span class="tag">${r[9]}</span></td>
+        <td><div class="t-2line"><div class="l1">${r[10]}</div><div class="l2">Camiseta ${r[11]}</div></div></td>
+      </tr>`).join('')}</tbody>
+    </table></div>
+    ${pager(172,10,2)}
+  </div>`;
+}
+
+/* ============================================================
+   VIEW · CUPONS DE DESCONTO
+   ============================================================ */
+function vCupons(){
+  const rows=[
+    ['57880','Lagartixa10','personalizado','90,00',0,10,0,'1ª Corrida Lagartixa Runner','Santa Fé do Sul/SP'],
+    ['57437','kms10','personalizado','15,00',0,50,0,'2ª Corrida SF Agropecuária Tenizon','Brasilândia/MS'],
+    ['57438','kms11','personalizado','15,00',2,50,4,'7ª Corrida e Caminhada Balneário','Três Lagoas/MS'],
+    ['57276','Fernando Lima Assessoria','personalizado','10,00',2,20,10,'2ª Corrida ATC Run','Andradina/SP'],
+    ['57275','Hidalgo Treinamento','personalizado','10,00',7,50,14,'2ª Corrida ATC Run','Andradina/SP'],
+    ['56998','BoxFit Ortuzal','personalizado','10,00',0,50,0,'2ª Corrida ATC Run','Andradina/SP'],
+    ['55300','Hidalgo 10','personalizado','10,00',4,50,8,'2ª Corrida de Rua Lavínia','Lavínia/SP'],
+    ['55301','Planet Fitness','personalizado','10,00',2,30,7,'2ª Corrida de Rua Lavínia','Lavínia/SP'],
+  ];
+  return `
+  <div class="card">
+    <div class="toolbar">
+      <span class="tb-count"><b>419</b> cupons cadastrados</span>
+      <span class="tb-spacer"></span>
+      <select class="sel" style="width:170px"><option>Exibir 10 por página</option><option>25 por página</option><option>50 por página</option></select>
+      <div class="search-w"><div class="inp-ic">${ic('search')}<input class="inp" placeholder="Buscar por código, evento ou organizador…"></div></div>
+      <button class="btn btn-pri">${ic('plus')} Novo Cupom</button>
+    </div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr>
+        <th style="width:34px"><span class="ckbox" onclick="this.classList.toggle('on')">${ic('check')}</span></th>
+        <th>Ações</th><th>ID</th><th>Código</th><th>Tipo</th><th>Valor</th><th>Uso</th><th>Disponível</th>
+        <th>Evento</th><th>Organizador</th><th>Vigência</th>
+      </tr></thead>
+      <tbody>${rows.map(r=>{
+        const pct=Math.round(r[4]/r[5]*100);
+        return `<tr>
+        <td><span class="ckbox" onclick="this.classList.toggle('on')">${ic('check')}</span></td>
+        <td><div class="row-acts"><button class="ra">${ic('eye')}</button><button class="ra">${ic('edit')}</button></div></td>
+        <td class="t-id">#${r[0]}</td>
+        <td><span class="row" style="gap:8px"><span class="kpi-ic" style="width:28px;height:28px;border-radius:7px;background:var(--brand-tint);color:var(--brand-700)">${ic('bolt')}</span><b>${r[1]}</b></span></td>
+        <td><span class="tag">${r[2]}</span></td>
+        <td class="t-strong num">R$ ${r[3]}</td>
+        <td style="min-width:130px">
+          <div class="row" style="justify-content:space-between;font-size:11.5px;font-weight:700;margin-bottom:4px">
+            <span class="num">${r[4]}/${r[5]}</span><span class="hint">${pct}%</span></div>
+          <div class="bar-track" style="height:6px"><div class="bar-fill" style="width:${Math.max(3,pct)}%;background:${pct>=80?'var(--no)':pct>=40?'var(--warn)':'var(--ok)'}"></div></div>
+        </td>
+        <td class="t-strong num" style="text-align:center">${r[6]}</td>
+        <td><div class="t-2line"><div class="l1">${r[7]}</div><div class="l2">${r[8]}</div></div></td>
+        <td class="t-mut">Rogério Onorato</td>
+        <td class="t-mut num">16/05 → 19/06/2026</td>
+      </tr>`;}).join('')}</tbody>
+    </table></div>
+    ${pager(419,10,1)}
+  </div>`;
+}
+
+/* ============================================================
+   VIEW · MEUS CONTRATOS
+   ============================================================ */
+function vContratos(){
+  const rows=[
+    ['106','30/01/2025','3ª Corrida Unimed Três Lagoas','Três Lagoas/MS','06/04/2025','pendente'],
+    ['107','30/01/2025','1ª Corrida Praia','Três Lagoas/MS','30/03/2025','pendente'],
+    ['108','30/01/2025','2ª Corrida e Caminhada Elite Run','Santa Clara D\'Oeste/SP','15/06/2025','pendente'],
+    ['87','06/01/2025','2ª Corrida e Caminhada Clodoaldo Run','Três Lagoas/MS','26/01/2025','assinado'],
+    ['56','14/10/2024','1ª Corrida e Caminhada Thamyres Garcia','Três Lagoas/MS','16/02/2025','assinado'],
+  ];
+  return `
+  <div class="card">
+    <div class="toolbar">
+      <span class="tb-count"><b>5</b> contratos cadastrados</span>
+      <span class="tb-spacer"></span>
+      <select class="sel" style="width:175px"><option>Todos os campos</option><option>Evento</option><option>Status</option></select>
+      <div class="search-w"><div class="inp-ic">${ic('search')}<input class="inp" placeholder="Buscar contrato…"></div></div>
+    </div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr>
+        <th style="width:34px"><span class="ckbox" onclick="this.classList.toggle('on')">${ic('check')}</span></th>
+        <th>Ações</th><th>ID</th><th>Unidade</th><th>Data Contrato</th><th>Evento</th>
+        <th>Status</th><th>Aceito</th><th>Arquivo</th><th>Inclusão / Alteração</th>
+      </tr></thead>
+      <tbody>${rows.map(r=>{
+        const ass=r[5]==='assinado';
+        return `<tr>
+        <td><span class="ckbox" onclick="this.classList.toggle('on')">${ic('check')}</span></td>
+        <td><div class="row-acts"><button class="ra">${ic('eye')}</button><button class="ra">${ic('doc2')}</button></div></td>
+        <td class="t-id">#${r[0]}</td>
+        <td><span class="tag">${'00'}</span></td>
+        <td class="t-mut num">${r[1]}</td>
+        <td><div class="t-2line"><div class="l1">${r[2]}</div><div class="l2">${ic('mapPin')==''?'':''}${r[3]} · realização ${r[4]}</div></div></td>
+        <td>${ass?chip('ok','Assinado'):chip('warn','Pendente')}</td>
+        <td>${ass?chip('ok','SIM'):chip('mut','NÃO')}</td>
+        <td><button class="ra" style="background:var(--no-bg);color:var(--no)">${ic('file')}</button></td>
+        <td class="t-mut num">${r[1]} · 24/01/2025</td>
+      </tr>`;}).join('')}</tbody>
+    </table></div>
+    <div class="pager"><span class="pager-info">5 de 5 registros</span></div>
+  </div>`;
+}
+
+/* ============================================================
+   VIEW · USUÁRIOS
+   ============================================================ */
+function vUsuarios(){
+  const rows=[
+    ['428','Rogério Onorato','218.641.128-83','rogerio.onoratoms@gmail.com','Organizador Master','Organizador','04/03/2024','04/04/2025'],
+    ['612','Ana Lúcia Estevão','331.204.778-10','ana.estevao@kmseventos.com','Operador de Inscrições','Colaborador','11/09/2024','02/03/2026'],
+    ['644','Marcos Vinícius Prado','509.118.330-22','marcos.prado@kmseventos.com','Financeiro','Colaborador','20/11/2024','15/04/2026'],
+  ];
+  return `
+  <div class="card">
+    <div class="toolbar">
+      <span class="tb-count"><b>3</b> usuários cadastrados</span>
+      <span class="tb-spacer"></span>
+      <div class="search-w"><div class="inp-ic">${ic('search')}<input class="inp" placeholder="Buscar usuário por nome ou e-mail…"></div></div>
+      <button class="btn btn-pri" onclick="go('usuario-edit')">${ic('plus')} Novo Usuário</button>
+    </div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr>
+        <th style="width:34px"><span class="ckbox" onclick="this.classList.toggle('on')">${ic('check')}</span></th>
+        <th>Ações</th><th>ID</th><th>Unidade</th><th>Usuário</th><th>Contato</th>
+        <th>Perfil de Acesso</th><th>Tipo</th><th>Inclusão / Alteração</th>
+      </tr></thead>
+      <tbody>${rows.map(r=>`<tr>
+        <td><span class="ckbox" onclick="this.classList.toggle('on')">${ic('check')}</span></td>
+        <td><div class="row-acts"><button class="ra" onclick="go('usuario-edit')">${ic('edit')}</button><button class="ra">${ic('eye')}</button></div></td>
+        <td class="t-id">#${r[0]}</td>
+        <td><span class="tag">00</span></td>
+        <td><div class="row" style="gap:10px">${avatar(r[1],colorFor(r[1]))}
+          <div class="t-2line"><div class="l1">${r[1]}</div><div class="l2">CPF ${r[2]}</div></div></div></td>
+        <td><div class="t-2line"><div class="l1" style="color:var(--info)">${r[3]}</div><div class="l2">Telefone não informado</div></div></td>
+        <td><span class="chip c-info">${r[4]}</span></td>
+        <td><span class="tag">${r[5]}</span></td>
+        <td class="t-mut num">${r[6]} · ${r[7]}</td>
+      </tr>`).join('')}</tbody>
+    </table></div>
+    <div class="pager"><span class="pager-info">3 de 3 registros</span></div>
+  </div>`;
+}
+</script>
+<script>
+/* ============================================================
+   VIEW · GESTÃO DE EVENTOS  (abas)
+   ============================================================ */
+function field(label,req,inner){
+  return `<div class="fld"><span class="fld-lbl">${label}${req?' <span class="req">*</span>':''}</span>${inner}</div>`;
+}
+function dateInp(val){return `<div class="inp-ic"><span style="left:auto;right:11px">${ic('calendar')}</span><input class="inp" value="${val||''}" placeholder="DD/MM/AAAA" style="padding-left:13px"></div>`;}
+function timeInp(val){return `<div class="inp-ic"><span style="left:auto;right:11px">${ic('clock')}</span><input class="inp" value="${val||''}" placeholder="00:00:00" style="padding-left:13px"></div>`;}
+
+function vEventos(){
+  const tab=(id,icon,label)=>`<button class="tab ${id==='datas'?'on':''}" data-evtab="${id}" onclick="evTab('${id}')">${ic(icon)} ${label}</button>`;
+  return `
+  <!-- event selector strip -->
+  <div class="card" style="margin-bottom:18px">
+    <div class="card-b" style="display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap;padding:18px 20px">
+      <div class="fld" style="flex:1;min-width:320px">
+        <span class="fld-lbl">Selecione o evento para gerenciar</span>
+        <select class="sel"><option>4409 · 00 · 06/12/2026 · 1ª Corrida Lagartixa Runner e Caminhada · Santa Fé do Sul/SP</option></select>
+      </div>
+      <button class="btn" style="background:var(--warn-bg);color:var(--warn)">${ic('x')} Encerrar Inscrições</button>
+      <button class="btn btn-ghost">${ic('refresh')} Reabrir Inscrições</button>
+    </div>
+  </div>
+
+  <!-- status + tabs -->
+  <div class="row" style="justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:12px">
+    <div class="tabs">
+      ${tab('datas','calendar','Datas e Lotes')}
+      ${tab('regulamento','doc2','Regulamento')}
+      ${tab('kits','shirt','Kits')}
+      ${tab('inscritos','users','Inscritos')}
+      ${tab('local','mapPin','Localização')}
+    </div>
+    <div class="row" style="gap:8px">
+      ${chip('info','Evento Ativo',true)}
+      ${chip('ok','Inscrições Abertas',true)}
+    </div>
+  </div>
+
+  <!-- ===== TAB: DATAS E LOTES ===== -->
+  <div data-evpanel="datas">
+    <div class="grid g-2">
+      <div class="fpanel">
+        <div class="fpanel-h"><div class="ic">${ic('calendar')}</div><div class="tt">Período de Inscrição</div></div>
+        <div class="fpanel-b fgrid g-2">
+          ${field('Data Início',1,dateInp('15/05/2026'))}
+          ${field('Hora Início',1,timeInp('00:00:00'))}
+          ${field('Data Fim',1,dateInp('17/10/2026'))}
+          ${field('Hora Fim',1,timeInp('00:00:00'))}
+        </div>
+      </div>
+      <div class="fpanel">
+        <div class="fpanel-h"><div class="ic">${ic('wallet')}</div><div class="tt">Data Limite por Meio de Pagamento</div></div>
+        <div class="fpanel-b fgrid">
+          ${field('Data final · Boleto',1,dateInp('17/10/2026'))}
+          ${field('Data final · PIX',1,dateInp('17/10/2026'))}
+          ${field('Data final · Cartão de Crédito',1,dateInp('17/10/2026'))}
+        </div>
+      </div>
+    </div>
+
+    <div class="banner banner-ok" style="margin:18px 0">${ic('okc')} Todas as datas dos lotes estão válidas e consistentes com o período de inscrição.</div>
+
+    <div class="fpanel">
+      <div class="fpanel-h"><div class="ic">${ic('layers')}</div><div class="tt">Lotes de Inscrição</div>
+        <span class="tb-spacer"></span><button class="btn btn-soft btn-sm">${ic('plus')} Adicionar lote</button></div>
+      <div class="fpanel-b">
+        <div class="lote-row">
+          <span class="lote-tag">1º Lote</span>
+          ${field('De',0,dateInp('15/05/2026'))}
+          <span class="lote-arrow">${ic('arrowR')}</span>
+          ${field('Até',0,dateInp('15/06/2026'))}
+          <button class="btn btn-ghost btn-ic btn-sm" style="margin-bottom:1px">${ic('plus')}</button>
+        </div>
+        <div class="lote-row" style="border-top:1px dashed var(--line)">
+          <span class="lote-tag" style="background:#2F6DE0">2º Lote</span>
+          ${field('De',0,dateInp('16/06/2026'))}
+          <span class="lote-arrow">${ic('arrowR')}</span>
+          ${field('Até',0,dateInp('17/10/2026'))}
+          <div class="row" style="gap:6px;margin-bottom:1px">
+            <button class="btn btn-ghost btn-ic btn-sm" style="color:var(--no)">${ic('trash')}</button>
+            <button class="btn btn-ghost btn-ic btn-sm">${ic('plus')}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="justify-content:flex-end;margin-top:18px">
+      <button class="btn btn-ghost">Cancelar</button>
+      <button class="btn btn-pri">${ic('save')} Salvar Alterações</button>
+    </div>
+  </div>
+
+  <!-- ===== TAB: REGULAMENTO ===== -->
+  <div data-evpanel="regulamento" style="display:none">
+    <div class="fpanel">
+      <div class="fpanel-h"><div class="ic">${ic('doc2')}</div><div class="tt">Regulamento do Evento</div>
+        <span class="tb-spacer"></span><button class="btn btn-ghost btn-sm">${ic('eye')} Pré-visualizar</button></div>
+      <div class="fpanel-b">
+        <div class="rt-toolbar">
+          ${['B','I','U','H1','H2','• Lista','Link'].map(t=>`<button class="rt-btn">${t}</button>`).join('')}
+        </div>
+        <textarea class="inp" style="min-height:280px;border-radius:0 0 10px 10px;border-top:none">1. DAS INSCRIÇÕES
+As inscrições para a 1ª Corrida Lagartixa Runner e Caminhada serão realizadas exclusivamente pela plataforma RecebeSports...
+
+2. DA ENTREGA DE KITS
+A retirada dos kits será realizada conforme cronograma divulgado...</textarea>
+        <p class="hint" style="margin-top:10px">${ic('warnc')} O regulamento ficará visível na página pública de inscrições do evento.</p>
+      </div>
+    </div>
+    <div class="row" style="justify-content:flex-end;margin-top:18px">
+      <button class="btn btn-pri">${ic('save')} Salvar Regulamento</button>
+    </div>
+  </div>
+
+  <!-- ===== TAB: KITS ===== -->
+  <div data-evpanel="kits" style="display:none">
+    <div class="grid g-3">
+      ${[
+        ['Kit Padrão','Camiseta + número + chip','#FF6600','shirt',420],
+        ['Kit Premium','Camiseta dry-fit + medalha + sacochila','#9B5DE5','trophy',180],
+        ['Kit Caminhada','Camiseta + número','#27B36B','flag',95],
+      ].map(([n,d,c,i,q])=>`
+      <div class="card">
+        <div class="card-b">
+          <div class="row" style="justify-content:space-between">
+            <div class="kpi-ic" style="background:${c}22;color:${c}">${ic(i)}</div>
+            <button class="dot-act">${ic('edit')}</button>
+          </div>
+          <div style="font-family:var(--font-d);font-weight:700;font-size:16px;margin-top:12px">${n}</div>
+          <p class="hint" style="margin-top:2px">${d}</p>
+          <div class="def" style="margin-top:12px;border-bottom:none"><span class="k">Disponíveis</span><span class="v num">${q}</span></div>
+          <div class="bar-track" style="margin-top:4px"><div class="bar-fill" style="width:${q/420*100}%;background:${c}"></div></div>
+        </div>
+      </div>`).join('')}
+    </div>
+    <button class="btn btn-soft" style="margin-top:16px">${ic('plus')} Novo Kit</button>
+  </div>
+
+  <!-- ===== TAB: INSCRITOS ===== -->
+  <div data-evpanel="inscritos" style="display:none">
+    <div class="grid g-4" style="margin-bottom:18px">
+      ${kpi({label:'Total de Inscritos',val:'478',icon:'users',tint:['#E5F5EC','#1F9D55']})}
+      ${kpi({label:'Pagos',val:'452',icon:'check',tint:['#E8F0FE','#2F6DE0']})}
+      ${kpi({label:'Pendentes',val:'21',icon:'clock',tint:['#FBEFD9','#D98200']})}
+      ${kpi({label:'Cancelados',val:'5',icon:'x',tint:['#FCE9E8','#E03B30']})}
+    </div>
+    <div class="card"><div class="card-b" style="text-align:center;padding:38px">
+      <div class="kpi-ic" style="width:54px;height:54px;border-radius:14px;background:var(--brand-tint);color:var(--brand-700);margin:0 auto">${ic('users')}</div>
+      <div style="font-family:var(--font-d);font-weight:700;font-size:17px;margin-top:14px">Gerencie os inscritos deste evento</div>
+      <p class="hint" style="margin-top:4px;max-width:380px;margin-left:auto;margin-right:auto">Acesse a consulta completa de inscrições para visualizar, editar e exportar a lista de atletas.</p>
+      <button class="btn btn-pri" style="margin-top:16px" onclick="go('inscricoes')">${ic('ticket')} Abrir Consulta de Inscrições</button>
+    </div></div>
+  </div>
+
+  <!-- ===== TAB: LOCALIZAÇÃO ===== -->
+  <div data-evpanel="local" style="display:none">
+    <div class="grid" style="grid-template-columns:1.4fr 1fr">
+      <div class="fpanel">
+        <div class="fpanel-h"><div class="ic">${ic('mapPin')}</div><div class="tt">Local da Largada</div></div>
+        <div class="fpanel-b" style="padding:0">
+          <div class="map-mock">
+            <div class="map-pin">${icf('mapPin')}</div>
+            <div class="map-grid"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fpanel">
+        <div class="fpanel-h"><div class="ic">${ic('pin2')}</div><div class="tt">Endereço do Evento</div></div>
+        <div class="fpanel-b fgrid">
+          ${field('CEP',0,`<input class="inp" value="15140-000">`)}
+          ${field('Logradouro',0,`<input class="inp" value="Av. Marginal · Parque dos Ipês">`)}
+          <div class="fgrid g-2">
+            ${field('Cidade',0,`<input class="inp" value="Santa Fé do Sul">`)}
+            ${field('UF',0,`<input class="inp" value="SP">`)}
+          </div>
+          ${field('Ponto de referência',0,`<input class="inp" value="Em frente ao Ginásio Municipal">`)}
+        </div>
+      </div>
+    </div>
+    <div class="row" style="justify-content:flex-end;margin-top:18px">
+      <button class="btn btn-pri">${ic('save')} Salvar Localização</button>
+    </div>
+  </div>`;
+}
+function evTab(id){
+  document.querySelectorAll('[data-evtab]').forEach(t=>t.classList.toggle('on',t.dataset.evtab===id));
+  document.querySelectorAll('[data-evpanel]').forEach(p=>p.style.display=p.dataset.evpanel===id?'':'none');
+}
+</script>
+<script>
+/* ============================================================
+   VIEW · EDITAR USUÁRIO   (cadastro de usuário)
+   ============================================================ */
+function vUsuarioEdit(){
+  const orgs=[
+    ['577','KMS Assessoria e Org. de Eventos','Rogério Onorato Eventos ME','49.700.141/0001-06','rogerio.onoratoms@gmail.com'],
+  ];
+  return `
+  <div class="form-2col">
+    <!-- left -->
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div class="fpanel">
+        <div class="fpanel-h"><div class="ic">${ic('user')}</div><div class="tt">Dados do Usuário</div>
+          <span class="tb-spacer"></span>${chip('info','Organizador',true)}</div>
+        <div class="fpanel-b">
+          <div style="display:grid;grid-template-columns:188px 1fr;gap:20px;align-items:start">
+            <label class="upz" style="padding:0;height:188px">
+              <div class="kpi-ic" style="width:46px;height:46px;border-radius:12px;background:var(--brand-tint);color:var(--brand-700)">${ic('upload')}</div>
+              <span class="ut">Foto do usuário</span>
+              <span class="us">PNG ou JPG · até 2 MB</span>
+            </label>
+            <div class="fgrid">
+              <div class="fgrid g-2">
+                ${field('Registro',0,`<input class="inp" value="428" disabled>`)}
+                ${field('Unidade',0,`<input class="inp" value="00 · Matriz" disabled>`)}
+              </div>
+              ${field('Nome completo',1,`<input class="inp" value="Rogério Onorato">`)}
+              <div class="fgrid g-2">
+                ${field('CPF',1,`<input class="inp" value="218.641.128-83">`)}
+                ${field('E-mail de acesso',1,`<div class="inp-ic"><span style="left:auto;right:11px">${ic('mail')}</span><input class="inp" value="rogerio.onoratoms@gmail.com" style="padding-left:13px"></div>`)}
+              </div>
+              ${field('Senha',0,`<div class="inp-ic"><span style="left:auto;right:11px">${ic('lock')}</span><input class="inp" type="password" value="••••••••" style="padding-left:13px"></div>`)}
+              <span class="hint" style="margin-top:-7px">Mínimo de 6 dígitos · preencha apenas se desejar alterar a senha atual</span>
+            </div>
+          </div>
+
+          <div class="sec-tt" style="font-size:13px;margin:22px 0 14px">
+            <span class="ic">${ic('gear')}</span>Outras informações
+          </div>
+          <div class="fgrid g-4">
+            ${field('Cargo',0,`<input class="inp" value="Diretor de Operações">`)}
+            ${field('Telefone',0,`<div class="inp-ic"><span style="left:auto;right:11px">${ic('phone')}</span><input class="inp" value="(67) 99999-0000" style="padding-left:13px"></div>`)}
+            ${field('Ramal',0,`<input class="inp" placeholder="000">`)}
+            ${field('Tema da interface',1,`<select class="sel"><option>Claro</option><option>Escuro</option><option>Automático (sistema)</option></select>`)}
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h">
+          <div><div class="ttl">Organizadores deste usuário</div>
+            <div class="sub">Empresas às quais este acesso está vinculado</div></div>
+          <button class="btn btn-soft btn-sm">${ic('plus')} Vincular</button>
+        </div>
+        <div class="tbl-wrap"><table class="tbl">
+          <thead><tr><th>Ações</th><th>ID</th><th>Organizador</th><th>Razão Social</th><th>CNPJ</th><th>E-mail</th></tr></thead>
+          <tbody>${orgs.map(o=>`<tr>
+            <td><button class="ra">${ic('edit')}</button></td>
+            <td class="t-id">#${o[0]}</td>
+            <td><div class="row" style="gap:10px">${avatar(o[1],colorFor(o[1]))}
+              <span class="t-strong">${o[1]}</span></div></td>
+            <td class="t-mut">${o[2]}</td>
+            <td class="t-mut num">${o[3]}</td>
+            <td class="t-link">${o[4]}</td>
+          </tr>`).join('')}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- right -->
+    <div class="rep-aside">
+      <div class="rep-sum">
+        <h4>Resumo do Acesso</h4>
+        <div class="rs-row"><span class="k">Perfil</span><span class="v">Organizador Master</span></div>
+        <div class="rs-row"><span class="k">Situação</span><span class="v" style="color:#27B36B">Ativo</span></div>
+        <div class="rs-row"><span class="k">Eventos visíveis</span><span class="v">Todos</span></div>
+        <div class="rs-row"><span class="k">Último acesso</span><span class="v">Hoje · 09:14</span></div>
+        <div class="rs-row"><span class="k">Criado em</span><span class="v">04/03/2024</span></div>
+      </div>
+      <div class="fpanel">
+        <div class="fpanel-h" style="background:var(--surface)"><div class="ic" style="background:var(--brand-tint);color:var(--brand-700)">${ic('lock')}</div>
+          <div class="tt">Permissões</div></div>
+        <div class="fpanel-b" style="display:flex;flex-direction:column;gap:13px">
+          ${[['Gerenciar eventos',1],['Consultar inscrições',1],['Emitir relatórios',1],['Acesso financeiro',1],['Gerenciar usuários',0]].map(([n,on])=>`
+            <div class="row" style="justify-content:space-between">
+              <span style="font-weight:600;font-size:13px">${n}</span>
+              <span class="tg ${on?'on':''}" onclick="this.classList.toggle('on')"></span>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="inote">${ic('warnc')}<span>Alterações de perfil e permissões passam a valer no próximo login do usuário.</span></div>
+    </div>
+  </div>`;
+}
+
+/* ============================================================
+   VIEW · MEU CADASTRO  (organizador)
+   ============================================================ */
+function vOrganizador(){
+  const users=[
+    ['428','Rogério Onorato','Organizador Master','rogerio.onoratoms@gmail.com'],
+    ['612','Ana Lúcia Estevão','Operador de Inscrições','ana.estevao@kmseventos.com'],
+    ['644','Marcos Vinícius Prado','Financeiro','marcos.prado@kmseventos.com'],
+  ];
+  const social=(icon,col,label,val)=>`<div class="fld">
+    <span class="fld-lbl">${label}</span>
+    <div class="inp-ic"><span style="color:${col}">${ic(icon)}</span><input class="inp" value="${val}" style="padding-left:38px"></div>
+  </div>`;
+  return `
+  <div class="form-2col">
+    <!-- LEFT -->
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div class="fpanel">
+        <div class="fpanel-h"><div class="ic">${ic('building')}</div><div class="tt">Dados da Empresa</div></div>
+        <div class="fpanel-b">
+          <div style="display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:start">
+            <label class="upz" style="height:200px;padding:0">
+              <div class="kpi-ic" style="width:46px;height:46px;border-radius:12px;background:var(--brand-tint);color:var(--brand-700)">${ic('image')}</div>
+              <span class="ut">Logo do organizador</span>
+              <span class="us">SVG ou PNG · fundo transparente</span>
+            </label>
+            <div class="fgrid">
+              <div class="fgrid" style="grid-template-columns:110px 1fr 160px">
+                ${field('Registro',0,`<input class="inp" value="577" disabled>`)}
+                ${field('Tipo de Pessoa',1,`<select class="sel"><option>Pessoa Jurídica</option><option>Pessoa Física</option></select>`)}
+                ${field('CNPJ',1,`<input class="inp" value="49.700.141/0001-06">`)}
+              </div>
+              ${field('Nome Fantasia',1,`<input class="inp" value="KMS Assessoria e Organização de Eventos">`)}
+              ${field('Razão Social',1,`<input class="inp" value="Rogério Onorato Eventos ME">`)}
+            </div>
+          </div>
+
+          <div class="sec-tt" style="font-size:13px;margin:22px 0 14px">
+            <span class="ic">${ic('pin2')}</span>Endereço
+          </div>
+          <div class="fgrid">
+            <div class="fgrid" style="grid-template-columns:210px 1fr 130px">
+              ${field('CEP',0,`<div class="inp-ic"><span style="left:auto;right:11px">${ic('search')}</span><input class="inp" value="79600-000" style="padding-left:13px"></div>`)}
+              ${field('Logradouro',0,`<input class="inp" value="Av. Antônio Trajano dos Santos">`)}
+              ${field('Número',0,`<input class="inp" value="1240">`)}
+            </div>
+            <div class="fgrid g-4">
+              ${field('Bairro',0,`<input class="inp" value="Centro">`)}
+              ${field('Complemento',0,`<input class="inp" placeholder="Sala, andar…">`)}
+              ${field('Cidade',0,`<select class="sel"><option>Três Lagoas</option></select>`)}
+              ${field('UF',0,`<select class="sel"><option>MS</option></select>`)}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fpanel">
+        <div class="fpanel-h"><div class="ic">${ic('globe')}</div><div class="tt">Mídias Sociais &amp; Site</div></div>
+        <div class="fpanel-b">
+          <div class="fgrid g-3">
+            ${social('users','#1877F2','Facebook','/kmseventos')}
+            ${social('image','#E1306C','Instagram','@kmseventos')}
+            ${social('globe','#1DA1F2','Twitter / X','@kmseventos')}
+          </div>
+          <div class="fgrid" style="margin-top:15px">
+            ${field('Site oficial',0,`<div class="inp-ic"><span style="left:auto;right:11px;color:var(--ok)">${ic('globe')}</span><input class="inp" value="https://www.kmseventos.com.br" style="padding-left:13px"></div>`)}
+          </div>
+          <div class="row" style="justify-content:space-between;margin-top:16px;padding:13px 15px;background:var(--surface-2);border:1px solid var(--line);border-radius:11px">
+            <span style="font-weight:600;font-size:13px">Exibir mídias sociais na página pública do evento</span>
+            <span class="tg on" onclick="this.classList.toggle('on')"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div class="fpanel">
+        <div class="fpanel-h"><div class="ic">${ic('bank')}</div><div class="tt">Dados Bancários</div></div>
+        <div class="fpanel-b fgrid">
+          <div class="fgrid g-2">
+            ${field('Tipo de Pessoa',0,`<select class="sel"><option>Pessoa Jurídica</option><option>Pessoa Física</option></select>`)}
+            ${field('CPF / CNPJ do Beneficiário',0,`<input class="inp" value="49.700.141/0001-06">`)}
+          </div>
+          ${field('Nome do Beneficiário',0,`<input class="inp" value="Rogério Onorato Eventos ME">`)}
+          ${field('Banco',0,`<select class="sel"><option>260 · Nu Pagamentos S.A.</option><option>001 · Banco do Brasil</option><option>341 · Itaú Unibanco</option></select>`)}
+          <div class="fgrid g-2">
+            ${field('Agência',0,`<input class="inp" value="0001">`)}
+            ${field('Conta',0,`<input class="inp" value="73920184-5">`)}
+          </div>
+          ${field('Chave PIX principal',0,`<div class="inp-ic"><span style="left:auto;right:11px;color:var(--ok)">${ic('bolt')}</span><input class="inp" value="49.700.141/0001-06" style="padding-left:13px"></div>`)}
+          ${field('Chave PIX secundária',0,`<input class="inp" placeholder="E-mail, telefone ou chave aleatória">`)}
+          <div class="banner banner-ok">${ic('okc')} Conta bancária verificada e apta a receber repasses.</div>
+        </div>
+      </div>
+
+      <div class="fpanel">
+        <div class="fpanel-h"><div class="ic">${ic('phone')}</div><div class="tt">Contato</div></div>
+        <div class="fpanel-b fgrid">
+          ${field('E-mail',1,`<div class="inp-ic"><span style="left:auto;right:11px">${ic('mail')}</span><input class="inp" value="contato@kmseventos.com.br" style="padding-left:13px"></div>`)}
+          ${field('Celular 1',1,`<div class="inp-ic"><span style="left:auto;right:11px">${ic('phone')}</span><input class="inp" value="(67) 99999-0000" style="padding-left:13px"></div>`)}
+          <div class="fgrid g-2">
+            ${field('Celular 2',0,`<input class="inp" placeholder="(00) 00000-0000">`)}
+            ${field('Telefone fixo',0,`<input class="inp" placeholder="(00) 0000-0000">`)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- USERS full width -->
+  <div class="card" style="margin-top:18px">
+    <div class="card-h">
+      <div><div class="ttl">Usuários do Organizador</div>
+        <div class="sub">Pessoas com acesso ao painel desta empresa</div></div>
+      <button class="btn btn-soft btn-sm" onclick="go('usuario-edit')">${ic('plus')} Novo Usuário</button>
+    </div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Ações</th><th>ID</th><th>Usuário</th><th>Perfil de Acesso</th><th>E-mail</th><th>Situação</th></tr></thead>
+      <tbody>${users.map(u=>`<tr>
+        <td><button class="ra" onclick="go('usuario-edit')">${ic('edit')}</button></td>
+        <td class="t-id">#${u[0]}</td>
+        <td><div class="row" style="gap:10px">${avatar(u[1],colorFor(u[1]))}<span class="t-strong">${u[1]}</span></div></td>
+        <td><span class="chip c-info">${u[2]}</span></td>
+        <td class="t-link">${u[3]}</td>
+        <td>${chip('ok','Ativo',true)}</td>
+      </tr>`).join('')}</tbody>
+    </table></div>
+  </div>`;
+}
+
+/* ============================================================
+   GENERIC REPORT BUILDER
+   ============================================================ */
+function repField(f){
+  if(f.t==='toggle'){
+    return `<div class="row" style="justify-content:space-between;padding:11px 14px;background:var(--surface-2);
+      border:1px solid var(--line);border-radius:11px;gap:12px;grid-column:span 2">
+      <span style="font-weight:600;font-size:12.5px">${f.label}</span>
+      <span class="tg ${f.on?'on':''}" onclick="this.classList.toggle('on')"></span></div>`;
+  }
+  let inner;
+  if(f.t==='date'){
+    inner=`<div class="inp-ic"><span style="left:auto;right:11px">${ic('calendar')}</span><input class="inp" value="${f.val||''}" placeholder="DD/MM/AAAA" style="padding-left:13px"></div>`;
+  }else{
+    const opts=(f.options||[]).map(o=>`<option>${o}</option>`).join('');
+    inner=`<select class="sel">${f.ph?`<option>${f.ph}</option>`:''}${opts}</select>`;
+  }
+  return `<div class="fld" style="${f.span?`grid-column:span ${f.span}`:''}">
+    <span class="fld-lbl">${f.label}${f.req?' <span class="req">*</span>':''}</span>${inner}</div>`;
+}
+
+function reportView(r){
+  const recent=r.recent||[
+    [r.short+' · período anterior','14/05/2026 16:32','PDF','318 KB'],
+    [r.short+' · fechamento abril','02/05/2026 09:07','XLSX','1,2 MB'],
+  ];
+  return `
+  <div class="form-2col">
+    <!-- filters -->
+    <div class="fpanel">
+      <div class="fpanel-h"><div class="ic">${ic(r.icon)}</div>
+        <div class="tt">${r.title}</div>
+        <span class="tb-spacer"></span><span class="tag">${r.fields.filter(f=>f.t!=='toggle').length} filtros</span></div>
+      <div class="fpanel-b">
+        <p class="hint" style="margin:-2px 0 16px;line-height:1.55">${r.desc}</p>
+        <div class="fgrid g-2">
+          ${r.fields.map(repField).join('')}
+        </div>
+
+        <div class="sec-tt" style="font-size:13px;margin:22px 0 12px">
+          <span class="ic">${ic('download')}</span>Formato de saída
+        </div>
+        <div class="rep-fmt">
+          <label class="fmt-chip on" onclick="pickFmt(this)">${ic('doc2')}PDF</label>
+          <label class="fmt-chip" onclick="pickFmt(this)">${ic('hash')}Excel</label>
+          <label class="fmt-chip" onclick="pickFmt(this)">${ic('list')}CSV</label>
+          <label class="fmt-chip" onclick="pickFmt(this)">${ic('print')}Imprimir</label>
+        </div>
+
+        <div class="row" style="justify-content:flex-end;gap:9px;margin-top:22px;
+          padding-top:18px;border-top:1px solid var(--line-2)">
+          <button class="btn btn-ghost">${ic('refresh')} Limpar filtros</button>
+          <button class="btn btn-pri">${ic('file')} Gerar Relatório</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- aside -->
+    <div class="rep-aside">
+      <div class="rep-sum">
+        <h4>O Relatório Inclui</h4>
+        ${r.includes.map(c=>`<div class="rs-row"><span class="k">${c[0]}</span><span class="v">${c[1]}</span></div>`).join('')}
+      </div>
+      <div class="inote">${ic('warnc')}<span>${r.note}</span></div>
+    </div>
+  </div>
+
+  <!-- recent -->
+  <div class="card" style="margin-top:18px">
+    <div class="card-h">
+      <div><div class="ttl">Relatórios Gerados Recentemente</div>
+        <div class="sub">Disponíveis para novo download por 30 dias</div></div>
+      <button class="dot-act">${ic('dots')}</button>
+    </div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Relatório</th><th>Gerado em</th><th>Formato</th><th>Tamanho</th><th style="text-align:right">Ação</th></tr></thead>
+      <tbody>${recent.map(x=>`<tr>
+        <td><span class="row" style="gap:10px">
+          <span class="kpi-ic" style="width:30px;height:30px;border-radius:8px;background:var(--brand-tint);color:var(--brand-700)">${ic('file')}</span>
+          <span class="t-strong">${x[0]}</span></span></td>
+        <td class="t-mut num">${x[1]}</td>
+        <td><span class="tag">${x[2]}</span></td>
+        <td class="t-mut num">${x[3]}</td>
+        <td style="text-align:right"><button class="btn btn-ghost btn-sm" style="display:inline-flex">${ic('download')} Baixar</button></td>
+      </tr>`).join('')}</tbody>
+    </table></div>
+  </div>`;
+}
+function pickFmt(el){
+  el.parentElement.querySelectorAll('.fmt-chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+}
+
+/* ---- shared filter fragments ---- */
+const F_UNIDADE={t:'select',label:'Unidade',ph:'Todas as unidades',options:['00 · Matriz','01 · Filial Andradina']};
+const F_EVENTO ={t:'select',label:'Evento',req:1,ph:'Selecione o evento',options:['4142 · 2ª Cascalheira Trail Run','3989 · 3ª Clodoaldo Run','4409 · 1ª Lagartixa Runner']};
+const F_DIST   ={t:'select',label:'Distância',ph:'Todas as distâncias',options:['Corrida 5 KM','Corrida 7 KM','Corrida 10 KM','Caminhada']};
+const F_ORG    ={t:'select',label:'Organizador',ph:'Todos os organizadores',options:['KMS Assessoria','Fernando Lima Assessoria']};
+const F_CIDADE ={t:'select',label:'Cidade do Atleta',ph:'Todas as cidades',options:['Três Lagoas/MS','Andradina/SP','Santa Fé do Sul/SP']};
+const F_DE     ={t:'date',label:'Data de Inscrição · De',val:'19/04/2026'};
+const F_ATE    ={t:'date',label:'Data de Inscrição · Até',val:'19/05/2026'};
+const F_TGPGTO ={t:'toggle',label:'Filtrar pela data de pagamento'};
+
+const REP={
+  'rel-crono':{
+    title:'Relatório de Cronometragem', short:'Cronometragem', icon:'clock',
+    desc:'Planilha completa de cronometragem para importação no sistema de chips, com numeração, categoria e equipe.',
+    fields:[F_EVENTO,F_DIST,
+      {t:'select',label:'Categoria',ph:'Todas as categorias',options:['Geral','60 anos ou mais','PCD']},
+      {t:'select',label:'Sexo',ph:'Ambos',options:['Masculino','Feminino']},
+      {t:'select',label:'Equipe',ph:'Todas as equipes',options:['Hidalgo Treinamento','Elite Run']},
+      F_CIDADE,F_DE,F_ATE,F_TGPGTO],
+    includes:[['Atletas no recorte','229'],['Número de peito','sequencial'],['Chip','vinculado'],['Categoria e Sexo','✓'],['Equipe e Cidade','✓']],
+    note:'A planilha de cronometragem segue o layout padrão de importação para sistemas de chip RFID.',
+  },
+  'rel-crono-r':{
+    title:'Cronometragem Reduzida', short:'Cronometragem Reduzida', icon:'pin2',
+    desc:'Versão enxuta da planilha de cronometragem — apenas número, nome e categoria do atleta.',
+    fields:[F_UNIDADE,F_EVENTO,F_DIST,F_CIDADE,F_DE,F_ATE,F_TGPGTO],
+    includes:[['Número de peito','✓'],['Nome do atleta','✓'],['Categoria','✓'],['Distância','✓'],['Total de linhas','229']],
+    note:'Formato reduzido ideal para conferência rápida no dia da prova e impressão da largada.',
+  },
+  'rel-inscricoes':{
+    title:'Relatório de Inscrições', short:'Inscrições', icon:'list',
+    desc:'Listagem detalhada de inscrições com dados cadastrais, pagamento, status e descontos aplicados.',
+    fields:[F_UNIDADE,F_EVENTO,F_DIST,F_ORG,
+      {t:'select',label:'Forma de Pagamento',ph:'Todas as formas',options:['PIX','Cartão de Crédito','Boleto']},
+      {t:'select',label:'Status da Inscrição',ph:'Todos os status',options:['Paga','Em aberto','Cancelada','Estornada']},
+      F_CIDADE,F_DE,F_ATE,
+      {t:'toggle',label:'Somente inscrições com desconto'},F_TGPGTO],
+    includes:[['Inscrições no período','172'],['Dados do atleta','completos'],['Pagamento e Status','✓'],['Cupom e Desconto','✓'],['Equipe e Camiseta','✓']],
+    note:'O relatório respeita a LGPD: dados sensíveis ficam disponíveis somente ao organizador responsável.',
+  },
+  'rel-agrupadas':{
+    title:'Inscrições Agrupadas', short:'Inscrições Agrupadas', icon:'layers',
+    desc:'Totais consolidados de inscrições agrupados por um critério, ideais para visão gerencial e logística.',
+    fields:[F_UNIDADE,
+      {t:'select',label:'Eventos',ph:'Selecione um ou mais eventos',options:['4142 · Cascalheira Trail Run','3989 · Clodoaldo Run']},
+      F_ORG,
+      {t:'select',label:'Agrupar por',options:['Cidade','Categoria','Distância','Tamanho de Camiseta','Equipe','Forma de Pagamento']},
+      F_DE,F_ATE,F_TGPGTO],
+    includes:[['Critério de agrupamento','Cidade'],['Eventos somados','até 10'],['Subtotais por grupo','✓'],['Total geral','✓'],['Percentual relativo','✓']],
+    note:'Permite somar vários eventos no mesmo relatório — útil para o fechamento de temporada.',
+  },
+  'rel-externas':{
+    title:'Inscrições Externas', short:'Inscrições Externas', icon:'external',
+    desc:'Inscrições importadas de canais externos: cortesias, lotes de patrocinador e planilhas manuais.',
+    fields:[F_UNIDADE,F_EVENTO,F_DIST,
+      {t:'select',label:'Origem',ph:'Todas as origens',options:['Cortesia','Patrocinador','Importação manual']},
+      {t:'select',label:'Status',ph:'Todos os status',options:['Confirmada','Pendente']},
+      F_DE,F_ATE],
+    includes:[['Inscrições externas','24'],['Origem do registro','✓'],['Responsável pela inclusão','✓'],['Kit e Camiseta','✓'],['Data de importação','✓']],
+    note:'Inscrições externas não geram cobrança e não entram no cálculo de repasse financeiro.',
+  },
+  'rel-base':{
+    title:'Base Completa', short:'Base Completa', icon:'database',
+    desc:'Exportação integral da base de inscritos do evento, com todos os campos disponíveis no sistema.',
+    fields:[F_UNIDADE,F_EVENTO,F_DE,F_ATE,
+      {t:'toggle',label:'Incluir inscrições canceladas'},
+      {t:'toggle',label:'Incluir dados de pagamento'},
+      {t:'toggle',label:'Incluir campos personalizados'}],
+    includes:[['Registros estimados','478'],['Colunas exportadas','60+'],['Histórico de status','✓'],['Pagamento e Repasse','opcional'],['Formato recomendado','Excel']],
+    note:'Exportação pesada — o arquivo é gerado em segundo plano e enviado por e-mail quando concluído.',
+  },
+};
+</script>
+<style>
+/* router-level helpers */
+.nav-grp{margin:1px 0}
+@media(max-width:760px){#mobBurger{display:grid!important}}
+</style>
+<script>
+/* ============================================================
+   ROUTES
+   ============================================================ */
+const A={ // reusable action sets
+  save:[{l:'Cancelar',i:'x',c:'btn-ghost'},{l:'Salvar Alterações',i:'save',c:'btn-pri'}],
+};
+const ROUTES={
+  estatisticas:{fn:vEstatisticas,trail:['Dashboard'],title:'Estatísticas do Evento',icon:'pie',
+    actions:[{l:'Atualizar',i:'refresh',c:'btn-ghost'},{l:'Exportar Painel',i:'download',c:'btn-dark'}]},
+  financeiro:{fn:vFinanceiro,trail:['Dashboard'],title:'Dashboard Financeiro',icon:'trend',
+    actions:[{l:'Exportar',i:'download',c:'btn-dark'}]},
+  inscricoes:{fn:vInscricoes,trail:['Auto Gestão'],title:'Consulta de Inscrições',icon:'ticket',
+    actions:[{l:'Exportar lista',i:'download',c:'btn-dark'}]},
+  cupons:{fn:vCupons,trail:['Auto Gestão'],title:'Cupons de Desconto',icon:'bolt',
+    actions:[{l:'Novo Cupom',i:'plus',c:'btn-pri'}]},
+  eventos:{fn:vEventos,trail:['Auto Gestão'],title:'Gestão de Eventos',icon:'calendar',
+    actions:[{l:'Novo Evento',i:'plus',c:'btn-pri'}]},
+  contratos:{fn:vContratos,trail:['Auto Gestão'],title:'Meus Contratos',icon:'file',
+    actions:[{l:'Solicitar Contrato',i:'plus',c:'btn-ghost'}]},
+  organizador:{fn:vOrganizador,trail:['Auto Gestão'],title:'Meu Cadastro',icon:'building',
+    actions:[{l:'Salvar Cadastro',i:'save',c:'btn-pri'}]},
+  usuarios:{fn:vUsuarios,trail:['Auto Gestão'],title:'Usuários',icon:'users',
+    actions:[{l:'Novo Usuário',i:'plus',c:'btn-pri',go:'usuario-edit'}]},
+  'usuario-edit':{fn:vUsuarioEdit,trail:['Auto Gestão','Usuários'],title:'Editar Usuário',icon:'user',
+    nav:'usuarios',actions:[{l:'Voltar',i:'chevL',c:'btn-ghost',go:'usuarios'},{l:'Salvar Usuário',i:'save',c:'btn-pri'}]},
+};
+['rel-crono','rel-crono-r','rel-inscricoes','rel-agrupadas','rel-externas','rel-base'].forEach(id=>{
+  const r=REP[id];
+  ROUTES[id]={fn:()=>reportView(r),trail:['Relatórios'],title:r.title,icon:r.icon,
+    actions:[{l:'Agendar envio',i:'clock',c:'btn-ghost'}]};
+});
+
+/* ============================================================
+   SIDEBAR NAV
+   ============================================================ */
+function renderNav(){
+  let h='';
+  NAV.forEach(item=>{
+    if(item.sec){h+=`<div class="nav-sec">${item.sec}</div>`;return;}
+    if(item.children){
+      h+=`<div class="nav-grp">
+        <button class="nav-i" data-grp="${item.id}" onclick="toggleGrp('${item.id}')">
+          <span class="ic">${ic(item.icon)}</span><span class="lbl">${item.label}</span>
+          <span class="chev">${ic('chevR')}</span>
+        </button>
+        <div class="nav-sub" data-sub="${item.id}">
+          ${item.children.map(c=>`<button class="nav-si" data-nav="${c.id}" onclick="go('${c.id}')">${c.label}</button>`).join('')}
+        </div>
+      </div>`;
+    }else{
+      h+=`<button class="nav-i" data-nav="${item.id}" onclick="go('${item.id}')">
+        <span class="ic">${ic(item.icon)}</span><span class="lbl">${item.label}</span>
+      </button>`;
+    }
+  });
+  document.getElementById('nav').innerHTML=h;
+}
+function groupOf(id){
+  const g=NAV.find(x=>x.children&&x.children.some(c=>c.id===id));
+  return g?g.id:null;
+}
+function toggleGrp(id){
+  const btn=document.querySelector(`[data-grp="${id}"]`);
+  const sub=document.querySelector(`[data-sub="${id}"]`);
+  const open=!sub.classList.contains('open');
+  btn.classList.toggle('open',open);
+  sub.classList.toggle('open',open);
+}
+function openGrp(id){
+  const btn=document.querySelector(`[data-grp="${id}"]`);
+  const sub=document.querySelector(`[data-sub="${id}"]`);
+  if(btn&&sub){btn.classList.add('open');sub.classList.add('open');}
+}
+
+/* ============================================================
+   ROUTER
+   ============================================================ */
+function go(id){
+  const r=ROUTES[id];
+  if(!r){return go('estatisticas');}
+
+  /* content */
+  const c=document.getElementById('content');
+  c.innerHTML=`<div class="view active">${r.fn()}</div>`;
+
+  /* breadcrumb */
+  document.getElementById('bcIcon').innerHTML=ic(r.icon);
+  document.getElementById('bcTrail').innerHTML=
+    r.trail.map(t=>`<span>${t}</span><span class="sep">${ic('chevR')}</span>`).join('')
+    +`<span class="cur">${r.title}</span>`;
+  document.getElementById('bcTitle').textContent=r.title;
+  document.getElementById('bcActions').innerHTML=(r.actions||[]).map(a=>
+    `<button class="btn ${a.c}" ${a.go?`onclick="go('${a.go}')"`:''}>${ic(a.i)} ${a.l}</button>`).join('');
+
+  /* active nav */
+  const navId=r.nav||id;
+  document.querySelectorAll('.nav-i,.nav-si').forEach(n=>n.classList.remove('active'));
+  const target=document.querySelector(`[data-nav="${navId}"]`);
+  if(target)target.classList.add('active');
+  const grp=groupOf(navId);
+  if(grp){
+    openGrp(grp);
+    const gbtn=document.querySelector(`[data-grp="${grp}"]`);
+    if(gbtn)gbtn.classList.add('active');
+  }
+
+  /* meta + scroll + url */
+  document.title=`RecebeSports · ${r.title}`;
+  window.scrollTo({top:0});
+  c.scrollTop=0;
+  if(location.hash.slice(1)!==id)history.replaceState(null,'',`#${id}`);
+  toggleMobile(false);
+}
+
+/* ============================================================
+   SHELL CONTROLS
+   ============================================================ */
+function toggleSidebar(){document.getElementById('app').classList.toggle('collapsed');}
+function toggleMobile(open){
+  const app=document.getElementById('app');
+  if(open===undefined)open=!app.classList.contains('mobopen');
+  app.classList.toggle('mobopen',open);
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+(function init(){
+  renderNav();
+  const start=(location.hash||'').slice(1);
+  go(ROUTES[start]?start:'estatisticas');
+  window.addEventListener('hashchange',()=>{
+    const id=(location.hash||'').slice(1);
+    if(ROUTES[id])go(id);
+  });
+})();
+</script>
+</body>
+</html>
