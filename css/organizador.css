@@ -1,0 +1,467 @@
+/* ==========================================================================
+   ÁREA DO ORGANIZADOR — login + fluxo de criação de conta
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Login do organizador
+   -------------------------------------------------------------------------- */
+.org-login {
+  position: relative;
+  min-height: calc(100vh - 76px - 380px);
+  background: url('../assets/bg-organizador.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  padding: 60px 0;
+}
+
+.org-login::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+.org-login .container {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+.org-login-card {
+  background: rgba(20, 20, 20, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: var(--radius-lg);
+  padding: 44px 48px;
+  max-width: 470px;
+  margin-left: auto;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 0.6s ease;
+}
+
+.org-login-card h2 {
+  color: var(--color-white);
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.org-login-card .subtitle {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 28px;
+}
+
+.org-login-card .form-label {
+  color: var(--color-white);
+}
+
+.org-login-card .form-control {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-white);
+}
+
+.org-login-card .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.org-login-card .form-control:focus {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--color-orange);
+}
+
+.org-login-card .forgot-link {
+  display: block;
+  text-align: right;
+  color: var(--color-white);
+  font-size: 13px;
+  margin: 8px 0 24px;
+  transition: var(--transition);
+}
+
+.org-login-card .forgot-link:hover {
+  color: var(--color-orange);
+}
+
+.org-login-card .btn {
+  margin-bottom: 12px;
+}
+
+.btn-criar-org {
+  background: #3a2412;
+  color: var(--color-white);
+  border: 1px solid #5a3a22;
+}
+
+.btn-criar-org:hover {
+  background: #4a2f17;
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   Hero das telas de criação de conta
+   -------------------------------------------------------------------------- */
+.org-hero-banner {
+  position: relative;
+  height: 300px;
+  background: url('../assets/bg-organizador.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.org-hero-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.org-hero-banner h1 {
+  position: relative;
+  z-index: 2;
+  color: var(--color-white);
+  font-size: 42px;
+  font-weight: 700;
+  text-align: center;
+  padding: 0 16px;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.65);
+  animation: fadeInUp 0.7s ease;
+}
+
+/* --------------------------------------------------------------------------
+   Wrapper do fluxo
+   -------------------------------------------------------------------------- */
+.org-flow {
+  background: var(--color-white);
+  padding: 46px 0 66px;
+  min-height: 30vh;
+}
+
+/* Barra de progresso (4 etapas) */
+.org-steps {
+  display: flex;
+  max-width: 720px;
+  margin: 0 auto 42px;
+  padding-top: 4px;
+}
+
+.org-step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+.org-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #bdbdbd;
+  margin: 0 auto 12px;
+  position: relative;
+  z-index: 2;
+  transition: var(--transition);
+}
+
+.org-step.active .org-dot,
+.org-step.done .org-dot {
+  background: var(--color-orange);
+}
+
+.org-step.active .org-dot {
+  box-shadow: 0 0 0 5px rgba(255, 102, 0, 0.2);
+}
+
+.org-step::before,
+.org-step::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  height: 3px;
+  width: 50%;
+  background: #bdbdbd;
+  z-index: 1;
+}
+
+.org-step::before { left: 0; }
+.org-step::after { right: 0; }
+.org-step:first-child::before { display: none; }
+.org-step:last-child::after { display: none; }
+
+.org-step.done::before,
+.org-step.done::after,
+.org-step.active::before {
+  background: var(--color-orange);
+}
+
+.org-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-gray-text);
+}
+
+.org-step.active .org-label,
+.org-step.done .org-label {
+  color: var(--color-orange);
+}
+
+/* --------------------------------------------------------------------------
+   Card de conteúdo
+   -------------------------------------------------------------------------- */
+.org-card {
+  max-width: 680px;
+  margin: 0 auto;
+  animation: fadeInUp 0.5s ease;
+}
+
+.org-card h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--color-black);
+  margin-bottom: 16px;
+}
+
+.org-card p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 14px;
+}
+
+.org-card p.destaque {
+  font-weight: 600;
+  color: var(--color-black);
+}
+
+/* Caixa de informação (cadeado / Receita Federal) */
+.org-info-box {
+  background: #f1f1f1;
+  border-radius: var(--radius);
+  padding: 13px 16px;
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.org-info-box i {
+  color: var(--color-orange);
+}
+
+/* Campos */
+.org-field-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-black);
+  margin-bottom: 8px;
+}
+
+.org-help {
+  font-size: 12px;
+  color: var(--color-gray-text);
+  font-style: italic;
+  margin-top: 6px;
+}
+
+/* Linha CNPJ + Buscar */
+.cnpj-row {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.cnpj-row .form-control {
+  flex: 1;
+}
+
+.cnpj-row .btn {
+  flex-shrink: 0;
+  padding: 0 30px;
+}
+
+/* Caixa com os dados da empresa retornados */
+.empresa-dados {
+  background: #f1f1f1;
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  font-size: 13px;
+  line-height: 1.75;
+  color: #333;
+  margin: 6px 0 4px;
+}
+
+.empresa-dados .razao {
+  font-weight: 700;
+  color: var(--color-black);
+}
+
+/* Upload de documento / logomarca */
+.upload-item {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.upload-box {
+  background: #f1f1f1;
+  border: 1px dashed #c2c2c2;
+  border-radius: var(--radius);
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  font-size: 13px;
+  color: #8a8a8a;
+  cursor: pointer;
+  padding: 14px;
+  transition: var(--transition);
+}
+
+.upload-box i {
+  font-size: 18px;
+}
+
+.upload-box:hover {
+  border-color: var(--color-orange);
+  color: var(--color-orange);
+}
+
+.upload-box.preenchido {
+  border-style: solid;
+  border-color: var(--color-orange);
+  color: var(--color-orange);
+  font-weight: 600;
+}
+
+.upload-hint {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--color-gray-text);
+}
+
+/* Caixa de aceites obrigatórios */
+.org-aceites {
+  background: #f1f1f1;
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 8px 0 2px;
+}
+
+.org-aceites h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-black);
+  margin-bottom: 10px;
+}
+
+.org-aceite-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  font-size: 13px;
+  color: #444;
+  cursor: pointer;
+}
+
+.org-aceite-item input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--color-orange);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* Ações inferiores */
+.org-acoes {
+  display: flex;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.org-acoes .btn {
+  flex: 1;
+}
+
+.org-acoes.single {
+  justify-content: center;
+}
+
+.org-acoes.single .btn {
+  flex: 0 1 380px;
+}
+
+/* --------------------------------------------------------------------------
+   Tela de conclusão
+   -------------------------------------------------------------------------- */
+.org-concluido {
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+  animation: fadeInUp 0.5s ease;
+}
+
+.org-concluido img {
+  max-width: 230px;
+  margin: 0 auto 6px;
+}
+
+.org-concluido h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--color-black);
+  margin-bottom: 6px;
+}
+
+.org-concluido p {
+  font-size: 14px;
+  color: var(--color-gray-text);
+  margin-bottom: 24px;
+}
+
+.org-concluido .btn {
+  padding: 14px 36px;
+}
+
+/* --------------------------------------------------------------------------
+   Responsivo
+   -------------------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .org-login .container { grid-template-columns: 1fr; }
+  .org-login-card { margin: 0 auto; }
+}
+
+@media (max-width: 600px) {
+  .org-login { padding: 40px 0; }
+  .org-login-card { padding: 32px 22px; }
+  .org-login-card h2 { font-size: 24px; }
+
+  .org-hero-banner { height: 200px; }
+  .org-hero-banner h1 { font-size: 26px; }
+
+  .org-flow { padding: 34px 0 54px; }
+  .org-steps { margin-bottom: 30px; }
+  .org-label { font-size: 11px; }
+  .org-card h2 { font-size: 19px; }
+
+  .cnpj-row { flex-direction: column; }
+  .cnpj-row .btn { padding: 13px; }
+
+  .upload-item { grid-template-columns: 1fr; gap: 8px; }
+
+  .org-acoes { flex-direction: column-reverse; }
+  .org-acoes.single .btn { flex: 1; }
+}

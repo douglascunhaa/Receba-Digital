@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inscrição — Etapa 2 — RecebeSports</title>
+  <title>Acesso organizador — RecebeSports</title>
   <link rel="stylesheet" href="css/global.css">
-  <link rel="stylesheet" href="css/cadastro.css">
-  <link rel="stylesheet" href="css/inscricao.css">
+  <link rel="stylesheet" href="css/organizador.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -29,45 +28,29 @@
     </div>
   </header>
 
-  <!-- INSCRIÇÃO ETAPA 2 -->
-  <section class="cadastro-section">
+  <!-- LOGIN ORGANIZADOR -->
+  <section class="org-login">
     <div class="container">
-      <div class="cadastro-card">
+      <div></div>
+      <div class="org-login-card">
+        <h2>Acesso organizador</h2>
+        <p class="subtitle">Para acessar a plataforma, é necessário um e-mail válido.<br>Se não souber qual é o seu, veja as opções para recuperá-lo.</p>
 
-        <div class="progress-steps">
-          <div class="step done"></div>
-          <div class="line active"></div>
-          <div class="step active"></div>
-          <div class="line"></div>
-          <div class="step"></div>
-        </div>
-
-        <h2>Agora seu e-mail e senha</h2>
-        <p class="subtitle">Crie seus dados de acesso</p>
-
-        <form onsubmit="return etapa2Submit(event)">
+        <form id="orgLoginForm" onsubmit="return fazerLoginOrg(event)">
           <div class="form-group">
-            <label class="form-label">E-mail</label>
-            <input type="email" class="form-control" placeholder="Seu melhor e-mail" required>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Confirme seu e-mail</label>
-            <input type="email" class="form-control" placeholder="Confirme o e-mail" required>
+            <label class="form-label">CNPJ</label>
+            <input type="text" class="form-control" placeholder="123.456./0089-00" maxlength="18" oninput="mascararCNPJ(this)" required>
           </div>
 
           <div class="form-group">
             <label class="form-label">Senha</label>
-            <input type="password" class="form-control" placeholder="•••" required minlength="6">
+            <input type="password" class="form-control" placeholder="Digite sua senha" required>
           </div>
 
-          <div class="form-group" style="margin-bottom: 26px;">
-            <label class="form-label">Confirme sua senha</label>
-            <input type="password" class="form-control" placeholder="•••" required minlength="6">
-          </div>
+          <a href="#" class="forgot-link" onclick="event.preventDefault(); showToast('Enviamos instruções ao seu e-mail', 'info')">Esqueci minha senha</a>
 
-          <button type="submit" class="btn btn-primary">Avançar</button>
-          <a href="inscricao-1.html" class="btn btn-secondary"><i class="fas fa-arrow-left" style="margin-right:8px"></i> Voltar</a>
+          <button type="submit" class="btn btn-primary btn-block">Acessar</button>
+          <a href="organizador-criar-1.html" class="btn btn-criar-org btn-block">Criar acesso organizador</a>
         </form>
       </div>
     </div>
@@ -116,12 +99,29 @@
     </div>
   </footer>
 
+  <!-- BARRA FIXA SUPORTE AO CLIENTE -->
+  <button class="suporte-bar" onclick="showToast('Abrindo canal de suporte ao cliente...', 'info')">
+    <i class="fab fa-whatsapp"></i> Suporte ao cliente
+  </button>
+
   <script src="js/global.js"></script>
   <script>
-    function etapa2Submit(e) {
+    function mascararCNPJ(el) {
+      let v = el.value.replace(/\D/g, '').slice(0, 14);
+      v = v.replace(/^(\d{2})(\d)/, '$1.$2');
+      v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+      v = v.replace(/\.(\d{3})(\d)/, '.$1/$2');
+      v = v.replace(/(\d{4})(\d)/, '$1-$2');
+      el.value = v;
+    }
+
+    function fazerLoginOrg(e) {
       e.preventDefault();
       const btn = e.target.querySelector('.btn-primary');
-      fakeLoadingButton(btn, () => window.location = 'inscricao-3.html', 'Validando...');
+      fakeLoadingButton(btn, () => {
+        showToast('Acesso autorizado! Redirecionando...', 'success');
+        setTimeout(() => window.location = 'index.html', 1200);
+      }, 'Validando...');
       return false;
     }
   </script>

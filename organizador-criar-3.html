@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inscrição — Etapa 2 — RecebeSports</title>
+  <title>Cadastro do organizador — RecebeSports</title>
   <link rel="stylesheet" href="css/global.css">
-  <link rel="stylesheet" href="css/cadastro.css">
-  <link rel="stylesheet" href="css/inscricao.css">
+  <link rel="stylesheet" href="css/organizador.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -29,47 +28,78 @@
     </div>
   </header>
 
-  <!-- INSCRIÇÃO ETAPA 2 -->
-  <section class="cadastro-section">
+  <!-- HERO -->
+  <div class="org-hero-banner">
+    <h1>Seu evento além da organização</h1>
+  </div>
+
+  <!-- FLUXO -->
+  <section class="org-flow">
     <div class="container">
-      <div class="cadastro-card">
 
-        <div class="progress-steps">
-          <div class="step done"></div>
-          <div class="line active"></div>
-          <div class="step active"></div>
-          <div class="line"></div>
-          <div class="step"></div>
+      <!-- Progresso -->
+      <div class="org-steps">
+        <div class="org-step done">
+          <div class="org-dot"></div>
+          <div class="org-label">Registro</div>
         </div>
+        <div class="org-step done">
+          <div class="org-dot"></div>
+          <div class="org-label">Sua Empresa</div>
+        </div>
+        <div class="org-step active">
+          <div class="org-dot"></div>
+          <div class="org-label">Cadastro</div>
+        </div>
+        <div class="org-step">
+          <div class="org-dot"></div>
+          <div class="org-label">Concluído</div>
+        </div>
+      </div>
 
-        <h2>Agora seu e-mail e senha</h2>
-        <p class="subtitle">Crie seus dados de acesso</p>
+      <div class="org-card">
+        <form id="orgCadastroForm" onsubmit="return finalizarCadastro(event)">
 
-        <form onsubmit="return etapa2Submit(event)">
           <div class="form-group">
-            <label class="form-label">E-mail</label>
-            <input type="email" class="form-control" placeholder="Seu melhor e-mail" required>
+            <label class="form-label">Site oficial (opcional)</label>
+            <input type="text" class="form-control" placeholder="Site oficial">
           </div>
 
           <div class="form-group">
-            <label class="form-label">Confirme seu e-mail</label>
-            <input type="email" class="form-control" placeholder="Confirme o e-mail" required>
+            <label class="form-label">Telefone para atendimento aos atletas (obrigatório)</label>
+            <input type="text" class="form-control" placeholder="(xx) x xxxx xxxx" required>
           </div>
 
           <div class="form-group">
-            <label class="form-label">Senha</label>
-            <input type="password" class="form-control" placeholder="•••" required minlength="6">
+            <label class="form-label">E-mail de atendimento aos atletas (obrigatório)</label>
+            <input type="email" class="form-control" placeholder="E-mail" required>
           </div>
 
-          <div class="form-group" style="margin-bottom: 26px;">
-            <label class="form-label">Confirme sua senha</label>
-            <input type="password" class="form-control" placeholder="•••" required minlength="6">
+          <div class="form-group">
+            <label class="form-label">Biografia (opcional)</label>
+            <textarea class="form-control" rows="4" placeholder="Biografia"></textarea>
           </div>
 
-          <button type="submit" class="btn btn-primary">Avançar</button>
-          <a href="inscricao-1.html" class="btn btn-secondary"><i class="fas fa-arrow-left" style="margin-right:8px"></i> Voltar</a>
+          <div class="org-aceites">
+            <h4>Aceites obrigatórios para finalizar o cadastro</h4>
+            <label class="org-aceite-item">
+              <input type="checkbox" required> Li e aceito os Termos de Uso
+            </label>
+            <label class="org-aceite-item">
+              <input type="checkbox" required> Concordo com a Política de Privacidade
+            </label>
+            <label class="org-aceite-item">
+              <input type="checkbox" required> Concordo com a Política de Proteção de Dados (LGPD)
+            </label>
+          </div>
+
+          <div class="org-acoes">
+            <a href="organizador-criar-2.html" class="btn btn-secondary">&#8629; Voltar</a>
+            <button type="submit" class="btn btn-primary">Continuar</button>
+          </div>
         </form>
       </div>
+
     </div>
   </section>
 
@@ -116,12 +146,19 @@
     </div>
   </footer>
 
+  <!-- BARRA FIXA SUPORTE AO CLIENTE -->
+  <button class="suporte-bar" onclick="showToast('Abrindo canal de suporte ao cliente...', 'info')">
+    <i class="fab fa-whatsapp"></i> Suporte ao cliente
+  </button>
+
   <script src="js/global.js"></script>
   <script>
-    function etapa2Submit(e) {
+    function finalizarCadastro(e) {
       e.preventDefault();
       const btn = e.target.querySelector('.btn-primary');
-      fakeLoadingButton(btn, () => window.location = 'inscricao-3.html', 'Validando...');
+      fakeLoadingButton(btn, () => {
+        window.location = 'organizador-criar-4.html';
+      }, 'Finalizando...');
       return false;
     }
   </script>

@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inscrição — Etapa 2 — RecebeSports</title>
+  <title>Registre sua empresa — RecebeSports</title>
   <link rel="stylesheet" href="css/global.css">
-  <link rel="stylesheet" href="css/cadastro.css">
-  <link rel="stylesheet" href="css/inscricao.css">
+  <link rel="stylesheet" href="css/organizador.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -29,47 +28,52 @@
     </div>
   </header>
 
-  <!-- INSCRIÇÃO ETAPA 2 -->
-  <section class="cadastro-section">
+  <!-- HERO -->
+  <div class="org-hero-banner">
+    <h1>Registre sua empresa</h1>
+  </div>
+
+  <!-- FLUXO -->
+  <section class="org-flow">
     <div class="container">
-      <div class="cadastro-card">
 
-        <div class="progress-steps">
-          <div class="step done"></div>
-          <div class="line active"></div>
-          <div class="step active"></div>
-          <div class="line"></div>
-          <div class="step"></div>
+      <!-- Progresso -->
+      <div class="org-steps">
+        <div class="org-step active">
+          <div class="org-dot"></div>
+          <div class="org-label">Registro</div>
         </div>
-
-        <h2>Agora seu e-mail e senha</h2>
-        <p class="subtitle">Crie seus dados de acesso</p>
-
-        <form onsubmit="return etapa2Submit(event)">
-          <div class="form-group">
-            <label class="form-label">E-mail</label>
-            <input type="email" class="form-control" placeholder="Seu melhor e-mail" required>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Confirme seu e-mail</label>
-            <input type="email" class="form-control" placeholder="Confirme o e-mail" required>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Senha</label>
-            <input type="password" class="form-control" placeholder="•••" required minlength="6">
-          </div>
-
-          <div class="form-group" style="margin-bottom: 26px;">
-            <label class="form-label">Confirme sua senha</label>
-            <input type="password" class="form-control" placeholder="•••" required minlength="6">
-          </div>
-
-          <button type="submit" class="btn btn-primary">Avançar</button>
-          <a href="inscricao-1.html" class="btn btn-secondary"><i class="fas fa-arrow-left" style="margin-right:8px"></i> Voltar</a>
-        </form>
+        <div class="org-step">
+          <div class="org-dot"></div>
+          <div class="org-label">Sua Empresa</div>
+        </div>
+        <div class="org-step">
+          <div class="org-dot"></div>
+          <div class="org-label">Cadastro</div>
+        </div>
+        <div class="org-step">
+          <div class="org-dot"></div>
+          <div class="org-label">Concluído</div>
+        </div>
       </div>
+
+      <div class="org-card">
+        <h2>Registre sua empresa</h2>
+
+        <p class="destaque">👋 Bem-vindo à Central da Corrida!</p>
+
+        <p>Aqui na Central da Corrida, o cadastro de organizadores é feito exclusivamente por meio de empresas com CNPJ. Essa regra existe para trazer mais segurança, organização e confiança para todos os envolvidos — organizadores, atletas e parceiros.</p>
+
+        <p>Os dados da empresa são validados automaticamente junto à Receita Federal, o que ajuda a garantir um ambiente mais profissional e confiável para a publicação dos eventos.</p>
+
+        <p class="destaque">👉 Ainda não tem CNPJ ou empresa constituída?</p>
+        <p>Para começar, o cadastro pode ser feito inclusive como MEI, que é uma forma simples e acessível de formalizar sua atividade como organizador.</p>
+
+        <div class="org-acoes single">
+          <a href="organizador-criar-2.html" class="btn btn-primary">Começar Cadastro</a>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -116,14 +120,11 @@
     </div>
   </footer>
 
+  <!-- BARRA FIXA SUPORTE AO CLIENTE -->
+  <button class="suporte-bar" onclick="showToast('Abrindo canal de suporte ao cliente...', 'info')">
+    <i class="fab fa-whatsapp"></i> Suporte ao cliente
+  </button>
+
   <script src="js/global.js"></script>
-  <script>
-    function etapa2Submit(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('.btn-primary');
-      fakeLoadingButton(btn, () => window.location = 'inscricao-3.html', 'Validando...');
-      return false;
-    }
-  </script>
 </body>
 </html>

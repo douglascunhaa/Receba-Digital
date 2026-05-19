@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sua Empresa — RecebeSports</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/organizador.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.svg" alt="Recebe Sports">
+      </a>
+      <nav class="main-nav">
+        <a href="resultados.html">Resultados</a>
+        <a href="quem-somos.html">Quem somos</a>
+        <a href="organizadores.html">Para organizadores</a>
+      </nav>
+      <div class="nav-buttons">
+        <a href="organizador-login.html" class="btn-nav btn-nav-organizador">Área do Organizador</a>
+        <a href="login.html" class="btn-nav btn-nav-atleta">Área do Atleta</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="org-hero-banner">
+    <h1>Seu evento além da organização</h1>
+  </div>
+
+  <!-- FLUXO -->
+  <section class="org-flow">
+    <div class="container">
+
+      <!-- Progresso -->
+      <div class="org-steps">
+        <div class="org-step done">
+          <div class="org-dot"></div>
+          <div class="org-label">Registro</div>
+        </div>
+        <div class="org-step active">
+          <div class="org-dot"></div>
+          <div class="org-label">Sua Empresa</div>
+        </div>
+        <div class="org-step">
+          <div class="org-dot"></div>
+          <div class="org-label">Cadastro</div>
+        </div>
+        <div class="org-step">
+          <div class="org-dot"></div>
+          <div class="org-label">Concluído</div>
+        </div>
+      </div>
+
+      <div class="org-card">
+        <div class="org-info-box">
+          <i class="fas fa-lock"></i>
+          Seus dados estão seguros e validados diretamente com a Receita Federal.
+        </div>
+
+        <div class="org-field-label">Digite seu CNPJ (somente os números)</div>
+        <div class="cnpj-row">
+          <input type="text" class="form-control" id="cnpjInput" placeholder="23.078.912/0001-81" maxlength="18" oninput="mascararCNPJ(this)">
+          <button type="button" class="btn btn-primary" onclick="buscarCNPJ(this)">Buscar</button>
+        </div>
+        <p class="org-help">Os dados da empresa serão preenchidos automaticamente com base na Receita Federal.</p>
+
+        <!-- Resultado da busca (revelado ao clicar em Buscar) -->
+        <div id="resultadoEmpresa" style="display:none;">
+          <div class="empresa-dados">
+            <div class="razao">ALEX DOS SANTOS 35847132859</div>
+            CNPJ: 23.078.912/0001-81 &nbsp;|&nbsp; 65847913<br>
+            07902150<br>
+            Rua Delfim Moreira, 302<br>
+            Vila Rossi<br>
+            Francisco Morato / SP
+          </div>
+
+          <div class="org-field-label" style="margin-top:22px;">Documento oficial com foto</div>
+          <div class="upload-item">
+            <div class="upload-box" id="upDoc" onclick="anexar('upDoc','Documento anexado')">
+              <i class="fas fa-cloud-arrow-up"></i>
+              Anexo do documento
+            </div>
+            <div class="upload-hint">
+              Envie um documento com foto para validar sua identidade. Dê preferência à CNH (frente e verso). Se não tiver, envie o RG com CPF visível.<br>
+              🔒 Seus dados estão protegidos e essa verificação é feita apenas para garantir a segurança de todos na plataforma.
+            </div>
+          </div>
+
+          <div class="org-field-label" style="margin-top:18px;">Sua logomarca</div>
+          <div class="upload-item">
+            <div class="upload-box" id="upLogo" onclick="anexar('upLogo','Logomarca anexada')">
+              <i class="fas fa-image"></i>
+              Logomarca a empresa
+            </div>
+            <div class="upload-hint">
+              Seu perfil fica mais profissional e confiável com a identidade visual da sua empresa. Envie uma imagem de boa qualidade com até 400x200 pixels, para garantir uma ótima visualização da sua logomarca.
+            </div>
+          </div>
+        </div>
+
+        <!-- Ações: só Voltar antes de buscar; Voltar + Continuar depois -->
+        <div class="org-acoes single" id="acoesEmpresa">
+          <a href="organizador-criar-1.html" class="btn btn-secondary">&#8629; Voltar</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><img src="assets/icon-instagram.svg" alt=""></a>
+        <a href="#" aria-label="Whatsapp"><img src="assets/icon-whatsapp.svg" alt=""></a>
+        <a href="#" aria-label="Linkedin"><img src="assets/icon-linkedin.svg" alt=""></a>
+        <a href="#" aria-label="Facebook"><img src="assets/icon-facebook.svg" alt=""></a>
+      </div>
+      <div class="footer-logo">
+        <img src="assets/logo.svg" alt="Recebe Sports">
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>Atletas</h4>
+          <ul>
+            <li><a href="login.html">Acessar</a></li>
+            <li><a href="cadastro-1.html">Crie sua conta</a></li>
+            <li><a href="resultados.html">Resultados</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Organizadores</h4>
+          <ul>
+            <li><a href="organizadores.html">Serviços Oferecidos</a></li>
+            <li><a href="organizador-criar-1.html">Crie sua Conta</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Institucional</h4>
+          <ul>
+            <li><a href="quem-somos.html">Quem Somos</a></li>
+            <li><a href="#">Políticas de Privacidade</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2013 - 2026 - Recebe Digital - CNPJ: 12.345.678/0001-99 - Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <!-- BARRA FIXA SUPORTE AO CLIENTE -->
+  <button class="suporte-bar" onclick="showToast('Abrindo canal de suporte ao cliente...', 'info')">
+    <i class="fab fa-whatsapp"></i> Suporte ao cliente
+  </button>
+
+  <script src="js/global.js"></script>
+  <script>
+    function mascararCNPJ(el) {
+      let v = el.value.replace(/\D/g, '').slice(0, 14);
+      v = v.replace(/^(\d{2})(\d)/, '$1.$2');
+      v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+      v = v.replace(/\.(\d{3})(\d)/, '.$1/$2');
+      v = v.replace(/(\d{4})(\d)/, '$1-$2');
+      el.value = v;
+    }
+
+    function buscarCNPJ(btn) {
+      const cnpj = document.getElementById('cnpjInput').value.replace(/\D/g, '');
+      if (cnpj.length < 14) {
+        showToast('Digite um CNPJ válido (14 dígitos)', 'error');
+        return;
+      }
+      fakeLoadingButton(btn, () => {
+        document.getElementById('resultadoEmpresa').style.display = 'block';
+        document.getElementById('acoesEmpresa').classList.remove('single');
+        document.getElementById('acoesEmpresa').innerHTML =
+          '<a href="organizador-criar-1.html" class="btn btn-secondary">&#8629; Voltar</a>' +
+          '<a href="organizador-criar-3.html" class="btn btn-primary">Continuar</a>';
+        showToast('Empresa encontrada na Receita Federal', 'success');
+      }, 'Buscando...');
+    }
+
+    function anexar(id, msg) {
+      const box = document.getElementById(id);
+      box.classList.add('preenchido');
+      box.innerHTML = '<i class="fas fa-circle-check"></i> ' + msg;
+      showToast(msg, 'success');
+    }
+  </script>
+</body>
+</html>
