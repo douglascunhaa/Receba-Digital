@@ -130,3 +130,544 @@
   .progress-steps { margin-bottom: 28px; }
   .terms-box { height: 210px; padding: 16px; }
 }
+
+
+
+/* ============================================
+   CADASTRO DE ORGANIZADOR - Estilos Específicos
+   Integrado com o design system do Recebe Digital
+   ============================================ */
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+.main {
+    padding: 60px 0;
+}
+
+/* ============================================
+   PROGRESS INDICATOR
+   ============================================ */
+.progress-wrapper {
+    margin-bottom: 48px;
+    animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+.step-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--color-input-bg);
+    color: var(--color-gray-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-family: var(--font);
+    font-size: 18px;
+    border: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.progress-step.completed .step-circle {
+    background: #10B981;
+    color: white;
+    border-color: #10B981;
+}
+
+.progress-step.active .step-circle {
+    background: var(--color-orange);
+    color: white;
+    border-color: var(--color-orange);
+    box-shadow: 0 0 0 4px rgba(255, 102, 0, 0.1);
+}
+
+.step-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-gray-text);
+}
+
+.progress-step.active .step-label {
+    color: var(--color-orange);
+}
+
+.progress-line {
+    width: 120px;
+    height: 3px;
+    background: var(--color-input-border);
+    margin: 0 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #10B981;
+    animation: progressFill 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    transform: translateX(-100%);
+}
+
+@keyframes progressFill {
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* ============================================
+   FORM HEADER
+   ============================================ */
+.form-header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-title {
+    font-family: var(--font);
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--color-black);
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+}
+
+.form-subtitle {
+    font-size: 18px;
+    color: var(--color-gray-text);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   FORM SECTIONS
+   ============================================ */
+.registration-form {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.form-section {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-input-border);
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    transition: all 0.3s ease;
+}
+
+.form-section:nth-child(1) { animation-delay: 0.3s; }
+.form-section:nth-child(2) { animation-delay: 0.4s; }
+.form-section:nth-child(3) { animation-delay: 0.5s; }
+.form-section:nth-child(4) { animation-delay: 0.6s; }
+
+.form-section:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(255, 102, 0, 0.2);
+}
+
+.section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--color-input-bg);
+}
+
+.section-icon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--color-orange) 0%, #e65a00 100%);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(255, 102, 0, 0.25);
+}
+
+.section-title-wrapper {
+    flex: 1;
+}
+
+.section-title {
+    font-family: var(--font);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-black);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+}
+
+.section-description {
+    font-size: 15px;
+    color: var(--color-gray-text);
+}
+
+/* ============================================
+   SUBSECTIONS
+   ============================================ */
+.subsection {
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--color-input-border);
+}
+
+.subsection-title {
+    font-family: var(--font);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-black);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.subsection-title::before {
+    content: '';
+    width: 4px;
+    height: 24px;
+    background: var(--color-orange);
+    border-radius: 2px;
+}
+
+/* ============================================
+   FORM GRID
+   ============================================ */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group.span-2 {
+    grid-column: span 2;
+}
+
+.form-group.span-3 {
+    grid-column: span 3;
+}
+
+.form-group.span-4 {
+    grid-column: span 4;
+}
+
+/* ============================================
+   FORM CONTROLS ESPECÍFICOS
+   ============================================ */
+
+/* Input with Icon */
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon svg {
+    position: absolute;
+    left: 16px;
+    color: var(--color-gray-text);
+    pointer-events: none;
+    transition: color 0.3s ease;
+}
+
+.input-with-icon input {
+    padding-left: 48px;
+}
+
+.input-with-icon:focus-within svg {
+    color: var(--color-orange);
+}
+
+/* Input with Button */
+.input-with-button {
+    display: flex;
+    gap: 8px;
+}
+
+.input-with-button input {
+    flex: 1;
+}
+
+.btn-search-cep {
+    width: 48px;
+    height: 48px;
+    background: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gray-text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.btn-search-cep:hover {
+    background: var(--color-orange);
+    border-color: var(--color-orange);
+    color: white;
+}
+
+/* Password Wrapper */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--color-gray-text);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+    color: var(--color-orange);
+}
+
+/* Checkbox */
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.form-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-input-border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.form-checkbox:checked {
+    background: var(--color-orange);
+    border-color: var(--color-orange);
+}
+
+.form-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 4px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-label {
+    font-size: 15px;
+    color: var(--color-gray-text);
+    cursor: pointer;
+    user-select: none;
+}
+
+/* ============================================
+   FORM ACTIONS
+   ============================================ */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 32px;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 1024px) {
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .form-group.span-3,
+    .form-group.span-4 {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-title {
+        font-size: 32px;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .form-group.span-2,
+    .form-group.span-3,
+    .form-group.span-4 {
+        grid-column: span 1;
+    }
+    
+    .form-section {
+        padding: 24px;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .section-icon {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .section-title {
+        font-size: 24px;
+    }
+    
+    .progress-line {
+        width: 80px;
+    }
+    
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .main {
+        padding: 32px 0;
+    }
+    
+    .form-title {
+        font-size: 28px;
+    }
+    
+    .form-subtitle {
+        font-size: 16px;
+    }
+    
+    .step-label {
+        font-size: 12px;
+    }
+    
+    .step-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .progress-line {
+        width: 60px;
+    }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+.required {
+    color: #dc3545;
+    font-weight: 700;
+}
+
+.text-error {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+.text-success {
+    color: #10B981;
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+/* Form Validation States */
+.form-control.is-invalid {
+    border-color: #dc3545;
+}
+
+.form-control.is-invalid:focus {
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+.form-control.is-valid {
+    border-color: #10B981;
+}
+
+.form-control.is-valid:focus {
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}

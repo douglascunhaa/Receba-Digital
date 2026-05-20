@@ -133,7 +133,7 @@
 .search-field select {
   border: none;
   background: transparent;
-  padding: 14px 0;
+  padding: 10px 0;
   font-size: 14px;
   flex: 1;
   outline: none;
@@ -164,7 +164,7 @@
 }
 
 .search-bar .btn {
-  padding: 14px 32px;
+  padding: 10px 32px;
 }
 
 /* Seções de eventos */
@@ -322,7 +322,7 @@
   width: 75px;
   display: flex;
   padding: 2px;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   justify-content: center;
   align-items: center;
 }
@@ -338,7 +338,7 @@
 
 .event-card-info {
   font-size: 12px;
-  color: var(--color-gray-text);
+  color: var(--color-black);
   margin-bottom: 4px;
   display: flex;
   align-items: center;
