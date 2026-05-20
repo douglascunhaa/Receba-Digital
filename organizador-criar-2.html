@@ -1,200 +1,578 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sua Empresa — RecebeSports</title>
-  <link rel="stylesheet" href="css/global.css">
-  <link rel="stylesheet" href="css/organizador.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Organizador - Recebe Sports</title>
+    <link rel="stylesheet" href="organizador-criar-2.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-
-  <!-- HEADER -->
-  <header class="site-header">
-    <div class="container">
-      <a href="index.html" class="logo">
-        <img src="assets/logo.svg" alt="Recebe Sports">
-      </a>
-      <nav class="main-nav">
-        <a href="resultados.html">Resultados</a>
-        <a href="quem-somos.html">Quem somos</a>
-        <a href="organizadores.html">Para organizadores</a>
-      </nav>
-      <div class="nav-buttons">
-        <a href="login-organizador.html" class="btn-nav btn-nav-organizador">Área do Organizador</a>
-        <a href="login.html" class="btn-nav btn-nav-atleta">Área do Atleta</a>
-      </div>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <div class="org-hero-banner">
-    <h1>Seu evento além da organização</h1>
-  </div>
-
-  <!-- FLUXO -->
-  <section class="org-flow">
-    <div class="container">
-
-      <!-- Progresso -->
-      <div class="org-steps">
-        <div class="org-step done">
-          <div class="org-dot"></div>
-          <div class="org-label">Registro</div>
-        </div>
-        <div class="org-step active">
-          <div class="org-dot"></div>
-          <div class="org-label">Sua Empresa</div>
-        </div>
-        <div class="org-step">
-          <div class="org-dot"></div>
-          <div class="org-label">Cadastro</div>
-        </div>
-        <div class="org-step">
-          <div class="org-dot"></div>
-          <div class="org-label">Concluído</div>
-        </div>
-      </div>
-
-      <div class="org-card">
-        <div class="org-info-box">
-          <i class="fas fa-lock"></i>
-          Seus dados estão seguros e validados diretamente com a Receita Federal.
-        </div>
-
-        <div class="org-field-label">Digite seu CNPJ (somente os números)</div>
-        <div class="cnpj-row">
-          <input type="text" class="form-control" id="cnpjInput" placeholder="23.078.912/0001-81" maxlength="18" oninput="mascararCNPJ(this)">
-          <button type="button" class="btn btn-primary" onclick="buscarCNPJ(this)">Buscar</button>
-        </div>
-        <p class="org-help">Os dados da empresa serão preenchidos automaticamente com base na Receita Federal.</p>
-
-        <!-- Resultado da busca (revelado ao clicar em Buscar) -->
-        <div id="resultadoEmpresa" style="display:none;">
-          <div class="empresa-dados">
-            <div class="razao">ALEX DOS SANTOS 35847132859</div>
-            CNPJ: 23.078.912/0001-81 &nbsp;|&nbsp; 65847913<br>
-            07902150<br>
-            Rua Delfim Moreira, 302<br>
-            Vila Rossi<br>
-            Francisco Morato / SP
-          </div>
-
-          <div class="org-field-label" style="margin-top:22px;">Documento oficial com foto</div>
-          <div class="upload-item">
-            <div class="upload-box" id="upDoc" onclick="anexar('upDoc','Documento anexado')">
-              <i class="fas fa-cloud-arrow-up"></i>
-              Anexo do documento
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M20 0L40 10V30L20 40L0 30V10L20 0Z" fill="#FF6B35"/>
+                        <path d="M20 8L32 14V26L20 32L8 26V14L20 8Z" fill="#fff"/>
+                    </svg>
+                    <span>recebe<strong>sports</strong></span>
+                </a>
+                <nav class="nav">
+                    <a href="resultados.html">Resultados</a>
+                    <a href="quem-somos.html">Quem somos</a>
+                    <a href="organizadores.html">Para organizadores</a>
+                </nav>
             </div>
-            <div class="upload-hint">
-              Envie um documento com foto para validar sua identidade. Dê preferência à CNH (frente e verso). Se não tiver, envie o RG com CPF visível.<br>
-              🔒 Seus dados estão protegidos e essa verificação é feita apenas para garantir a segurança de todos na plataforma.
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Progress Indicator -->
+            <div class="progress-wrapper">
+                <div class="progress-bar">
+                    <div class="progress-step completed">
+                        <div class="step-circle">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M16 6L8 14L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <span class="step-label">Início</span>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step active">
+                        <div class="step-circle">2</div>
+                        <span class="step-label">Cadastro</span>
+                    </div>
+                </div>
             </div>
-          </div>
 
-          <div class="org-field-label" style="margin-top:18px;">Sua logomarca</div>
-          <div class="upload-item">
-            <div class="upload-box" id="upLogo" onclick="anexar('upLogo','Logomarca anexada')">
-              <i class="fas fa-image"></i>
-              Logomarca a empresa
+            <!-- Form Header -->
+            <div class="form-header">
+                <h1 class="form-title">Complete seu cadastro</h1>
+                <p class="form-subtitle">Preencha as informações abaixo para criar sua conta de organizador</p>
             </div>
-            <div class="upload-hint">
-              Seu perfil fica mais profissional e confiável com a identidade visual da sua empresa. Envie uma imagem de boa qualidade com até 400x200 pixels, para garantir uma ótima visualização da sua logomarca.
+
+            <!-- Registration Form -->
+            <form id="registrationForm" class="registration-form">
+                
+                <!-- Dados da Empresa Section -->
+                <section class="form-section" data-section="empresa">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="section-title-wrapper">
+                            <h2 class="section-title">Dados da Empresa</h2>
+                            <p class="section-description">Informações da sua empresa ou negócio</p>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group span-2">
+                            <label for="tipoPessoa" class="form-label">
+                                Tipo de Pessoa
+                                <span class="required">*</span>
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="tipoPessoa" name="tipoPessoa" class="form-control" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="juridica">Jurídica</option>
+                                    <option value="fisica">Física</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="cnpj" class="form-label">
+                                CNPJ
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="cnpj" name="cnpj" class="form-control" placeholder="00.000.000/0000-00" required>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="nomeFantasia" class="form-label">
+                                Nome Fantasia
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="nomeFantasia" name="nomeFantasia" class="form-control" placeholder="Nome comercial da empresa" required>
+                        </div>
+
+                        <div class="form-group span-4">
+                            <label for="razaoSocial" class="form-label">
+                                Razão Social
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="razaoSocial" name="razaoSocial" class="form-control" placeholder="Razão social completa" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cep" class="form-label">
+                                CEP
+                                <span class="required">*</span>
+                            </label>
+                            <div class="input-with-button">
+                                <input type="text" id="cep" name="cep" class="form-control" placeholder="00000-000" required>
+                                <button type="button" class="btn-search-cep" id="searchCep">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M11 11L14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="endereco" class="form-label">
+                                Endereço
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="endereco" name="endereco" class="form-control" placeholder="Rua, Avenida..." required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="numero" class="form-label">
+                                Número
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="numero" name="numero" class="form-control" placeholder="Nº" required>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="bairro" class="form-label">
+                                Bairro
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="bairro" name="bairro" class="form-control" placeholder="Bairro" required>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="complemento" class="form-label">
+                                Complemento
+                            </label>
+                            <input type="text" id="complemento" name="complemento" class="form-control" placeholder="Apto, Sala...">
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="cidade" class="form-label">
+                                Cidade
+                                <span class="required">*</span>
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="cidade" name="cidade" class="form-control" required>
+                                    <option value="">Selecione uma Cidade...</option>
+                                    <option value="sao-paulo">São Paulo</option>
+                                    <option value="rio-janeiro">Rio de Janeiro</option>
+                                    <option value="belo-horizonte">Belo Horizonte</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="uf" class="form-label">
+                                UF
+                                <span class="required">*</span>
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="uf" name="uf" class="form-control" required>
+                                    <option value="">UF</option>
+                                    <option value="SP">SP</option>
+                                    <option value="RJ">RJ</option>
+                                    <option value="MG">MG</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Representante Legal Subsection -->
+                    <div class="subsection">
+                        <h3 class="subsection-title">Representante Legal</h3>
+                        <div class="form-grid">
+                            <div class="form-group span-3">
+                                <label for="nomeCompleto" class="form-label">
+                                    Nome Completo
+                                    <span class="required">*</span>
+                                </label>
+                                <input type="text" id="nomeCompleto" name="nomeCompleto" class="form-control" placeholder="Nome completo do representante" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cpfRepresentante" class="form-label">
+                                    CPF
+                                    <span class="required">*</span>
+                                </label>
+                                <input type="text" id="cpfRepresentante" name="cpfRepresentante" class="form-control" placeholder="000.000.000-00" required>
+                            </div>
+
+                            <div class="form-group span-2">
+                                <label for="emailRepresentante" class="form-label">
+                                    E-mail
+                                    <span class="required">*</span>
+                                </label>
+                                <input type="email" id="emailRepresentante" name="emailRepresentante" class="form-control" placeholder="email@exemplo.com" required>
+                            </div>
+
+                            <div class="form-group span-2">
+                                <label for="celularRepresentante" class="form-label">
+                                    Celular
+                                    <span class="required">*</span>
+                                </label>
+                                <input type="tel" id="celularRepresentante" name="celularRepresentante" class="form-control" placeholder="(00) 00000-0000" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mídias Sociais Subsection -->
+                    <div class="subsection">
+                        <h3 class="subsection-title">Mídias Sociais</h3>
+                        <div class="form-grid">
+                            <div class="form-group span-2">
+                                <label for="facebook" class="form-label">
+                                    Facebook
+                                </label>
+                                <div class="input-with-icon">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        <path d="M20 10C20 4.48 15.52 0 10 0S0 4.48 0 10c0 4.99 3.66 9.12 8.44 9.88v-6.99H5.9V10h2.54V7.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.19 2.24.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56V10h2.78l-.45 2.89h-2.33v6.99C16.34 19.12 20 14.99 20 10z" fill="currentColor"/>
+                                    </svg>
+                                    <input type="text" id="facebook" name="facebook" class="form-control" placeholder="facebook.com/sua-pagina">
+                                </div>
+                            </div>
+
+                            <div class="form-group span-2">
+                                <label for="instagram" class="form-label">
+                                    Instagram
+                                </label>
+                                <div class="input-with-icon">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        <path d="M10 1.8c2.67 0 2.99.01 4.04.06 2.72.12 3.99 1.41 4.11 4.11.05 1.05.06 1.37.06 4.04s-.01 2.99-.06 4.04c-.12 2.7-1.39 3.99-4.11 4.11-1.05.05-1.37.06-4.04.06s-2.99-.01-4.04-.06c-2.73-.12-3.99-1.42-4.11-4.11C1.8 12.99 1.8 12.67 1.8 10s.01-2.99.06-4.04c.12-2.7 1.39-3.99 4.11-4.11C7.01 1.8 7.33 1.8 10 1.8zM10 0C7.28 0 6.94.01 5.88.06 2.35.22.22 2.35.06 5.88.01 6.94 0 7.28 0 10s.01 3.06.06 4.12c.16 3.53 2.29 5.66 5.82 5.82C6.94 19.99 7.28 20 10 20s3.06-.01 4.12-.06c3.53-.16 5.66-2.29 5.82-5.82.05-1.06.06-1.4.06-4.12s-.01-3.06-.06-4.12C19.78 2.35 17.65.22 14.12.06 13.06.01 12.72 0 10 0zm0 4.87a5.13 5.13 0 100 10.26 5.13 5.13 0 000-10.26zM10 13.33A3.33 3.33 0 1110 6.67a3.33 3.33 0 010 6.66zm5.34-8.59a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z" fill="currentColor"/>
+                                    </svg>
+                                    <input type="text" id="instagram" name="instagram" class="form-control" placeholder="@seu_perfil">
+                                </div>
+                            </div>
+
+                            <div class="form-group span-2">
+                                <label for="twitter" class="form-label">
+                                    Twitter/X
+                                </label>
+                                <div class="input-with-icon">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        <path d="M15.75 1.875h2.938L12.125 9.14l7.5 9.985h-5.906l-4.594-6.008-5.25 6.008H.938l6.953-7.946L.625 1.875h6.063l4.156 5.5 4.906-5.5zm-1.031 15.313h1.625L5.5 3.594H3.75l11 13.594z" fill="currentColor"/>
+                                    </svg>
+                                    <input type="text" id="twitter" name="twitter" class="form-control" placeholder="@seu_usuario">
+                                </div>
+                            </div>
+
+                            <div class="form-group span-2">
+                                <label for="site" class="form-label">
+                                    Site
+                                </label>
+                                <div class="input-with-icon">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M2 10h16M10 2a15.3 15.3 0 014 8 15.3 15.3 0 01-4 8 15.3 15.3 0 01-4-8 15.3 15.3 0 014-8z" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                    <input type="url" id="site" name="site" class="form-control" placeholder="www.seusite.com.br">
+                                </div>
+                            </div>
+
+                            <div class="form-group span-4">
+                                <div class="checkbox-wrapper">
+                                    <input type="checkbox" id="mostrarMidias" name="mostrarMidias" class="form-checkbox">
+                                    <label for="mostrarMidias" class="checkbox-label">
+                                        Mostrar mídias sociais na página do evento
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Dados Bancários Section -->
+                <section class="form-section" data-section="bancario">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M3 10h18M7 14h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="section-title-wrapper">
+                            <h2 class="section-title">Dados Bancários</h2>
+                            <p class="section-description">Informações para recebimento dos pagamentos</p>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group span-2">
+                            <label for="tipoPessoaBanco" class="form-label">
+                                Tipo de Pessoa
+                                <span class="required">*</span>
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="tipoPessoaBanco" name="tipoPessoaBanco" class="form-control" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="fisica">Física</option>
+                                    <option value="juridica">Jurídica</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="cpfBeneficiario" class="form-label">
+                                CPF do Beneficiário
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="cpfBeneficiario" name="cpfBeneficiario" class="form-control" placeholder="000.000.000-00" required>
+                        </div>
+
+                        <div class="form-group span-4">
+                            <label for="nomeBeneficiario" class="form-label">
+                                Nome do Beneficiário
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="nomeBeneficiario" name="nomeBeneficiario" class="form-control" placeholder="Nome completo do beneficiário" required>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="banco" class="form-label">
+                                Banco
+                                <span class="required">*</span>
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="banco" name="banco" class="form-control" required>
+                                    <option value="">Selecione um Banco...</option>
+                                    <option value="001">001 - Banco do Brasil</option>
+                                    <option value="033">033 - Santander</option>
+                                    <option value="104">104 - Caixa Econômica</option>
+                                    <option value="237">237 - Bradesco</option>
+                                    <option value="341">341 - Itaú</option>
+                                    <option value="260">260 - Nubank</option>
+                                    <option value="077">077 - Inter</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="agencia" class="form-label">
+                                Agência
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="agencia" name="agencia" class="form-control" placeholder="0000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="conta" class="form-label">
+                                Conta
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="conta" name="conta" class="form-control" placeholder="00000-0" required>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="chavePix1" class="form-label">
+                                Chave PIX 1
+                            </label>
+                            <input type="text" id="chavePix1" name="chavePix1" class="form-control" placeholder="CPF, E-mail, Celular ou Chave Aleatória">
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="chavePix2" class="form-label">
+                                Chave PIX 2
+                            </label>
+                            <input type="text" id="chavePix2" name="chavePix2" class="form-control" placeholder="CPF, E-mail, Celular ou Chave Aleatória">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contato Section -->
+                <section class="form-section" data-section="contato">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="section-title-wrapper">
+                            <h2 class="section-title">Contato</h2>
+                            <p class="section-description">Formas de contato com sua empresa</p>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group span-2">
+                            <label for="emailContato" class="form-label">
+                                E-mail
+                                <span class="required">*</span>
+                            </label>
+                            <input type="email" id="emailContato" name="emailContato" class="form-control" placeholder="contato@empresa.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="celular1" class="form-label">
+                                Celular 1
+                                <span class="required">*</span>
+                            </label>
+                            <input type="tel" id="celular1" name="celular1" class="form-control" placeholder="(00) 00000-0000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="celular2" class="form-label">
+                                Celular 2
+                            </label>
+                            <input type="tel" id="celular2" name="celular2" class="form-control" placeholder="(00) 00000-0000">
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="telefone" class="form-label">
+                                Telefone
+                            </label>
+                            <input type="tel" id="telefone" name="telefone" class="form-control" placeholder="(00) 0000-0000">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Usuário para Acesso Section -->
+                <section class="form-section" data-section="usuario">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="section-title-wrapper">
+                            <h2 class="section-title">Usuário para Acesso</h2>
+                            <p class="section-description">Credenciais de acesso ao sistema</p>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group span-2">
+                            <label for="nomeUsuario" class="form-label">
+                                Nome
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="nomeUsuario" name="nomeUsuario" class="form-control" placeholder="Nome do usuário" required>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="cpfUsuario" class="form-label">
+                                CPF
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="cpfUsuario" name="cpfUsuario" class="form-control" placeholder="000.000.000-00" required>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="emailUsuario" class="form-label">
+                                E-mail
+                                <span class="required">*</span>
+                            </label>
+                            <input type="email" id="emailUsuario" name="emailUsuario" class="form-control" placeholder="usuario@email.com" required>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="senhaAcesso" class="form-label">
+                                Senha de Acesso
+                                <span class="required">*</span>
+                            </label>
+                            <div class="password-wrapper">
+                                <input type="password" id="senhaAcesso" name="senhaAcesso" class="form-control" placeholder="••••••••" required>
+                                <button type="button" class="toggle-password" data-target="senhaAcesso">
+                                    <svg class="eye-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        <path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z" stroke="currentColor" stroke-width="2"/>
+                                        <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="cargo" class="form-label">
+                                Cargo
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="cargo" name="cargo" class="form-control" placeholder="Cargo do usuário" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefoneUsuario" class="form-label">
+                                Telefone
+                                <span class="required">*</span>
+                            </label>
+                            <input type="tel" id="telefoneUsuario" name="telefoneUsuario" class="form-control" placeholder="(00) 00000-0000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="remal" class="form-label">
+                                Remal
+                            </label>
+                            <input type="text" id="remal" name="remal" class="form-control" placeholder="Remal">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="history.back()">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M15 10H5M5 10l5 5M5 10l5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Voltar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Concluir cadastro
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 10h10M10 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>Atletas</h4>
+                    <ul>
+                        <li><a href="#">Acessar</a></li>
+                        <li><a href="#">Crie sua conta</a></li>
+                        <li><a href="#">Resultados</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Organizadores</h4>
+                    <ul>
+                        <li><a href="#">Serviços Oferecidos</a></li>
+                        <li><a href="#">Crie sua Conta</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Institucional</h4>
+                    <ul>
+                        <li><a href="#">Quem Somos</a></li>
+                        <li><a href="#">Políticas de Privacidade</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                    </ul>
+                </div>
             </div>
-          </div>
+            <div class="footer-bottom">
+                <p>&copy; 2013 - 2026 - Recebe Digital - CNPJ: 12.345.678/0001-99 - Todos os direitos reservados.</p>
+            </div>
         </div>
+    </footer>
 
-        <!-- Ações: só Voltar antes de buscar; Voltar + Continuar depois -->
-        <div class="org-acoes single" id="acoesEmpresa">
-          <a href="organizador-criar-1.html" class="btn btn-secondary">&#8629; Voltar</a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-social">
-        <a href="#" aria-label="Instagram"><img src="assets/icon-instagram.svg" alt=""></a>
-        <a href="#" aria-label="Whatsapp"><img src="assets/icon-whatsapp.svg" alt=""></a>
-        <a href="#" aria-label="Linkedin"><img src="assets/icon-linkedin.svg" alt=""></a>
-        <a href="#" aria-label="Facebook"><img src="assets/icon-facebook.svg" alt=""></a>
-      </div>
-      <div class="footer-logo">
-        <img src="assets/logo.svg" alt="Recebe Sports">
-      </div>
-      <div class="footer-cols">
-        <div>
-          <h4>Atletas</h4>
-          <ul>
-            <li><a href="login.html">Acessar</a></li>
-            <li><a href="cadastro-1.html">Crie sua conta</a></li>
-            <li><a href="resultados.html">Resultados</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Organizadores</h4>
-          <ul>
-            <li><a href="organizadores.html">Serviços Oferecidos</a></li>
-            <li><a href="organizador-criar-1.html">Crie sua Conta</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Institucional</h4>
-          <ul>
-            <li><a href="quem-somos.html">Quem Somos</a></li>
-            <li><a href="#">Políticas de Privacidade</a></li>
-            <li><a href="#">Termos de Uso</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        © 2013 - 2026 - Recebe Digital - CNPJ: 12.345.678/0001-99 - Todos os direitos reservados.
-      </div>
-    </div>
-  </footer>
-
-  <!-- BARRA FIXA SUPORTE AO CLIENTE -->
-  <button class="suporte-bar" onclick="showToast('Abrindo canal de suporte ao cliente...', 'info')">
-    <i class="fab fa-whatsapp"></i> Suporte ao cliente
-  </button>
-
-  <script src="js/global.js"></script>
-  <script>
-    function mascararCNPJ(el) {
-      let v = el.value.replace(/\D/g, '').slice(0, 14);
-      v = v.replace(/^(\d{2})(\d)/, '$1.$2');
-      v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-      v = v.replace(/\.(\d{3})(\d)/, '.$1/$2');
-      v = v.replace(/(\d{4})(\d)/, '$1-$2');
-      el.value = v;
-    }
-
-    function buscarCNPJ(btn) {
-      const cnpj = document.getElementById('cnpjInput').value.replace(/\D/g, '');
-      if (cnpj.length < 14) {
-        showToast('Digite um CNPJ válido (14 dígitos)', 'error');
-        return;
-      }
-      fakeLoadingButton(btn, () => {
-        document.getElementById('resultadoEmpresa').style.display = 'block';
-        document.getElementById('acoesEmpresa').classList.remove('single');
-        document.getElementById('acoesEmpresa').innerHTML =
-          '<a href="organizador-criar-1.html" class="btn btn-secondary">&#8629; Voltar</a>' +
-          '<a href="organizador-criar-3.html" class="btn btn-primary">Continuar</a>';
-        showToast('Empresa encontrada na Receita Federal', 'success');
-      }, 'Buscando...');
-    }
-
-    function anexar(id, msg) {
-      const box = document.getElementById(id);
-      box.classList.add('preenchido');
-      box.innerHTML = '<i class="fas fa-circle-check"></i> ' + msg;
-      showToast(msg, 'success');
-    }
-  </script>
+    <script src="organizador-criar-2.js"></script>
 </body>
 </html>
