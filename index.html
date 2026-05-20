@@ -120,7 +120,6 @@
   <!-- PRÓXIMOS EVENTOS -->
   <section class="events-section">
     <div class="container">
-      <h2>Próximos eventos</h2>
       <div class="events-grid" id="proximosEventos"></div>
       <div class="events-grid" id="proximosEventos2"></div>
     </div>
@@ -129,7 +128,6 @@
   <!-- TODOS OS EVENTOS -->
   <section class="events-section">
     <div class="container">
-      <h2>Todos eventos</h2>
       <div class="events-grid" id="todosEventos"></div>
       <div class="events-grid" id="todosEventos2"></div>
     </div>
@@ -148,7 +146,9 @@
           <li>Confirmação de pagamento por WhatsApp e e-mail</li>
           <li>Histórico de inscrições</li>
         </ul>
-        <a href="#" class="btn btn-primary" onclick="event.preventDefault(); showToast('Abrindo suporte ao atleta...', 'info')">Suporte ao Atleta</a>
+        <a href="cadastro-1.html" class="btn btn-primary" onclick="event.preventDefault(); showToast('Abrindo suporte ao atleta...', 'info')">
+          Cadastre-se
+        </a>
       </div>
       <div class="servicos-mockup">
         <img src="assets/mockup-atleta.png" alt="Mockup celular atleta">
@@ -188,8 +188,8 @@
           <h4>Institucional</h4>
           <ul>
             <li><a href="quem-somos.html">Quem Somos</a></li>
-            <li><a href="#">Políticas de Privacidade</a></li>
-            <li><a href="#">Termos de Uso</a></li>
+            <li><a href="politica-de-privacidade.html">Política de Privacidade</a></li>
+            <li><a href="termos-de-uso.html">Termos de Uso</a></li>
           </ul>
         </div>
       </div>
@@ -201,17 +201,17 @@
 
   <!-- BARRA FIXA SUPORTE AO CLIENTE -->
   <button class="suporte-bar" onclick="showToast('Abrindo canal de suporte ao cliente...', 'info')">
-    <i class="fab fa-whatsapp"></i> Suporte ao cliente
+    <i class="fab fa-whatsapp"></i> Suporte ao Atleta
   </button>
 
   <script src="js/global.js"></script>
   <script>
     // Dados fictícios dos eventos
     const eventos = [
-      { img: 'assets/card-evento1.jpg', tag: 'União Europeia', titulo: '19º Corrida União Europeia Sunset Edition Ultimate', data: '09/05/2026 - 17:00', local: 'Brasília - DF', status: 'last', label: 'Últimas unidades' },
-      { img: 'assets/card-evento2.jpg', tag: 'União Europeia', titulo: 'Corrida FENAE do Pessoal da Caixa', data: '09/05/2026 - 17:00', local: 'Brasília - DF', status: 'sold-out', label: 'Inscrições esgotadas' },
-      { img: 'assets/card-evento3.jpg', tag: 'União Europeia', titulo: 'Natação nacional da Família', data: '09/05/2026 - 17:00', local: 'Brasília - DF', status: 'pre-sale', label: 'Pré-venda' },
-      { img: 'assets/card-evento4.jpg', tag: 'União Europeia', titulo: 'Curves RUN 2026 - Só para Mulheres', data: '09/05/2026 - 17:00', local: 'Brasília - DF', status: 'open', label: 'Inscrições aberta' }
+      { img: 'assets/card-evento1.jpg', tag: 'Corrida', titulo: '19º Corrida União Europeia Sunset Edition Ultimate', data: '09/05/2026 - 17:00', local: 'Brasília - DF', status: 'last', label: 'Divulgação' },
+      { img: 'assets/card-evento2.jpg', tag: 'Bike', titulo: 'Corrida FENAE do Pessoal da Caixa', data: '09/05/2026 - 17:00', local: 'Brasília - DF', status: 'sold-out', label: 'Encerradas' },
+      { img: 'assets/card-evento3.jpg', tag: 'Natação', titulo: 'Natação nacional da Família', data: '09/05/2026 - 17:00', local: 'Brasília - DF', status: 'pre-sale', label: 'Em breve' },
+      { img: 'assets/card-evento4.jpg', tag: 'Triathlon', titulo: 'Curves RUN 2026 - Só para Mulheres', data: '09/05/2026 - 17:00', local: 'Brasília - DF', status: 'open', label: 'Inscrições aberta' }
     ];
 
     function renderEvents(containerId) {
